@@ -27,15 +27,6 @@
         app:layout_constraintBottom_toTopOf="@id/search_checklist"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-<!--
-    <ListView
-        android:id="@+id/result_search_checklist"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@id/search_checklist"
-        app:layout_constraintLeft_toLeftOf="@id/search_checklist"/>
--->
 
     <LinearLayout
         android:id="@+id/search_checklist"
@@ -67,20 +58,5 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:hint="어떤 재료를 추가할까요?"/>
-
-
     </LinearLayout>
-
-<!--
-    <SearchView
-        android:id="@+id/search_checklist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5pt"
-        android:iconifiedByDefault="false"
-        android:queryHint="어떤 재료를 추가할까요?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
--->
 </androidx.constraintlayout.widget.ConstraintLayout>
