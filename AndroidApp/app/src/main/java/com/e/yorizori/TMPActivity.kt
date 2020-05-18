@@ -14,8 +14,7 @@ class TMPActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
 
         // for making this activity as a dialog
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_my)
 
         // set the textView
