@@ -19,6 +19,8 @@
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".TMPActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

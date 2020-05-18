@@ -1,14 +1,13 @@
 package com.e.yorizori
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.AutoCompleteTextView
-import android.widget.ArrayAdapter
 
 
 class CheckList: Fragment() {
@@ -35,22 +34,16 @@ class CheckList: Fragment() {
         searchAutoComplete.threshold = 0
         searchAutoComplete.setAdapter(searchAdapter)
 
+        // for click event
+        searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
+            parent, view, position, id ->
+            val clicked = parent.getItemAtPosition(position).toString()
+            Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
 
-        /*
-        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            // for real-time search
-            override fun onQueryTextChange (input : String) : Boolean {
-
-                return true
-            }
-            //submit button pressed
-            override fun onQueryTextSubmit (input : String) : Boolean {
-                return true
-            }
-        })
-
-        */
+            val intent = Intent(activity, TMPActivity::class.java)
+            intent.putExtra("ing_name", clicked)
+            startActivity(intent)
+        }
 
         /* search bar: done. */
 
@@ -60,6 +53,8 @@ class CheckList: Fragment() {
 
 
     private fun setList(list : ArrayList<String>) {
+        list.add("ab")
+        list.add("aab")
         list.add("양파")
         list.add("양서류(?)")
         list.add("양고기")
