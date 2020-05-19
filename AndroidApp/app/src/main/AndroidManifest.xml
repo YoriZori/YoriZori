@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CalendarSet"></activity>
         <activity android:name=".OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +20,6 @@
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".TMPActivity"
-            android:theme="@style/AppTheme.DialogNoTitleBar"/>
     </application>
 
 </manifest>
