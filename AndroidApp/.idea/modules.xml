@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidApp-YoriZori.iml" filepath="$PROJECT_DIR$/AndroidApp-YoriZori.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/AndroidApp-app.iml" filepath="$PROJECT_DIR$/app/AndroidApp-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/YoriZori.iml" filepath="$PROJECT_DIR$/YoriZori.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YoriZori-AndroidApp-YoriZori.iml" filepath="$PROJECT_DIR$/YoriZori-AndroidApp-YoriZori.iml" group="YoriZori" />
+      <module fileurl="file://$PROJECT_DIR$/app/YoriZori-AndroidApp-app.iml" filepath="$PROJECT_DIR$/app/YoriZori-AndroidApp-app.iml" group="YoriZori/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
