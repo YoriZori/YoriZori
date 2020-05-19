@@ -43,7 +43,5 @@ class OpeningActivity : AppCompatActivity(){
             }
         })
         mTurkey.startAnimation(animSlide)
-
-
     }
 }
