@@ -19,48 +19,34 @@ class CalendarSet : AppCompatActivity() {
 
         showDatePicker()
 
-        val btn2 : Button =  findViewById(R.id.btn_reInput_date)
-        btn2.setOnClickListener {
-            showDatePicker()
-        }
-
-        val btn : Button =  findViewById(R.id.btn_confirm)
-        btn.setOnClickListener {
-            var intent : Intent = Intent( this, HomeActivity::class.java)
-            startActivity(intent)
-        }
-
     }
-/*
-    private fun getDateString(c : Calendar) : String {
 
-        val return_me = year.toString() + "-" + month.toString() + "-" + day.toString()
-        return return_me
-    }
-    */
     private fun showDatePicker() {
         // Calendar
         val c = Calendar.getInstance()
         var year = c.get(Calendar.YEAR)
         var month = c.get(Calendar.MONTH)
         var day = c.get(Calendar.DAY_OF_MONTH)
-    /*
-        var lTime = c.timeInMillis / (24*60*60*1000)
+
+        val intent = getIntent()
+        val name = intent.getStringExtra("ing_name")
+        val date = c
+        val ref_clicked = RefrigItem(name, date)
+
+
         val dpd = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDayOfMonth ->
-                due_date_txt.setText(" " + mYear + "." + (mMonth+1) + "." + mDayOfMonth)
-                due_date_txt.setTextColor(BLACK)
-                setColor(lTime)
-    */
                 val intent = getIntent()
                 val name = intent.getStringExtra("ing_name")
-                val date = c
+                val date = mYear.toString() + "-" + (mMonth+1).toString() + "-" + mDayOfMonth.toString()
+
                 val ref_clicked = RefrigItem(name, date)
-
-
+                HomeActivity.add_item(name, date)
+                finish()
             }, year, month, day)
         dpd.show()
+    }
     }
 
     // 아직 작동 안함
