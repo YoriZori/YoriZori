@@ -10,8 +10,10 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ChecklistListAdapter (val context: Context, val _items: MutableList<RefrigItem>): BaseAdapter() {
 
@@ -33,9 +35,38 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
         item_name.text = item.item
         due_date.text = item.print_due()
 
-        var tmp = simpleDate.format(item.due).split("-")[0].toInt()
-        if (tmp < 2025)
+        //var tmp = simpleDate.format(item.due).split("-")[0].toInt()
+
+        var tmp : Date = item.due
+        val cal : Date = Calendar.getInstance().time
+
+        val c1 = Calendar.getInstance()
+        val c2 = Calendar.getInstance()
+
+        c1.setTime(tmp)
+        c2.setTime(cal)
+
+        c2.add(Calendar.DATE, 10)
+        val ten_days_later = (c1.compareTo(c2) <= 0)
+
+        val due_end = tmp.before(cal)
+
+        if (due_end)
             due_date.setTextColor(Color.RED)
+        else if (ten_days_later)
+            due_date.setTextColor(Color.MAGENTA)
+
+        /*
+        val cur_year = cal.get(Calendar.YEAR)
+        val cur_month = cal.get(Calendar.MONTH + 1)
+        val cur_day = cal.get(Calendar.DAY_OF_MONTH)
+        */
+
+        /*
+        if (diff < ???)
+            due_date.setTextColor(Color.RED)
+
+         */
 
         val checkBox = view.findViewById<CheckBox>(R.id.item_check)
 

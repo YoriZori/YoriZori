@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MyPage">
 
-<<<<<<< HEAD
-=======
     <TextView
         android:id = "@+id/text_my"
         android:layout_width="wrap_content"
@@ -19,5 +17,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
->>>>>>> c365a9ab9fe7cbaa4d13ba533972fd5174c92150
 </androidx.constraintlayout.widget.ConstraintLayout>
