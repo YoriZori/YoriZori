@@ -6,35 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".CalendarSet">
 
-    <TextView
-        android:id="@+id/due_date_txt"
-        android:text="Set Date"
-        android:textSize="12pt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50.00dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_reInput_date"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 
-    <Button
-        android:id="@+id/btn_reInput_date"
+    <FrameLayout
+        android:id="@+id/calendar_set"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10.00dp"
-        android:text="날짜 수정"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/due_date_txt" />
-
-    <Button
-        android:id="@+id/btn_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10.00dp"
-        android:text="Confirm"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_reInput_date" />
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
