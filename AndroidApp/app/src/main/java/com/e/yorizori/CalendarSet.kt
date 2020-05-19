@@ -37,15 +37,23 @@ class CalendarSet : AppCompatActivity() {
         val return_me = year.toString() + "-" + month.toString() + "-" + day.toString()
         return return_me
     }
+<<<<<<< HEAD
     */
+=======
+
+>>>>>>> 2e7c2517703221f1824a848a68383e7dc833dc42
     private fun showDatePicker() {
         // Calendar
         val c = Calendar.getInstance()
         var year = c.get(Calendar.YEAR)
         var month = c.get(Calendar.MONTH)
         var day = c.get(Calendar.DAY_OF_MONTH)
+<<<<<<< HEAD
     /*
         var lTime = c.timeInMillis / (24*60*60*1000)
+=======
+
+>>>>>>> 2e7c2517703221f1824a848a68383e7dc833dc42
         val dpd = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDayOfMonth ->
