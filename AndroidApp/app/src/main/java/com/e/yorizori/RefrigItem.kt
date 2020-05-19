@@ -17,7 +17,7 @@ class RefrigItem(item : String, due : Date?){
     constructor(item_: String): this(item_,null) {
         item = item_
         due = simpleDate.parse("9999-12-31")
-        //dDay = caldDay(due)
+        //dDay = caldDay(due)ㅓㅐㅔㅓㅔㅐㅓㅔㅐㅓㅐㅓㅐㅔㅓㅔ
     }
 
     fun print_due() : String {
