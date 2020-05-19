@@ -6,16 +6,20 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
-class RefrigItem(item : String, due : Date?){
+class RefrigItem(){
     /*구조를 만들어 주세요~!*/
     var item : String = "" // 재료 이름
     val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-    var due : Date? = due
+    var due = simpleDate.parse("9999-12-31")
 
-
-    constructor(item_: String): this(item_,null) {
+    constructor(item_: String): this() {
         item = item_
         due = simpleDate.parse("9999-12-31")
+    }
+
+    constructor(item_: String, due_ : String): this(item_) {
+        item = item_
+        this.due = simpleDate.parse(due_)
     }
 
     fun print_due() : String {
@@ -25,5 +29,20 @@ class RefrigItem(item : String, due : Date?){
         else
             return_me = simpleDate.format(due)
         return return_me
+    }
+
+    fun get_val() : Int {
+        if (due == simpleDate.parse("9999-12-31"))
+            return 100000000
+        else{
+            var arr = simpleDate.format(due).split("-")
+            return arr[0].toInt()*10000 + arr[1].toInt()*100 + arr[2].toInt()
+        }
+    }
+
+    companion object {
+        fun sort(items : MutableList<RefrigItem>) {
+            items.sortWith(compareBy({it.get_val()}, {it.item}))
+        }
     }
 }
