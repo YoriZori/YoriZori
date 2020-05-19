@@ -25,17 +25,36 @@ import kotlin.collections.ArrayList
 
 >>>>>>> c365a9ab9fe7cbaa4d13ba533972fd5174c92150
 
+
+
+
+
+
 class CheckList: Fragment(){
 
     internal var items = mutableListOf<RefrigItem>()
 
-    fun add_item(name: String, date : String){
-        items.add(RefrigItem(name, date))
-    }
+    companion object {
 
-    fun add_item(name: String){
-        items.add(RefrigItem(name))
+        fun add_item(name: String, date: String) {
+            items.add(RefrigItem(name, date))
+        }
+
+        fun add_item(name: String) {
+            items.add(RefrigItem(name))
+        }
     }
+    //호출은 요렇게
+    Checklist.add_item(name, due)
+
+
+
+
+
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +65,7 @@ class CheckList: Fragment(){
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
 <<<<<<< HEAD
 
-        items.add(RefrigItem("소세지", "2032-12-25"))
+       dd(RefrigItem("소세지", "2032-12-25"))
         items.add(RefrigItem("돼지고기"))
         items.add(RefrigItem("우유", "2026-11-10"))
         items.add(RefrigItem("양파", "2025-11-10"))
@@ -54,7 +73,7 @@ class CheckList: Fragment(){
         items.add(RefrigItem("마늘", "2025-11-10"))
         items.add(RefrigItem("고추장"))
         items.add(RefrigItem("떡", "2025-11-10"))
-        items.add(RefrigItem("간장", "2025-11-10"))
+        items.add(RefrigItem("간장", "2025-11-10")) items.a
         items.add(RefrigItem("나랏말싸미뒹귁에달아문자와로서로사맛디아니할세이런젼차로어린백성이니르고져홀빼이셔도마참내제뜻을", "2019-05-10"))
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
