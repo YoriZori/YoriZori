@@ -49,8 +49,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="585">
+              <caret line="39" column="62" lean-forward="true" selection-start-line="39" selection-start-column="62" selection-end-line="39" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -172,6 +172,10 @@
       <pane id="AndroidView">
         <subPane>
           <expand>
+            <path>
+              <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
+              <item name="AndroidApp-app" type="feadf853:AndroidModuleNode" />
+            </path>
             <path>
               <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -546,8 +550,8 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
+        <state relative-caret-position="585">
+          <caret line="39" column="62" lean-forward="true" selection-start-line="39" selection-start-column="62" selection-end-line="39" selection-end-column="62" />
         </state>
       </provider>
     </entry>
