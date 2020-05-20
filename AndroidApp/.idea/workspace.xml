@@ -50,7 +50,7 @@
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="40" lean-forward="true" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
+              <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -166,27 +166,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
-              <item name="AndroidApp-app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
-              <item name="AndroidApp-app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
-              <item name="AndroidApp-app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
             <path>
               <item name="YoriZori" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -355,7 +340,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="23" width="1545" height="1302" extended-state="0" />
+    <frame x="1040" y="23" width="1545" height="1302" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.18695942" />
@@ -370,17 +355,17 @@
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.32761088" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32975206" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="4" visible="true" weight="0.32975206" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.27024794" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.27024794" />
       <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Find" order="9" visible="true" weight="0.32998565" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info active="true" anchor="right" id="Preview" order="4" visible="true" weight="0.30073187" />
+      <window_info anchor="right" id="Preview" order="4" visible="true" weight="0.30073187" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout>
   </component>
@@ -420,12 +405,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="18" column="58" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/e/yorizori/ContentsPagerAdapter.kt" />
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
@@ -562,7 +547,7 @@
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="40" lean-forward="true" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
+          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="6" selection-end-column="44" />
         </state>
       </provider>
     </entry>
