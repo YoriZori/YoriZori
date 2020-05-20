@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".explain">
+
+    <ListView
+        android:id="@+id/recipe_listview"
+        android:layout_width="0dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:divider="@color/design_default_color_on_secondary"
+        android:dividerHeight="1dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/howTo" />
 
     <TextView
         android:id="@+id/foodName"
@@ -14,7 +32,9 @@
         android:layout_marginLeft="2dp"
         android:layout_marginTop="16dp"
         android:text="음식이름"
-        android:textSize="20sp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toEndOf="@+id/returnBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="#특징"
-            android:textSize="15sp"
 
             />
 
@@ -55,43 +74,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sample_image" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="380dp"
-        android:layout_height="122dp"
+    <ListView
+        android:id="@+id/ing_listview"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:divider="@color/design_default_color_on_secondary"
+        android:dividerHeight="1dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ing">
-
-        <CheckBox
-            android:id="@+id/ing1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="소시지" />
-
-        <CheckBox
-            android:id="@+id/ing2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="고추장" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/ing" />
 
     <TextView
+
         android:id="@+id/ing"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="59dp"
+        android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="center_vertical"
         android:text="재료"
-        android:textSize="20sp"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/photoView" />
 
     <TextView
         android:id="@+id/howTo"
@@ -99,42 +114,14 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="center_vertical"
         android:text="조리법"
-        android:textSize="20sp"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-    <LinearLayout
-        android:layout_width="380dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/howTo">
-
-        <EditText
-            android:id="@+id/exactHowto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="어떻게 만들까요?"
-            android:textSize="15sp"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="어떻게 만들까요?"
-            android:textSize="15sp"
-            android:inputType="textPersonName" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/ing_listview" />
 
     <Button
         android:id="@+id/scrapBtn"
@@ -149,10 +136,11 @@
 
     <TextView
         android:id="@+id/scrapNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:gravity="center_horizontal"
         android:text="숫자"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrapBtn" />

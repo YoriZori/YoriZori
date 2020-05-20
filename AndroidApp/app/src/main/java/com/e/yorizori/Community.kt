@@ -1,5 +1,6 @@
 package com.e.yorizori
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class Community: Fragment(){
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?{
+
         val view = inflater.inflate(R.layout.activity_community, container, false)
         val title : TextView= view.findViewById(R.id.title0)
         var txt = "Event"
@@ -28,6 +31,14 @@ class Community: Fragment(){
         val text3 : TextView=view.findViewById(R.id.text3)
         text0.text ="칠면조"
         image0.setImageResource(R.drawable.turkey_looking_right)
+        image0.setOnClickListener(object: View.OnClickListener
+        {
+            override fun onClick(v: View?) {
+                val intent = Intent(context,explain::class.java)
+                startActivity(intent)
+            }
+
+        })
         text1.text ="칠면조반대"
         image1.setImageResource(R.drawable.turkey_looking_left)
         text2.text ="마주보는칠면조"
