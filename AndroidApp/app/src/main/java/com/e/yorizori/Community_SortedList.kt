@@ -1,9 +1,12 @@
 package com.e.yorizori
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
@@ -22,13 +25,21 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
         val add_recipe_button = view.findViewById(R.id.add_recipe) as Button
         add_recipe_button.setOnClickListener{
             // TODO: click event
+            val intent = Intent(context,activity_writingRecipe::class.java)
+            startActivity(intent)
             // activity.changeFragment(레시피 추가하는 fragment를 넣어주세요)
         }
         val titleview = view.findViewById(R.id.page_title) as TextView
         val adapter = Community_SortedListViewAdapter(this.context!!, position)
         titleview.text = titles[position]
         val listview = view.findViewById(R.id.listview1) as ListView
+
         listview.adapter = adapter
+
+        listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            val intent = Intent(context,explain::class.java)
+            startActivity(intent)
+        })
 
         return view
     }

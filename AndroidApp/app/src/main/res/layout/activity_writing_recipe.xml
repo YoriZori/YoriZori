@@ -22,6 +22,7 @@
             android:layout_height="18dp"
             android:src="@drawable/ic_arrow_left"
             android:scaleType="fitCenter"
+            android:background="#ffffff"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -44,6 +45,7 @@
             android:layout_height="18dp"
             android:src="@drawable/ic_check"
             android:scaleType="fitCenter"
+            android:background="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

@@ -7,20 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b03cc96-fde9-4374-9ca9-43dbb80538f8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_HorizontalAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_ListViewAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_ListViewItem.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedList.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedListViewAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/round_rectangle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/community_list_item_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/community_list_item_2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Like.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Like.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Recipe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Recipe.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_community.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_community.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_HorizontalAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_HorizontalAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/explain.xml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
