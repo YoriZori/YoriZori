@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Button
+import android.widget.ListView
 import androidx.fragment.app.Fragment
 
 class Community: Fragment(){
@@ -18,33 +18,15 @@ class Community: Fragment(){
     ): View?{
 
         val view = inflater.inflate(R.layout.activity_community, container, false)
-        val title : TextView= view.findViewById(R.id.title0)
-        var txt = "Event"
-        title.text=  txt
-        val image0 : ImageView = view.findViewById(R.id.image0)
-        val text0 : TextView=view.findViewById(R.id.text0)
-        val image1 : ImageView = view.findViewById(R.id.image1)
-        val text1 : TextView=view.findViewById(R.id.text1)
-        val image2 : ImageView = view.findViewById(R.id.image2)
-        val text2 : TextView=view.findViewById(R.id.text2)
-        val image3 : ImageView = view.findViewById(R.id.image3)
-        val text3 : TextView=view.findViewById(R.id.text3)
-        text0.text ="칠면조"
-        image0.setImageResource(R.drawable.turkey_looking_right)
-        image0.setOnClickListener(object: View.OnClickListener
-        {
-            override fun onClick(v: View?) {
-                val intent = Intent(context,explain::class.java)
-                startActivity(intent)
-            }
+        val button = view.findViewById(R.id.add_recipe) as Button
+        val listview = view.findViewById(R.id.listview1) as ListView
+        button.setOnClickListener{
+            // TODO: onclick Listener
+            // (activity as HomeActivity).changeFragment( 레시피 추가 fragment로 바꿔주세요! )
+        }
+        val adapter = Community_ListViewAdapter(this.context!!,activity)
+        listview.adapter = adapter
 
-        })
-        text1.text ="칠면조반대"
-        image1.setImageResource(R.drawable.turkey_looking_left)
-        text2.text ="마주보는칠면조"
-        image2.setImageResource(R.drawable.turkey_looking_right)
-        text3.text ="마주보는칠면조"
-        image3.setImageResource(R.drawable.turkey_looking_left)
         return view
     }
 }
