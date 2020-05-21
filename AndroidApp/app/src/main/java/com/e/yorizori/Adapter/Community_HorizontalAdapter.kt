@@ -1,4 +1,4 @@
-package com.e.yorizori
+package com.e.yorizori.Adapter
 
 import android.content.Context
 import android.content.Intent
@@ -9,11 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.e.yorizori.Class.Community_ListViewItem
+import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.R
+import com.e.yorizori.explain
 
 
 class Community_HorizontalAdapter(
     context: Context,
-    activity:HomeActivity
+    activity: HomeActivity
 ) :
     RecyclerView.Adapter<Community_HorizontalAdapter.ViewHolder>() {
     private var listViewItemList=ArrayList<Community_ListViewItem>()
@@ -51,7 +56,7 @@ class Community_HorizontalAdapter(
             rpicview=itemView.findViewById(R.id.list_imageView1)
             itemView.setOnClickListener{
                 /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-                val intent = Intent(context,explain::class.java)
+                val intent = Intent(context, explain::class.java)
                 activity.startActivity(intent)
                 //activity.changeFragment(explain())
             }
@@ -64,7 +69,9 @@ class Community_HorizontalAdapter(
     }
     fun addItem(recipe: Recipe){
         val item = Community_ListViewItem()
-        item.iconDrawable = ContextCompat.getDrawable(context,R.drawable.turkey_looking_left)
+        item.iconDrawable = ContextCompat.getDrawable(context,
+            R.drawable.turkey_looking_left
+        )
         item.titleStr = recipe.cook_title
         item.tagStr = mktag(recipe)
 

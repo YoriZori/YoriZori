@@ -2,10 +2,10 @@ package com.e.yorizori
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import com.e.yorizori.Class.Recipe
 import kotlinx.android.synthetic.main.activity_explain.*
 
 class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
@@ -24,7 +24,22 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
         actionBar?.hide()
 
         val intent = getIntent()
-        var recipe1 = Recipe("계란볶음밥",arrayOf("1. 기름을 두른다","2. 계란을 깨서 넣고 마구 젓는다","3. 밥을 넣어 잘 풀어준다","4. 밥이 모두 풀어지면 소금간을 한다","5. 완성!"),arrayOf("5분 완성","밥과 계란","응용 가능"),arrayOf("대충 사진"),"내가 쓴거 아님",arrayOf(Pair("밥",1),Pair("계란",1),Pair("식용유",10)),arrayOf(3,19,20),43)
+        var recipe1 = Recipe(
+            "계란볶음밥",
+            arrayOf(
+                "1. 기름을 두른다",
+                "2. 계란을 깨서 넣고 마구 젓는다",
+                "3. 밥을 넣어 잘 풀어준다",
+                "4. 밥이 모두 풀어지면 소금간을 한다",
+                "5. 완성!"
+            ),
+            arrayOf("5분 완성", "밥과 계란", "응용 가능"),
+            arrayOf("대충 사진"),
+            "내가 쓴거 아님",
+            arrayOf(Pair("밥", 1), Pair("계란", 1), Pair("식용유", 10)),
+            arrayOf(3, 19, 20),
+            43
+        )
         setContentView(R.layout.activity_explain)
         foodName.text = recipe1.cook_title
         var num : Int = recipe1.scrap_num.toInt()

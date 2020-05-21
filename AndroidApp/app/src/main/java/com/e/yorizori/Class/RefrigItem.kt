@@ -1,10 +1,6 @@
-package com.e.yorizori
+package com.e.yorizori.Class
 
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
 
 class RefrigItem(){
     /*구조를 만들어 주세요~!*/

@@ -1,4 +1,4 @@
-package com.e.yorizori
+package com.e.yorizori.Activity
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.e.yorizori.R
 
 
 class OpeningActivity : AppCompatActivity(){
@@ -22,8 +23,12 @@ class OpeningActivity : AppCompatActivity(){
             applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val mTurkey: ImageView = findViewById(R.id.Turkey)
         val mBar : ImageView = findViewById(R.id.Bar)
-        val animSlide = AnimationUtils.loadAnimation(applicationContext,R.anim.slide)
-        val animScale = AnimationUtils.loadAnimation(applicationContext,R.anim.scale)
+        val animSlide = AnimationUtils.loadAnimation(applicationContext,
+            R.anim.slide
+        )
+        val animScale = AnimationUtils.loadAnimation(applicationContext,
+            R.anim.scale
+        )
         var params = mTurkey.layoutParams
 
         windowManager.defaultDisplay.getMetrics(metrics)

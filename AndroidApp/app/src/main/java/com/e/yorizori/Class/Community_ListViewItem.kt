@@ -1,4 +1,4 @@
-package com.e.yorizori
+package com.e.yorizori.Class
 
 import android.graphics.drawable.Drawable
 

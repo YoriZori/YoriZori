@@ -1,11 +1,15 @@
-package com.e.yorizori
+package com.e.yorizori.Activity
 
 import android.os.Bundle
-import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Fragment.CheckList
+import com.e.yorizori.Fragment.Community
+import com.e.yorizori.Fragment.MyPage
+import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -56,7 +60,12 @@ class HomeActivity : AppCompatActivity() {
         items.add(RefrigItem("으악", "2020-05-19"))
         items.add(RefrigItem("으악", "2020-05-18"))
         items.add(RefrigItem("으악", "2020-05-17"))
-        items.add(RefrigItem("나랏말싸미뒹귁에달아문자와로서로사맛디아니할세이런젼차로어린백성이니르고져홀빼이셔도마참내제뜻을", "2019-05-10"))
+        items.add(
+            RefrigItem(
+                "나랏말싸미뒹귁에달아문자와로서로사맛디아니할세이런젼차로어린백성이니르고져홀빼이셔도마참내제뜻을",
+                "2019-05-10"
+            )
+        )
 
         val bottomNavigation =findViewById<BottomNavigationView>(R.id.tab)
         val upperView = findViewById<FrameLayout>(R.id.tab_frame)

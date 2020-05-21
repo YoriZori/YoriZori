@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CalendarSet"/>
-        <activity android:name=".OpeningActivity">
+        <activity android:name=".Activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,7 +19,7 @@
         <activity android:name=".explain"></activity>
         <activity android:name=".activity_writingRecipe"></activity>
         <!-- for the result of real-time search in the checklist -->
-        <activity android:name=".HomeActivity"
+        <activity android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
     </application>
 

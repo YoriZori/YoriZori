@@ -1,4 +1,4 @@
-package com.e.yorizori
+package com.e.yorizori.Class
 
 
 class Recipe(cook_title: String, recipe : Array<String>, tag : Array<String>, pics : Array<String>, writer : String, ings: Array<Pair<String,Int>>, like_num: Array<Int>, scrap_num : Int){

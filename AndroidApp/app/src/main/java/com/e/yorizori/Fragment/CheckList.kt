@@ -1,7 +1,6 @@
-package com.e.yorizori
+package com.e.yorizori.Fragment
 
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import android.widget.*
-import com.e.yorizori.HomeActivity.Companion.items
+import com.e.yorizori.CalendarSet
+import com.e.yorizori.Adapter.ChecklistListAdapter
+import com.e.yorizori.Activity.HomeActivity.Companion.items
+import com.e.yorizori.R
 import kotlin.collections.ArrayList
 
 class CheckList: Fragment(){
@@ -24,7 +26,11 @@ class CheckList: Fragment(){
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
-        val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
+        val listViewAdapter =
+            ChecklistListAdapter(
+                this.requireContext(),
+                items
+            )
 
         listView.setAdapter(listViewAdapter)
 

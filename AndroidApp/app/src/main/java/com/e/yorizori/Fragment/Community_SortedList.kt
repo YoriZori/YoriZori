@@ -1,16 +1,19 @@
-package com.e.yorizori
+package com.e.yorizori.Fragment
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.e.yorizori.Adapter.Community_SortedListViewAdapter
+import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.R
+import com.e.yorizori.explain
 
 class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
     val position = position
@@ -27,14 +30,17 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
             activity.changeFragment(activity_writingRecipe())
         }
         val titleview = view.findViewById(R.id.page_title) as TextView
-        val adapter = Community_SortedListViewAdapter(this.context!!, position)
+        val adapter = Community_SortedListViewAdapter(
+            this.context!!,
+            position
+        )
         titleview.text = titles[position]
         val listview = view.findViewById(R.id.listview1) as ListView
 
         listview.adapter = adapter
 
         listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
-            val intent = Intent(context,explain::class.java)
+            val intent = Intent(context, explain::class.java)
             startActivity(intent)
             //TODO: fragment로 변경하면 아래 코드로 바꿔주세요
             //activity.changeFragment(explain())
