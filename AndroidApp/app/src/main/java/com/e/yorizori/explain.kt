@@ -9,7 +9,7 @@ import androidx.appcompat.app.ActionBar
 import kotlinx.android.synthetic.main.activity_explain.*
 
 class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
-
+// 이부분을 fragment로 바꾸시면 밑에 TODO를 눌러서 적어놓은 걸로 바꿔주세요!
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         var option = 0 // 체크를 하면 레시피를 추천해주기 위해 추천가능한 옵션을 설정한다.

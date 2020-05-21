@@ -53,7 +53,7 @@ class Community_HorizontalAdapter(
                 /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
                 val intent = Intent(context,explain::class.java)
                 activity.startActivity(intent)
-                //activity.changeFragment(자세한 레시피 확인하는 fragment를 넣어주세요)
+                //activity.changeFragment(explain())
             }
         }
     }

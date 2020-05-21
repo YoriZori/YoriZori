@@ -24,10 +24,7 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
         val view = inflater.inflate(R.layout.activity_community,container,false)
         val add_recipe_button = view.findViewById(R.id.add_recipe) as Button
         add_recipe_button.setOnClickListener{
-            // TODO: click event
-            val intent = Intent(context,activity_writingRecipe::class.java)
-            startActivity(intent)
-            // activity.changeFragment(레시피 추가하는 fragment를 넣어주세요)
+            activity.changeFragment(activity_writingRecipe())
         }
         val titleview = view.findViewById(R.id.page_title) as TextView
         val adapter = Community_SortedListViewAdapter(this.context!!, position)
@@ -39,6 +36,9 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
         listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             val intent = Intent(context,explain::class.java)
             startActivity(intent)
+            //TODO: fragment로 변경하면 아래 코드로 바꿔주세요
+            //activity.changeFragment(explain())
+
         })
 
         return view
