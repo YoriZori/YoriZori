@@ -3,6 +3,7 @@ package com.e.yorizori
 
 class Recipe(cook_title: String, recipe : Array<String>, tag : Array<String>, pics : Array<String>, writer : String, ings: Array<Pair<String,Int>>, like_num: Array<Int>, scrap_num : Int){
     /*구조를 만들어 주세요~!*/
+
     var cook_title : String = cook_title // 제목
     var recipe : Array<String> = recipe// 조리법
     var tag : Array<String> = tag//태그
