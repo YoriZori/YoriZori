@@ -17,9 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".explain"></activity>
+
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".Activity.LoginActivity"/>
     </application>
 
 </manifest>
