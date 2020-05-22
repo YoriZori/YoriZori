@@ -27,7 +27,7 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
         val view = inflater.inflate(R.layout.activity_community,container,false)
         val add_recipe_button = view.findViewById(R.id.add_recipe) as Button
         add_recipe_button.setOnClickListener{
-            activity.changeFragment(activity_writingRecipe())
+            activity.changeFragment(Add_Recipe())
         }
         val titleview = view.findViewById(R.id.page_title) as TextView
         val adapter = Community_SortedListViewAdapter(

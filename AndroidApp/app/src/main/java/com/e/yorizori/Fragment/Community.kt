@@ -23,7 +23,7 @@ class Community: Fragment(){
         val button = view.findViewById(R.id.add_recipe) as Button
         val listview = view.findViewById(R.id.listview1) as ListView
         button.setOnClickListener{
-            (activity as HomeActivity).changeFragment(activity_writingRecipe())
+            (activity as HomeActivity).changeFragment(Add_Recipe())
         }
         val adapter =
             Community_ListViewAdapter(
