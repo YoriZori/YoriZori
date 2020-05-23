@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/AndroidApp-YoriZori.iml" filepath="$PROJECT_DIR$/AndroidApp-YoriZori.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/AndroidApp-app.iml" filepath="$PROJECT_DIR$/app/AndroidApp-app.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/AndroidApp-YoriZori.iml" filepath="$PROJECT_DIR$/AndroidApp-YoriZori.iml" group="YoriZori" />
-      <module fileurl="file://$PROJECT_DIR$/app/AndroidApp-app.iml" filepath="$PROJECT_DIR$/app/AndroidApp-app.iml" group="YoriZori/app" />
->>>>>>> f87bcff744c7f14ea91ce6b34d66eaf69230b991
-      <module fileurl="file://$PROJECT_DIR$/YoriZori.iml" filepath="$PROJECT_DIR$/YoriZori.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AndroidApp.iml" filepath="$PROJECT_DIR$/.idea/AndroidApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YoriZori.iml" filepath="$PROJECT_DIR$/YoriZori.iml" group="YoriZori" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="YoriZori/app" />
     </modules>
   </component>
 </project>
