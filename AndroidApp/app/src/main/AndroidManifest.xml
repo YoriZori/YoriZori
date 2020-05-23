@@ -9,13 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".activity_writingRecipe"></activity>
-=======
-        <activity android:name=".explain"></activity>
-        <activity android:name=".ExplainActivity2" />
-        <activity android:name=".ExplainActivity" />
->>>>>>> f87bcff744c7f14ea91ce6b34d66eaf69230b991
         <activity android:name=".OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
+        <activity android:name=".explain"></activity>
+        <activity android:name=".activity_writingRecipe"></activity>
     </application>
 
 </manifest>
