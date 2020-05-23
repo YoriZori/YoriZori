@@ -6,14 +6,21 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b03cc96-fde9-4374-9ca9-43dbb80538f8" name="Default Changelist" comment="" />
+    <list default="true" id="3b03cc96-fde9-4374-9ca9-43dbb80538f8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_HorizontalAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_HorizontalAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/e/yorizori/Community_SortedList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_writing_recipe.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/explain.xml" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_26" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

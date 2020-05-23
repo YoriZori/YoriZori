@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round_rectangle"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:id="@+id/list_title"
+        android:textSize="24dp"
+        android:textColor="#000000"
+        android:gravity="bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/list_tag1"
+        app:layout_constraintVertical_bias="0.4"
+        android:layout_marginLeft="10dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/list_imageView1"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_tag1"
+        android:gravity="top"
+        android:layout_below="@id/list_title"
+        android:text="#쉬워요"
+        app:layout_constraintTop_toBottomOf="@id/list_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:singleLine="false"
+        android:breakStrategy="balanced"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
