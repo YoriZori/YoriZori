@@ -32,7 +32,7 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 arrayOf("5분 완성", "밥과 계란", "응용 가능"),
                 arrayOf("대충 사진"),
                 "내가 쓴거 아님",
-                arrayOf(Pair("밥", 1), Pair("계란", 1), Pair("식용유", 10)),
+                arrayOf(Pair("밥", "1공"), Pair("계란", "1"), Pair("식용유", "10스푼")),
                 arrayOf(3, 19, 20),
                 43
             )
@@ -50,11 +50,11 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 arrayOf("대충 고기"),
                 "고기반찬",
                 arrayOf(
-                    Pair("돼지고기", 200),
-                    Pair("고추장", 1),
-                    Pair("고춧가루", 1),
-                    Pair("간장", 1),
-                    Pair("설탕", 1)
+                    Pair("돼지고기", "200g"),
+                    Pair("고추장", "1스푼"),
+                    Pair("고춧가루", "1스푼"),
+                    Pair("간장", "1스푼"),
+                    Pair("설탕", "1스푼")
                 ),
                 arrayOf(25, 3, 10),
                 87
@@ -72,7 +72,7 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 arrayOf("소시지 강추", "야채 아무거나", "국민반찬"),
                 arrayOf("대충 소시지 윤기 좔좔"),
                 "소시지가짱이야",
-                arrayOf(Pair("소시지", 10), Pair("케찹", 3)),
+                arrayOf(Pair("소시지", "10개"), Pair("케찹", "3스푼")),
                 arrayOf(13, 15, 23),
                 54
             )
@@ -94,11 +94,11 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 arrayOf("맛잇어보이는케이크"),
                 "홈카페 장인",
                 arrayOf(
-                    Pair("계란", 3),
-                    Pair("크림치즈", 1),
-                    Pair("식빵", 2),
-                    Pair("카카오파우더", 1),
-                    Pair("설탕", 6)
+                    Pair("계란", "3개"),
+                    Pair("크림치즈", "1통"),
+                    Pair("식빵", "2개"),
+                    Pair("카카오파우더", "1스푼"),
+                    Pair("설탕", "6개")
                 ),
                 arrayOf(65, 0, 23),
                 105
@@ -111,7 +111,7 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 arrayOf("다들 하는법 알잖아", "이걸 왜봐"),
                 arrayOf("대충 후라이"),
                 "포인트꺼억",
-                arrayOf(Pair("계란", 1)),
+                arrayOf(Pair("계란", "1개")),
                 arrayOf(12, 74, 36),
                 1
             )
