@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.e.yorizori">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +20,12 @@
         <activity android:name=".explain"></activity>
         <activity android:name=".Activity.ChecklistActivity"></activity>
         <activity android:name=".Activity.MyPageActivity"></activity>
+
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".Activity.CommunityActivity"
             android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".Activity.LoginActivity"/>
     </application>
 
 </manifest>

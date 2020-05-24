@@ -1,11 +1,11 @@
 package com.e.yorizori.Class
 
+import com.e.yorizori.DateUtils.Companion.simpleDate
 import java.text.SimpleDateFormat
 
 class RefrigItem(){
     /*구조를 만들어 주세요~!*/
     var item : String = "" // 재료 이름
-    val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     var due = simpleDate.parse("9999-12-31")
 
     constructor(item_: String): this() {

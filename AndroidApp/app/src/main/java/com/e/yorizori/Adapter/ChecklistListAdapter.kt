@@ -50,21 +50,9 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
         val due_end = tmp.before(cal)
 
         if (due_end)
-            due_date.setTextColor(Color.RED)
+            due_date.setTextColor(Color.rgb(255, 0, 6))
         else if (ten_days_later)
-            due_date.setTextColor(Color.MAGENTA)
-
-        /*
-        val cur_year = cal.get(Calendar.YEAR)
-        val cur_month = cal.get(Calendar.MONTH + 1)
-        val cur_day = cal.get(Calendar.DAY_OF_MONTH)
-        */
-
-        /*
-        if (diff < ???)
-            due_date.setTextColor(Color.RED)
-
-         */
+            due_date.setTextColor(Color.rgb(255, 101, 54))
 
         val checkBox = view.findViewById<CheckBox>(R.id.item_check)
 

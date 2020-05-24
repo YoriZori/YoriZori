@@ -46,6 +46,7 @@ class Community: Fragment(){
         }
         button.setOnClickListener{
             (activity as CommunityActivity).changeFragment(Add_Recipe())
+            (activity as HomeActivity).changeFragment(Add_Recipe())
         }
         val adapter =
             Community_ListViewAdapter(

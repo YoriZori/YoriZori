@@ -1,20 +1,35 @@
 package com.e.yorizori.Fragment
 
+import android.app.Activity
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
-import androidx.fragment.app.Fragment
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.e.yorizori.CalendarSet
 import com.e.yorizori.Adapter.ChecklistListAdapter
 import com.e.yorizori.Activity.ChecklistActivity.Companion.items
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
+import com.e.yorizori.Activity.HomeActivity.Companion.items
+import com.e.yorizori.Adapter.ChecklistListAdapter
+import com.e.yorizori.CalendarSet
+import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
-import kotlin.collections.ArrayList
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_checklist.*
+import kotlinx.android.synthetic.main.activity_checklist.view.*
+
 
 class CheckList: Fragment(){
+
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +75,22 @@ class CheckList: Fragment(){
             intent.putExtra("ing_name", clicked)
             startActivity(intent)
             //activity?.finish()
+        }
+
+        //input new ingredients
+        view.auto_search_checklist.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
+                val refrigItem = RefrigItem(auto_search_checklist.text.toString())
+                database = FirebaseDatabase.getInstance().reference
+                database.child("refrigItem").push().setValue(Gson().toJson(refrigItem))
+                view.auto_search_checklist.setText("")
+
+                //hide keyboard
+                val inputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+
+            }
+            true
         }
 
         /* search bar: done. */
