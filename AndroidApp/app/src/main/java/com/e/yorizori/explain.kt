@@ -36,7 +36,7 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
             arrayOf("5분 완성", "밥과 계란", "응용 가능"),
             arrayOf("대충 사진"),
             "내가 쓴거 아님",
-            arrayOf(Pair("밥", 1), Pair("계란", 1), Pair("식용유", 10)),
+            arrayOf(Pair("밥", "1그릇"), Pair("계란", "1개"), Pair("식용유", "10스푼")),
             arrayOf(3, 19, 20),
             43
         )

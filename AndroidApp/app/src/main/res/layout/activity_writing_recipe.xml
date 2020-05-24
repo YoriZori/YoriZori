@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity_writingRecipe">
+    android:layout_height="match_parent">
 
     <!--  header  -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,6 +90,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/tagInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/titleInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="제목" />
@@ -108,6 +108,7 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tagInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="태그" />
@@ -160,6 +161,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ingredientText" >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ingInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="재료 추가" />
@@ -174,6 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ingredientText" >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ingNumInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="양" />
@@ -243,7 +246,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/recipeInput"
+                android:id="@+id/recipeInputLayout"
                 android:layout_width="300dp"
                 android:layout_height="56dp"
                 android:layout_marginLeft="10dp"
@@ -251,6 +254,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/recipeNumText" >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/recipeInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="설명 추가" />
