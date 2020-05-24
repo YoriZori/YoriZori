@@ -1,5 +1,6 @@
 package com.e.yorizori.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Fragment.CheckList
-import com.e.yorizori.Fragment.Community
-import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
-class HomeActivity : AppCompatActivity() {
+class ChecklistActivity : AppCompatActivity(){
     lateinit var ft : FragmentTransaction
 
     companion object {
@@ -28,10 +26,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun changeFragment(f: Fragment, cleanStack:Boolean=false){
+    fun changeFragment(f: Fragment,name: String?=null, cleanStack:Boolean=false){
         ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.tab_frame,f)
-        ft.addToBackStack(null)
+        ft.addToBackStack(name)
         ft.commit()
 
         true
@@ -67,33 +65,46 @@ class HomeActivity : AppCompatActivity() {
             )
         )
 
+    }
+    override fun onResume(){
+        super.onResume()
         val bottomNavigation =findViewById<BottomNavigationView>(R.id.tab)
         val upperView = findViewById<FrameLayout>(R.id.tab_frame)
-        changeFragment(Community())
+        changeFragment(CheckList())
         bottomNavigation.setOnNavigationItemSelectedListener {
             upperView.removeAllViews()
 
-            var selected:Fragment
-
+            //  var selected:Fragment
+            var selected : Intent
             when(it.itemId){
                 R.id.tab_community ->{
-                    selected = Community()
+                    selected = Intent(this, CommunityActivity::class.java)
+                    //selected = Community()
                     true
                 }
                 R.id.tab_check ->{
-                    selected = CheckList()
+                    selected = Intent(this, ChecklistActivity::class.java)
+                    // selected = CheckList()
                     true
                 }
                 else ->{
-                    selected = MyPage()
+                    selected = Intent(this, MyPageActivity::class.java)
+                    //selected = MyPage()
                     true
                 }
             }
             if(selected != null){
-                changeFragment(selected)
+                selected.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                startActivity(selected)
+                //changeFragment(selected)
             }
 
             true
         }
     }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+    }
+
 }

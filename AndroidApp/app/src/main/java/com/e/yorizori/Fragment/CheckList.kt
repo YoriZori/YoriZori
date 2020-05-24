@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import com.e.yorizori.CalendarSet
 import com.e.yorizori.Adapter.ChecklistListAdapter
-import com.e.yorizori.Activity.HomeActivity.Companion.items
+import com.e.yorizori.Activity.ChecklistActivity.Companion.items
 import com.e.yorizori.R
 import kotlin.collections.ArrayList
 
@@ -84,5 +84,8 @@ class CheckList: Fragment(){
         list.add("팔보채")
         list.add("양장피")
         list.add("맛있다")
+    }
+    override fun onResume(){
+        super.onResume()
     }
 }

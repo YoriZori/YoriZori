@@ -6,21 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community_SortedList
-import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.CommunityActivity
 import com.e.yorizori.Enum.Like
+import com.e.yorizori.Fragment.Community
 import com.e.yorizori.R
 
 
-class Community_ListViewAdapter(context: Context, activity: FragmentActivity?): BaseAdapter(){
+class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fragment : Fragment): BaseAdapter(){
     private var itemList = ArrayList<Recipe>()
     private var listViewItemList=ArrayList<Community_HorizontalAdapter>()
     private var titles = arrayOf(null,"#지금 당장만들어 보자","#이 세상 맛이 아니다","#배고프니 빨리빨리","#이 가격 실화냐!?","#다들 이거 만들던데....","#이런건 어때요?")
-    private val activity = activity as HomeActivity
+    private val activity = activity as CommunityActivity
+    private val fragment = fragment as Community
     init{
         itemList.add(
             Recipe(
@@ -124,7 +127,8 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?): 
             listViewItemList.add(
                 Community_HorizontalAdapter(
                     context,
-                    activity as HomeActivity
+                    activity as CommunityActivity,
+                    fragment
                 )
             )
             fillList(i)
@@ -150,12 +154,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?): 
         listTitleView.text = titles[position]
 
         listTitleView.setOnClickListener(View.OnClickListener {
-            activity.changeFragment(
-                Community_SortedList(
-                    position,
-                    activity
-                )
-            )
+            activity.changeFragment(Community_SortedList(position, activity, fragment))
         })
         return view
     }

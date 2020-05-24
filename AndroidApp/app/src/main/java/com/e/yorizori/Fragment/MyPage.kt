@@ -17,4 +17,7 @@ class MyPage: Fragment(){
 
         return view
     }
+    override fun onResume(){
+        super.onResume()
+    }
 }

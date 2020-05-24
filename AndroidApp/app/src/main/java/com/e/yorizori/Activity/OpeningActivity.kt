@@ -43,7 +43,7 @@ class OpeningActivity : AppCompatActivity(){
             }
             override fun onAnimationRepeat(arg0: Animation) {}
             override fun onAnimationEnd(arg0: Animation) {
-                startActivity(Intent(this@OpeningActivity, HomeActivity::class.java))
+                startActivity(Intent(this@OpeningActivity, CommunityActivity::class.java))
                 finish()
             }
         })

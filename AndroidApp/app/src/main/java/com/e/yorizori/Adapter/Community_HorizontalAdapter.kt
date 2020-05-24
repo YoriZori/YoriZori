@@ -8,22 +8,28 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
-import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.CommunityActivity
+import com.e.yorizori.Fragment.Community
 import com.e.yorizori.R
 import com.e.yorizori.explain
 
 
 class Community_HorizontalAdapter(
     context: Context,
-    activity: HomeActivity
+    activity: CommunityActivity,
+    fragment: Fragment,
+    issorted : Int = 0
 ) :
     RecyclerView.Adapter<Community_HorizontalAdapter.ViewHolder>() {
     private var listViewItemList=ArrayList<Community_ListViewItem>()
     private val context: Context
     private val activity = activity
+    private val fragment = fragment
+    private val issorted=  issorted
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -35,11 +41,17 @@ class Community_HorizontalAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listViewItemList[position]
-
         holder.rnameview.text = item.titleStr
         holder.rtagview.text = item.tagStr
         holder.rpicview.setImageDrawable(item.iconDrawable)
 
+        holder.itemView.setOnClickListener{
+            /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
+            val intent = Intent(context, explain::class.java)
+            activity.startActivity(intent)
+            //activity.changeFragment(explain())
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -54,12 +66,7 @@ class Community_HorizontalAdapter(
             rnameview = itemView.findViewById(R.id.list_title)
             rtagview = itemView.findViewById(R.id.list_tag1)
             rpicview=itemView.findViewById(R.id.list_imageView1)
-            itemView.setOnClickListener{
-                /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-                val intent = Intent(context, explain::class.java)
-                activity.startActivity(intent)
-                //activity.changeFragment(explain())
-            }
+
         }
     }
 
