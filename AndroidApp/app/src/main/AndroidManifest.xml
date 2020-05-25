@@ -30,6 +30,9 @@
         <activity android:name=".Activity.RegisterActivity"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".CalendarSet"/>
+        <activity android:name=".explain"/>
+
 
     </application>
 

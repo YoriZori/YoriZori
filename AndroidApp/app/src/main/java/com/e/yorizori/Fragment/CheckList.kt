@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import android.widget.*
@@ -23,14 +24,11 @@ class CheckList: Fragment(){
     ): View? {
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
+        // activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
-        val listViewAdapter =
-            ChecklistListAdapter(
-                this.requireContext(),
-                items
-            )
+        val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
 
         listView.setAdapter(listViewAdapter)
 
