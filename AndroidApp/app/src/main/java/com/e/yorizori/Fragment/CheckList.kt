@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
@@ -17,6 +14,7 @@ import com.e.yorizori.Adapter.ChecklistListAdapter
 import com.e.yorizori.CalendarSet
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -27,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_checklist.view.*
 class CheckList: Fragment(){
 
     private lateinit var database: DatabaseReference
+    lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +33,12 @@ class CheckList: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+        val userUID = user!!.uid
+
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
@@ -79,7 +83,7 @@ class CheckList: Fragment(){
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
                 val refrigItem = RefrigItem(auto_search_checklist.text.toString())
                 database = FirebaseDatabase.getInstance().reference
-                database.child("refrigItem").push().setValue(Gson().toJson(refrigItem))
+                database.child("refrigItem").child(userUID).push().setValue(Gson().toJson(refrigItem))
                 view.auto_search_checklist.setText("")
 
                 //hide keyboard

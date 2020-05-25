@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -23,6 +25,7 @@ import java.time.ZoneId
 class Add_Recipe : Fragment() {
 
     private lateinit var database: DatabaseReference
+    lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +34,11 @@ class Add_Recipe : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_writing_recipe,container,false)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+        val userUID = user!!.uid
+
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //back 버튼을 누르면 community뷰로 돌아감
         view.backBtn.setOnClickListener {
@@ -46,6 +54,7 @@ class Add_Recipe : Fragment() {
             recipe.tag = arrayOf(view.tagInput.text.toString())
             recipe.ings = arrayOf(Pair(view.ingInput.text.toString(), view.ingNumInput.text.toString()))
             recipe.recipe = arrayOf(view.recipeInput.text.toString())
+            recipe.writer_UID = userUID
 
             //Gson().fromJson<Recipe>("", Recipe::class.java)
 
