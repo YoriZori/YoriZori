@@ -2,13 +2,12 @@ package com.e.yorizori.Activity
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.e.yorizori.Class.User
 import com.e.yorizori.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
@@ -32,14 +31,7 @@ class RegisterActivity : AppCompatActivity() {
                 val pw = register_pw.text.toString()
                 val name = register_name.text.toString()
 
-                var result = createAccount(email, name, pw)
-                if (result) {
-                    Toast.makeText(applicationContext, R.string.register_succeed, Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                else {
-                    Toast.makeText(applicationContext, R.string.register_failed, Toast.LENGTH_SHORT).show()
-                }
+                createAccount(email, pw, name)
             }
         })
     }
@@ -76,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    private fun createAccount(email: String, name: String, password: String) : Boolean {
+    private fun createAccount(email: String, password: String, name: String) : Boolean {
         if (!validateForm())
             return false
 
@@ -85,8 +77,17 @@ class RegisterActivity : AppCompatActivity() {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = firebaseAuth.currentUser
+                    Toast.makeText(applicationContext, R.string.register_succeed, Toast.LENGTH_SHORT).show()
+                    finish()
+
+                    val user = task.getResult()!!.user
+                    val request = UserProfileChangeRequest.Builder()
+                        .setDisplayName(name)
+                        .build()
+
+                    user?.updateProfile(request)
                 } else {
+                    Toast.makeText(applicationContext, R.string.register_failed, Toast.LENGTH_SHORT).show()
                     return_me = false
                 }
             }
