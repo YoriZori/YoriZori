@@ -38,7 +38,6 @@ class CheckList: Fragment(){
         val userUID = user!!.uid
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
-        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
