@@ -1,8 +1,8 @@
 package com.e.yorizori.Activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,32 +32,65 @@ class RegisterActivity : AppCompatActivity() {
                 val pw = register_pw.text.toString()
                 val name = register_name.text.toString()
 
-                if (isValidEmail(email)) {
-                    createUser(email, name, pw)
+                var result = createAccount(email, name, pw)
+                if (result) {
+                    Toast.makeText(applicationContext, R.string.register_succeed, Toast.LENGTH_SHORT).show()
+                    finish()
                 }
-                finish()
+                else {
+                    Toast.makeText(applicationContext, R.string.register_failed, Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
 
-    /* 일단 지금은 비어있는지 아닌지만 테스트 함. */
-    private fun isValidEmail(email : String): Boolean {
-        if(TextUtils.isEmpty(email))
-            return false
-        return true
+    /* 이메일: 일단 지금은 비어있는지 아닌지만 테스트 함. */
+    private fun validateForm() : Boolean {
+        var valid = true
+
+        val email = register_email.text.toString()
+        if(TextUtils.isEmpty(email)) {
+            register_email.error = "이메일을 정확히 입력해주세요"
+            valid = false
+        } else {
+            register_email.error = null
+        }
+
+        val pw = register_pw.text.toString()
+        if (pw.length < 6) {
+            register_pw.error = "비밀번호는 6자 이상이어야 합니다."
+            valid = false
+        } else {
+            register_pw.error = null
+        }
+
+        val name = register_name.text.toString()
+        if (TextUtils.isEmpty(name)) {
+            register_name.error = "닉네임을 정해주세요."
+            valid = false
+        } else {
+            register_name.error = null
+        }
+
+        return valid
     }
 
-    private fun createUser(email: String, name:String, pw: String) {
-        database = FirebaseDatabase.getInstance().getReference("Auth")
-        firebaseAuth!!.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this
-        ) { task ->
-            if (task.isSuccessful) { // 회원가입 성공
-                val new = User(name,email, pw).toMap()
-                database.child(name).setValue(new)
-                Toast.makeText(this, R.string.register_succeed, Toast.LENGTH_SHORT).show()
-            } else { // 회원가입 실패
-                Toast.makeText(this, R.string.register_failed, Toast.LENGTH_SHORT).show()
+
+    private fun createAccount(email: String, name: String, password: String) : Boolean {
+        if (!validateForm())
+            return false
+
+        var return_me = true
+        // [START create_user_with_email]
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+                } else {
+                    return_me = false
+                }
             }
-        }
+
+        return return_me
     }
 }

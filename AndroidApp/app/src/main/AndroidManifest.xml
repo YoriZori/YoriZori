@@ -3,6 +3,7 @@
     package="com.e.yorizori">
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,13 +19,17 @@
             </intent-filter>
         </activity>
 
-        <!-- for login & register -->
-        <activity android:name=".Activity.LoginActivity"></activity>
-        <acitvity android:name=".Activity.RegisterActivity"></acitvity>
-
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
+
+        <!-- for login & register -->
+        <activity android:name=".Activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".Activity.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
 
     </application>
 
