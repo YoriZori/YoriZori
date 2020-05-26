@@ -1,8 +1,10 @@
 package com.e.yorizori
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +26,16 @@ class CheckList: Fragment(){
 
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
-        val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
+        val button = view.findViewById<Button>(R.id.delete_button)
+        val listViewAdapter = ChecklistListAdapter(this.requireContext(), button, items)
 
         listView.setAdapter(listViewAdapter)
 
+        button.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                showSettingPopup(listView, listViewAdapter, button)
+            }
+        })
 
         /* search bar in the checklist: start! */
 
@@ -60,6 +68,44 @@ class CheckList: Fragment(){
 
         return view
     }
+
+    private fun showSettingPopup(listView: ListView,  listViewAdapter: ChecklistListAdapter, button:Button) {
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.alert_delete, null)
+        val textView: TextView = view.findViewById<TextView>(R.id.alert_textview)
+        textView.text = ChecklistListAdapter.selected.size.toString() + "개 항목을 삭제하시겠습니까?"
+
+        val alertDialog = AlertDialog.Builder(this.requireContext())
+            .setTitle("  ")
+            .setPositiveButton("삭제") { dialog, which ->
+                for (i in 0 until ChecklistListAdapter.selected.size){
+                    items.remove(ChecklistListAdapter.selected[i])
+                }
+                ChecklistListAdapter.selected.clear()
+                listView.clearChoices()
+                listViewAdapter.notifyDataSetChanged()
+                Toast.makeText(this.requireContext(), "삭제", Toast.LENGTH_SHORT).show()
+            }
+            .setNeutralButton("취소", null)
+            .create()
+
+        alertDialog.setView(view)
+        alertDialog.show()
+//        changeVisibility(button)
+   }
+
+    fun changeVisibility(button: Button){
+        Log.d("init : ", button.visibility.toString())
+        if (ChecklistListAdapter.selected.size == 0){
+            button.visibility = View.INVISIBLE
+        }
+        else if (ChecklistListAdapter.selected.size > 0){
+            Log.d("Before : ", button.visibility.toString())
+            button.visibility = View.VISIBLE
+            Log.d("After : ", button.visibility.toString())
+        }
+    }
+
 
     private fun setList(list : ArrayList<String>) {
         list.add("ab")
