@@ -39,6 +39,14 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(applicationContext, RegisterActivity::class.java))
             }
         })
+
+        login_find.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                Toast.makeText(applicationContext, "로그인 안 한 채로 들어옴", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, HomeActivity::class.java))
+                finish()
+            }
+        })
     }
 
     private fun logIn(email: String, password: String) {
