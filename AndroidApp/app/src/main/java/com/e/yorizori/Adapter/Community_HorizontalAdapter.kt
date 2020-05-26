@@ -14,6 +14,7 @@ import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.R
 import com.e.yorizori.explain
+import com.e.yorizori.explainFrag
 
 
 class Community_HorizontalAdapter(
@@ -54,11 +55,12 @@ class Community_HorizontalAdapter(
             rnameview = itemView.findViewById(R.id.list_title)
             rtagview = itemView.findViewById(R.id.list_tag1)
             rpicview=itemView.findViewById(R.id.list_imageView1)
-            itemView.setOnClickListener{
+            itemView.setOnClickListener() {
+
                 /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
                 val intent = Intent(context, explain::class.java)
-                activity.startActivity(intent)
-                //activity.changeFragment(explain())
+                //activity.startActivity(intent)
+                activity.changeFragment(explainFrag())
             }
         }
     }
