@@ -1,7 +1,13 @@
 package com.e.yorizori.Activity
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -11,6 +17,7 @@ import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_writing_recipe.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -26,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
         fun add_item(name: String) {
             items.add(RefrigItem(name))
         }
+        // Image Pick Code
+        val IMAGE_PICK_CODE = 1000
+        // Permission Code
+        val PERMISSION_CODE = 1001
     }
 
     fun changeFragment(f: Fragment, cleanStack:Boolean=false){
@@ -35,6 +46,50 @@ class HomeActivity : AppCompatActivity() {
         ft.commit()
 
         true
+    }
+
+    fun perCheck() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                //Permission Denied
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permissions, PERMISSION_CODE)
+            }
+            else {
+                pickImageFromGallery()
+            }
+        }
+        else {
+            pickImageFromGallery()
+        }
+
+    }
+
+    fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            PERMISSION_CODE -> {
+                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery()
+                }
+                else {
+                    Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            recipeImage.setImageURI(data?.data)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -95,5 +150,7 @@ class HomeActivity : AppCompatActivity() {
 
             true
         }
+
     }
+
 }
