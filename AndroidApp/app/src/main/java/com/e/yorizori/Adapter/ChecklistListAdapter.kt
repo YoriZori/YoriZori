@@ -6,23 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
+import androidx.core.view.isVisible
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChecklistListAdapter (val context: Context, val _items: MutableList<RefrigItem>): BaseAdapter() {
+class ChecklistListAdapter (val context: Context, val _button : Button, val _items: MutableList<RefrigItem>): BaseAdapter() {
 
-    private val mContext: Context = context
+    val mContext: Context = context
     val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val items : MutableList<RefrigItem> = _items
-    val selected : MutableList<RefrigItem> = mutableListOf()
+    val del_button : Button = _button
+    companion object{
+        val selected : MutableList<RefrigItem> = mutableListOf()
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         val view: View = LayoutInflater.from(context).inflate(R.layout.checklist_item, parent, false)
+
 
         val item_name = view.findViewById<TextView>(R.id.item_name)
         val due_date = view.findViewById<TextView>(R.id.due_date)
@@ -52,7 +58,7 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
         if (due_end)
             due_date.setTextColor(Color.rgb(255, 0, 6))
         else if (ten_days_later)
-            due_date.setTextColor(Color.rgb(255, 101, 54))
+            due_date.setTextColor(Color.MAGENTA)
 
         val checkBox = view.findViewById<CheckBox>(R.id.item_check)
 
@@ -76,6 +82,12 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
                     }
                 }
             }
+//            if (selected.size == 0){
+//                del_button.visibility = View.INVISIBLE
+//            }
+//            else{
+//                del_button.visibility = View.VISIBLE
+//            }
         }
 
         var check = true
@@ -86,8 +98,9 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
                 break
             }
         }
-        if (check)
+        if (check){
             checkBox.isChecked = false
+        }
 
         return view
     }
