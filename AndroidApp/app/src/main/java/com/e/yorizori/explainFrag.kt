@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.e.yorizori.Activity.HomeActivity.Companion.items
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -61,15 +62,15 @@ class explainFrag : Fragment() {
         view.tag_array.scrapTag.text = recipe1.tag[0]
 
         val listView  = view.findViewById<ListView>(R.id.ing_listview)
-
+/*
         val listViewAdapter =
             ChecklistListAdapter(
                 this.requireContext(),
-                HomeActivity.items
+                (activity as HomeActivity).items
             )
 
         listView.setAdapter(listViewAdapter)
-
+*/
         val listView2  = view.findViewById<ListView>(R.id.recipe_listview)
         val recipeAdapter = explainAdapter()
         listView2.setAdapter(recipeAdapter)
