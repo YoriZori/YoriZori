@@ -2,38 +2,47 @@ package com.e.yorizori.Adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Insets.add
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.view.OneShotPreDrawListener.add
 import com.e.yorizori.Activity.HomeActivity.Companion.items
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Class.recipe_ListViewItem
 import com.e.yorizori.R
+import java.nio.file.Files.size
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-/*
-class explainAdapter (val context: Context, val howto: ArrayList<Recipe>): BaseAdapter() {
 
-    private val mContext: Context = context
-    val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-    val selected : MutableList<RefrigItem> = mutableListOf()
+class explainAdapter : BaseAdapter() {
+
+    private var recipeList = ArrayList<Recipe>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.community_recipe, parent, false)
+        var view = convertView
+        val context = parent?.context
 
-        val howto = view.findViewById<TextView>(R.id.howtorecipe)
-        //val string = ArrayList[position]
+        if (view == null) {
+            val inflater =
+                context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = inflater.inflate(R.layout.custom_explain, parent, false)
+        }
 
-        return view
+        val howto = view?.findViewById<TextView>(R.id.howto)
+        val recipe_ListviewItem = recipeList[position]
+
+
+        return view!!
     }
 
     override fun getItem(position: Int): Any {
-        //return ArrayList[position]
+        return recipeList[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -41,8 +50,6 @@ class explainAdapter (val context: Context, val howto: ArrayList<Recipe>): BaseA
     }
 
     override fun getCount(): Int {
-        return items.size
+        return recipeList.size
     }
-
 }
-*/

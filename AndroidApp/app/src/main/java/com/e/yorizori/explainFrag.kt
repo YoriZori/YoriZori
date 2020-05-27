@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.ChecklistListAdapter
+import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
@@ -27,6 +28,7 @@ class explainFrag : Fragment() {
         var mListView: ListView
         var mAdapter: ArrayAdapter<*>
 
+        var p : Int = 1
 
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
@@ -69,14 +71,8 @@ class explainFrag : Fragment() {
         listView.setAdapter(listViewAdapter)
 
         val listView2  = view.findViewById<ListView>(R.id.recipe_listview)
-
-        val recipeAdapter =
-            ChecklistListAdapter(
-                this.requireContext(),
-                HomeActivity.items
-            )
-
-        listView.setAdapter(listViewAdapter)
+        val recipeAdapter = explainAdapter()
+        listView2.setAdapter(recipeAdapter)
 
 
         view.scrapBtn.setOnClickListener(object : View.OnClickListener
