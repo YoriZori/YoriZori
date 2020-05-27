@@ -35,12 +35,26 @@ class Community_HorizontalAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val item = listViewItemList[position]
+        if(item.titleStr == null){
+            val drawable_tmp = ContextCompat.getDrawable(context,R.drawable.event_image)
+            holder.rnameview.visibility = View.GONE
+            holder.rtagview.visibility = View.GONE
+            holder.rpicview.setImageDrawable(drawable_tmp)
+        }
+        else {
+            holder.rnameview.text = item.titleStr
+            holder.rtagview.text = item.tagStr
+            holder.rpicview.setImageDrawable(item.iconDrawable)
+        }
+        holder.itemView.setOnClickListener{
+            /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
+            val intent = Intent(context, explain::class.java)
+            activity.startActivity(intent)
+            //activity.changeFragment(explain())
 
-        holder.rnameview.text = item.titleStr
-        holder.rtagview.text = item.tagStr
-        holder.rpicview.setImageDrawable(item.iconDrawable)
-
+        }
     }
 
     override fun getItemCount(): Int {
@@ -62,6 +76,7 @@ class Community_HorizontalAdapter(
                 //activity.startActivity(intent)
                 activity.changeFragment(explainFrag())
             }
+
         }
     }
 
@@ -69,14 +84,20 @@ class Community_HorizontalAdapter(
         this.context = context
         this.listViewItemList = listViewItemList
     }
-    fun addItem(recipe: Recipe){
+    fun addItem(recipe: Recipe?) {
         val item = Community_ListViewItem()
-        item.iconDrawable = ContextCompat.getDrawable(context,
+        item.iconDrawable = ContextCompat.getDrawable(
+            context,
             R.drawable.turkey_looking_left
         )
-        item.titleStr = recipe.cook_title
-        item.tagStr = mktag(recipe)
-
+        if (recipe == null){
+            item.titleStr = null
+            item.tagStr=null
+        }
+        else {
+            item.titleStr = recipe!!.cook_title
+            item.tagStr = mktag(recipe!!)
+        }
         listViewItemList.add(item)
     }
     fun mktag(recipe: Recipe): String{

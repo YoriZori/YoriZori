@@ -6,38 +6,58 @@
     android:background="@drawable/round_rectangle"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp">
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/information"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:id="@+id/list_title"
-        android:textSize="24dp"
-        android:textColor="#000000"
-        android:gravity="bottom"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/list_tag1"
-        app:layout_constraintVertical_bias="0.4"
-        android:layout_marginLeft="10dp"/>
+        app:layout_constraintRight_toLeftOf="@id/list_imageView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:gravity="bottom"
+            android:text="Title"
+            android:textColor="#000000"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toTopOf="@id/list_tag1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/list_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:breakStrategy="balanced"
+            android:gravity="top"
+            android:singleLine="false"
+            android:text="#쉬워요"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/list_title" />
+    </LinearLayout>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/list_imageView1"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintRight_toRightOf="parent"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_tag1"
-        android:gravity="top"
-        android:layout_below="@id/list_title"
-        android:text="#쉬워요"
-        app:layout_constraintTop_toBottomOf="@id/list_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="20dp"
-        android:singleLine="false"
-        android:breakStrategy="balanced"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/information"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

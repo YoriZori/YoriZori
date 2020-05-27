@@ -15,13 +15,17 @@ import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
+import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(){
     lateinit var ft : FragmentTransaction
+    var backBtnListener : BackBtnPressListener? = null
+    var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
+    var position = 0
 
     companion object {
         var items = mutableListOf<RefrigItem>()
@@ -37,14 +41,18 @@ class HomeActivity : AppCompatActivity() {
         val IMAGE_PICK_CODE = 1000
         // Permission Code
         val PERMISSION_CODE = 1001
+
     }
 
-    fun changeFragment(f: Fragment, cleanStack:Boolean=false){
+    fun setOnBackBtnListener(listener:BackBtnPressListener?){
+        backBtnListener = listener
+    }
+
+    fun changeFragment(f: Fragment,name: String?=null, cleanStack:Boolean=false){
         ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.tab_frame,f)
-        ft.addToBackStack(null)
+        ft.addToBackStack(name)
         ft.commit()
-
         true
     }
 
@@ -121,36 +129,53 @@ class HomeActivity : AppCompatActivity() {
                 "2019-05-10"
             )
         )
+    }
 
+    override fun onResume(){
+        super.onResume()
+        setContentView(R.layout.activity_home)
         val bottomNavigation =findViewById<BottomNavigationView>(R.id.tab)
         val upperView = findViewById<FrameLayout>(R.id.tab_frame)
-        changeFragment(Community())
+        if(fragments[position] != null) {
+                changeFragment(fragments[position]!!)
+        }
+
         bottomNavigation.setOnNavigationItemSelectedListener {
             upperView.removeAllViews()
 
             var selected:Fragment
-
             when(it.itemId){
-                R.id.tab_community ->{
-                    selected = Community()
-                    true
+                R.id.tab_community -> {
+                    selected = fragments[0]!!
                 }
                 R.id.tab_check ->{
-                    selected = CheckList()
-                    true
+                    selected = fragments[1]!!
                 }
                 else ->{
-                    selected = MyPage()
-                    true
+                    selected = fragments[2]!!
                 }
-            }
-            if(selected != null){
-                changeFragment(selected)
-            }
 
+            }
+            changeFragment(selected)
             true
         }
 
+    }
+
+    override fun onBackPressed() {
+        if(backBtnListener != null){
+            backBtnListener!!.onBack()
+        }
+        else {
+            Toast.makeText(this,"no back Button Listener!",Toast.LENGTH_SHORT).show()
+            super.onBackPressed()
+        }
+    }
+
+    
+    fun saveFragment(p : Int,f: Fragment){
+        fragments[p] = f
+        position = p
     }
 
 }

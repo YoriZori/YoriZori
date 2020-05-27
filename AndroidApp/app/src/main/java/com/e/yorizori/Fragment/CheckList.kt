@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity.Companion.items
+import androidx.fragment.app.Fragment
+import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.ChecklistListAdapter
 import com.e.yorizori.CalendarSet
 import com.e.yorizori.Class.RefrigItem
@@ -33,6 +33,7 @@ class CheckList: Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as HomeActivity).saveFragment(1, this)
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
 
@@ -112,5 +113,8 @@ class CheckList: Fragment(){
         list.add("팔보채")
         list.add("양장피")
         list.add("맛있다")
+    }
+    override fun onResume(){
+        super.onResume()
     }
 }
