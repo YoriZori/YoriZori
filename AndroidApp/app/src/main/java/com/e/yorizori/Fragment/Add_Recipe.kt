@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.R
+
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -20,9 +21,16 @@ import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 import java.time.ZoneId
 
-class Add_Recipe : Fragment() {
+import com.e.yorizori.Activity.HomeActivity
+import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
+
+
+
 
     private lateinit var database: DatabaseReference
+
+class Add_Recipe : Fragment() {
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +38,6 @@ class Add_Recipe : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.activity_writing_recipe,container,false)
-
 
         //back 버튼을 누르면 community뷰로 돌아감
         view.backBtn.setOnClickListener {
@@ -63,6 +70,16 @@ class Add_Recipe : Fragment() {
                     val toast = Toast.makeText(activity, "저장에 실패 :(", Toast.LENGTH_SHORT)
                     toast.show()
                 }
+        }
+
+
+        view.backBtn.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Community())
+        }
+
+        // Image Click
+        view.recipeImage.setOnClickListener {
+            (activity as HomeActivity).perCheck()
         }
 
         return view
