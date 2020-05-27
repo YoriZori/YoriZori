@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -20,9 +21,11 @@ import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 import java.time.ZoneId
 
-class Add_Recipe : Fragment() {
+class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fragment() {
 
     private lateinit var database: DatabaseReference
+    private var fragment = fragment
+    private var fromwhere : Int = option
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,13 +35,22 @@ class Add_Recipe : Fragment() {
         val view = inflater.inflate(R.layout.activity_writing_recipe,container,false)
         val backBtn = view.findViewById(R.id.backBtn) as ImageButton
         val doneBtn = view.findViewById(R.id.doneBtn) as ImageButton
-
-
+        if(fromwhere == 0){
+            (fragment as Community).saveInfo(1,this)
+        }
+        else if(fromwhere == 1){
+            (fragment as Community_SortedList).saveInfo(0,this)
+        }
+        (activity as HomeActivity).setOnBackBtnListener(this)
 
         //back 버튼을 누르면 community뷰로 돌아감
         view.backBtn.setOnClickListener {
+            if(fromwhere == 0)
+                (fragment as Community).saveInfo(1,null)
+            else
+                (fragment as Community_SortedList).saveInfo(0,null)
             val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-            fragmentManager.beginTransaction().remove(this@Add_Recipe).commit()
+            fragmentManager.beginTransaction().remove(this).commit()
             fragmentManager.popBackStack()
         }
 
@@ -59,7 +71,7 @@ class Add_Recipe : Fragment() {
                     toast.show()
 
                     val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-                    fragmentManager.beginTransaction().remove(this@Add_Recipe).commit()
+                    fragmentManager.beginTransaction().remove(this).commit()
                     fragmentManager.popBackStack()
                 }
                 .addOnFailureListener {
@@ -69,5 +81,15 @@ class Add_Recipe : Fragment() {
         }
 
         return view
+    }
+    override fun onBack() {
+        if(fromwhere == 0)
+            (fragment as Community).saveInfo(1,null)
+        else
+            (fragment as Community_SortedList).saveInfo(0,null)
+
+        var ft = activity!!.supportFragmentManager
+        ft.beginTransaction().remove(this).commit()
+        ft.popBackStack()
     }
 }

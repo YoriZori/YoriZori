@@ -8,28 +8,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
-import com.e.yorizori.Activity.CommunityActivity
-import com.e.yorizori.Fragment.Community
+import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.R
 import com.e.yorizori.explain
 
 
 class Community_HorizontalAdapter(
     context: Context,
-    activity: CommunityActivity,
-    fragment: Fragment,
-    issorted : Int = 0
+    activity: HomeActivity
 ) :
     RecyclerView.Adapter<Community_HorizontalAdapter.ViewHolder>() {
     private var listViewItemList=ArrayList<Community_ListViewItem>()
     private val context: Context
     private val activity = activity
-    private val fragment = fragment
-    private val issorted=  issorted
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -40,11 +34,19 @@ class Community_HorizontalAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = listViewItemList[position]
-        holder.rnameview.text = item.titleStr
-        holder.rtagview.text = item.tagStr
-        holder.rpicview.setImageDrawable(item.iconDrawable)
 
+        val item = listViewItemList[position]
+        if(item.titleStr == null){
+            val drawable_tmp = ContextCompat.getDrawable(context,R.drawable.event_image)
+            holder.rnameview.visibility = View.GONE
+            holder.rtagview.visibility = View.GONE
+            holder.rpicview.setImageDrawable(drawable_tmp)
+        }
+        else {
+            holder.rnameview.text = item.titleStr
+            holder.rtagview.text = item.tagStr
+            holder.rpicview.setImageDrawable(item.iconDrawable)
+        }
         holder.itemView.setOnClickListener{
             /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
             val intent = Intent(context, explain::class.java)
@@ -74,14 +76,20 @@ class Community_HorizontalAdapter(
         this.context = context
         this.listViewItemList = listViewItemList
     }
-    fun addItem(recipe: Recipe){
+    fun addItem(recipe: Recipe?) {
         val item = Community_ListViewItem()
-        item.iconDrawable = ContextCompat.getDrawable(context,
+        item.iconDrawable = ContextCompat.getDrawable(
+            context,
             R.drawable.turkey_looking_left
         )
-        item.titleStr = recipe.cook_title
-        item.tagStr = mktag(recipe)
-
+        if (recipe == null){
+            item.titleStr = null
+            item.tagStr=null
+        }
+        else {
+            item.titleStr = recipe!!.cook_title
+            item.tagStr = mktag(recipe!!)
+        }
         listViewItemList.add(item)
     }
     fun mktag(recipe: Recipe): String{

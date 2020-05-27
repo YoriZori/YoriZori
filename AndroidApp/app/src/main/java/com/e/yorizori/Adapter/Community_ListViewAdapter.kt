@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community_SortedList
-import com.e.yorizori.Activity.CommunityActivity
+import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Enum.Like
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.R
@@ -22,7 +22,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
     private var itemList = ArrayList<Recipe>()
     private var listViewItemList=ArrayList<Community_HorizontalAdapter>()
     private var titles = arrayOf(null,"#지금 당장만들어 보자","#이 세상 맛이 아니다","#배고프니 빨리빨리","#이 가격 실화냐!?","#다들 이거 만들던데....","#이런건 어때요?")
-    private val activity = activity as CommunityActivity
+    private val activity = activity as HomeActivity
     private val fragment = fragment as Community
     init{
         itemList.add(
@@ -127,8 +127,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
             listViewItemList.add(
                 Community_HorizontalAdapter(
                     context,
-                    activity as CommunityActivity,
-                    fragment
+                    activity as HomeActivity
                 )
             )
             fillList(i)
@@ -150,12 +149,20 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
         listView.setLayoutManager(layoutManager)
 
         val ladapter = listViewItemList[position]
-        listView.adapter = ladapter
-        listTitleView.text = titles[position]
-
-        listTitleView.setOnClickListener(View.OnClickListener {
-            activity.changeFragment(Community_SortedList(position, activity, fragment))
-        })
+        if(titles[position] == null){
+            listTitleView.visibility = View.GONE
+            var eadapter = Community_Horizontal_Event_Adapter(context,activity,fragment)
+            eadapter.fill()
+            listView.adapter = eadapter
+        }
+        else {
+            listTitleView.text = titles[position]
+            listTitleView.visibility = View.VISIBLE
+            listTitleView.setOnClickListener(View.OnClickListener {
+                activity.changeFragment(Community_SortedList(position, activity, fragment))
+            })
+            listView.adapter = ladapter
+        }
         return view
     }
 
@@ -178,7 +185,9 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
     fun fillList(position:Int){
         when(position){
             0 -> {//Event Tab...!? 어떻게 채우지 ㄷㄷㄷㄷㄷ
-
+                for(i in itemList){
+                    listViewItemList[position].addItem(null)
+                }
             }
             1->{
                 for (i in itemList){

@@ -18,11 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".explain"></activity>
-        <activity android:name=".Activity.ChecklistActivity"></activity>
-        <activity android:name=".Activity.MyPageActivity"></activity>
 
         <!-- for the result of real-time search in the checklist -->
-        <activity android:name=".Activity.CommunityActivity"
+        <activity android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".Activity.LoginActivity"/>

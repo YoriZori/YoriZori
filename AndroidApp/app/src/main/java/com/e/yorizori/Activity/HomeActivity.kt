@@ -1,18 +1,25 @@
 package com.e.yorizori.Activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Fragment.CheckList
+import com.e.yorizori.Fragment.Community
+import com.e.yorizori.Fragment.MyPage
+import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ChecklistActivity : AppCompatActivity(){
+
+class HomeActivity : AppCompatActivity(){
     lateinit var ft : FragmentTransaction
+    var backBtnListener : BackBtnPressListener? = null
+    var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
+    var position = 0
 
     companion object {
         var items = mutableListOf<RefrigItem>()
@@ -24,6 +31,11 @@ class ChecklistActivity : AppCompatActivity(){
         fun add_item(name: String) {
             items.add(RefrigItem(name))
         }
+
+    }
+
+    fun setOnBackBtnListener(listener:BackBtnPressListener?){
+        backBtnListener = listener
     }
 
     fun changeFragment(f: Fragment,name: String?=null, cleanStack:Boolean=false){
@@ -31,7 +43,6 @@ class ChecklistActivity : AppCompatActivity(){
         ft.replace(R.id.tab_frame,f)
         ft.addToBackStack(name)
         ft.commit()
-
         true
     }
 
@@ -64,47 +75,53 @@ class ChecklistActivity : AppCompatActivity(){
                 "2019-05-10"
             )
         )
-
     }
+
     override fun onResume(){
         super.onResume()
+        setContentView(R.layout.activity_home)
         val bottomNavigation =findViewById<BottomNavigationView>(R.id.tab)
         val upperView = findViewById<FrameLayout>(R.id.tab_frame)
-        changeFragment(CheckList())
+        if(fragments[position] != null) {
+                changeFragment(fragments[position]!!)
+        }
+
         bottomNavigation.setOnNavigationItemSelectedListener {
             upperView.removeAllViews()
 
-            //  var selected:Fragment
-            var selected : Intent
+            var selected:Fragment
             when(it.itemId){
-                R.id.tab_community ->{
-                    selected = Intent(this, CommunityActivity::class.java)
-                    //selected = Community()
-                    true
+                R.id.tab_community -> {
+                    selected = fragments[0]!!
                 }
                 R.id.tab_check ->{
-                    selected = Intent(this, ChecklistActivity::class.java)
-                    // selected = CheckList()
-                    true
+                    selected = fragments[1]!!
                 }
                 else ->{
-                    selected = Intent(this, MyPageActivity::class.java)
-                    //selected = MyPage()
-                    true
+                    selected = fragments[2]!!
                 }
-            }
-            if(selected != null){
-                selected.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-                startActivity(selected)
-                //changeFragment(selected)
-            }
 
+            }
+            changeFragment(selected)
             true
         }
     }
 
-    override fun onResumeFragments() {
-        super.onResumeFragments()
+    override fun onBackPressed() {
+        if(backBtnListener != null){
+            backBtnListener!!.onBack()
+        }
+        else {
+            Toast.makeText(this,"no back Button Listener!",Toast.LENGTH_SHORT).show()
+            super.onBackPressed()
+        }
     }
+
+    
+    fun saveFragment(p : Int,f: Fragment){
+        fragments[p] = f
+        position = p
+    }
+
 
 }
