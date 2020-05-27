@@ -19,6 +19,10 @@ class Add_Recipe : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_writing_recipe,container,false)
 
+        view.backBtn.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Community())
+        }
+
         // Image Click
         view.recipeImage.setOnClickListener {
             (activity as HomeActivity).perCheck()
