@@ -35,23 +35,8 @@ class Community: BackBtnPressListener,Fragment(){
         Back_btn.visibility = View.GONE
 
         if(goto != -1){
-            val prev_frag:Fragment
-            when(goto){
-                0 -> { // sorted_commu
-                    prev_frag = savedFragment[0]!!
-                }
-                1 -> { // add_recipe
-                    //prev_frag = Community_Explain()
-                    prev_frag = savedFragment[1]!!
-                }
-                2 -> { // explain
-                    prev_frag = savedFragment[2]!!
-                }
-                else ->{ // event_view
-                    prev_frag = savedFragment[3]!!
-                }
-            }
-            (this.activity as HomeActivity).changeFragment(prev_frag)
+            val prev_frag = savedFragment[goto]!!
+            (activity as HomeActivity).changeFragment(prev_frag)
 
         }
         Add_button.setOnClickListener{

@@ -18,37 +18,40 @@ import kotlinx.android.synthetic.main.activity_my.view.*
 
 
 class MyPage: BackBtnPressListener, Fragment(){
+    private var savedFragment : Array<Fragment?> = arrayOf(null,null,null,null,null,null)
+    private var goto = -1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?{
         val view = inflater.inflate(R.layout.activity_my, container, false)
-
+        if(goto != -1){
+            val fragment = savedFragment[goto]!!
+            (activity as HomeActivity).changeFragment(fragment)
+        }
         view.text_scrap.setOnClickListener {
-            (activity as HomeActivity).changeFragment(Scrap())
+            (activity as HomeActivity).changeFragment(Scrap(this))
         }
 
         view.text_wrote.setOnClickListener {
-            (activity as HomeActivity).changeFragment(Wrote())
+            (activity as HomeActivity).changeFragment(Wrote(this))
         }
 
         view.text_allergy.setOnClickListener {
-            (activity as HomeActivity).changeFragment(Allergy())
+            (activity as HomeActivity).changeFragment(Allergy(this))
         }
 
         view.text_account_set.setOnClickListener {
-            (activity as HomeActivity).changeFragment(AccountSetting())
+            (activity as HomeActivity).changeFragment(AccountSetting(this))
         }
 
         view.text_suggest.setOnClickListener {
-            val intent=Intent(activity, Suggest::class.java)
-            startActivity(intent)
+            (activity as HomeActivity).changeFragment(Suggest(this))
         }
 
         view.text_donate.setOnClickListener {
-            val intent=Intent(activity, Donate::class.java)
-            startActivity(intent)
+            (activity as HomeActivity).changeFragment(Donate(this))
         }
 
         return view
@@ -60,7 +63,7 @@ class MyPage: BackBtnPressListener, Fragment(){
     override fun onBack() {
         dialog()
     }
-    fun dialog(){
+    fun dialog() {
         var builder = AlertDialog.Builder(this.context)
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
@@ -72,5 +75,12 @@ class MyPage: BackBtnPressListener, Fragment(){
         })
         builder.show()
         true
+    }
+    fun saveInfo(idx: Int, fragment : Fragment?){
+        savedFragment[idx] = fragment
+        if(fragment == null)
+            goto = -1
+        else
+            goto = idx
     }
 }

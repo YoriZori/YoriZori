@@ -66,16 +66,7 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
 
         })
         if(goto != -1){
-            val prev_frag:Fragment
-            when(goto){
-                0 -> {
-                    prev_frag = savedFragment[0]!!
-                }
-                else -> {
-                    //prev_frag = Community_Explain()
-                    prev_frag = savedFragment[1]!!
-                }
-            }
+            val prev_frag = savedFragment[goto]!!
             (this.activity as HomeActivity).changeFragment(prev_frag)
 
         }
