@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.e.yorizori.Activity.HomeActivity.Companion.items
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.e.yorizori.Activity.HomeActivity
-import com.e.yorizori.Adapter.ChecklistListAdapter
-import com.e.yorizori.Adapter.explainAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.e.yorizori.Adapter.FoodDataAdapter
+import com.e.yorizori.Class.FoodModel
+//import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
@@ -24,13 +24,6 @@ class explainFrag : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        var mList: ArrayList<String?>
-        var mListView: ListView
-        var mAdapter: ArrayAdapter<*>
-
-        var p : Int = 1
-
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
 
@@ -40,6 +33,9 @@ class explainFrag : Fragment() {
             fragmentManager.beginTransaction().remove(this@explainFrag).commit()
             fragmentManager.popBackStack()
         }
+
+
+
         //임시저장 레시피
         var recipe1 = Recipe(
             "계란볶음밥",
@@ -57,24 +53,33 @@ class explainFrag : Fragment() {
             arrayOf(3, 19, 20),
             43
         )
+
         view.foodName.text = recipe1.cook_title
         view.scrapNum.text = recipe1.scrap_num.toString()
         view.tag_array.scrapTag.text = recipe1.tag[0]
 
-        val listView  = view.findViewById<ListView>(R.id.ing_listview)
-/*
-        val listViewAdapter =
-            ChecklistListAdapter(
-                this.requireContext(),
-                (activity as HomeActivity).items
-            )
+        val foodList = listOf(
+            FoodModel("밥", "1그릇", false),
+            FoodModel("계란","1개",false),
+            FoodModel("식용유","10스푼",false),
+            FoodModel("소시지","100개",false)
+        )
 
+        val adapter = FoodDataAdapter(foodList)
+        val recyclerview2 = view.findViewById<RecyclerView>(R.id.foodListView)
+        recyclerview2.adapter = adapter
+        recyclerview2.layoutManager = LinearLayoutManager(this.context)
+
+        /*
+        val listView  = view.findViewById<ListView>(R.id.ing_listview)
+        val listViewAdapter = ChecklistListAdapter(this.requireContext(),(activity as HomeActivity).items)
         listView.setAdapter(listViewAdapter)
 */
-        val listView2  = view.findViewById<ListView>(R.id.recipe_listview)
-        val recipeAdapter = explainAdapter()
-        listView2.setAdapter(recipeAdapter)
 
+        val LIST_MENU2 = recipe1.recipe
+        val adapter2 = ArrayAdapter(this.context!!, android.R.layout.simple_list_item_1,LIST_MENU2)
+        val listview2 = view.findViewById<ListView>(R.id.recipe_listview)
+        listview2.setAdapter(adapter2)
 
         view.scrapBtn.setOnClickListener(object : View.OnClickListener
         {

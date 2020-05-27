@@ -46,12 +46,12 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1,LIST_MENU1)
         val listview1 = findViewById(R.id.recipe_listview) as ListView
         listview1.setAdapter(adapter1)
-
+/*
         val LIST_MENU2 = recipe1.ings
         val adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1,LIST_MENU2)
         val listview2 = findViewById(R.id.ing_listview) as ListView
         listview2.setAdapter(adapter2)
-
+*/
         scrapBtn.setOnClickListener(object : View.OnClickListener
         {
             var isDefault = false

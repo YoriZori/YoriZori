@@ -50,9 +50,8 @@ class Community_HorizontalAdapter(
         }
         holder.itemView.setOnClickListener{
             /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-            val intent = Intent(context, explain::class.java)
-            activity.startActivity(intent)
-            //activity.changeFragment(explain())
+
+            activity.changeFragment(explainFrag())
 
         }
     }
@@ -72,8 +71,6 @@ class Community_HorizontalAdapter(
             itemView.setOnClickListener() {
 
                 /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-                val intent = Intent(context, explain::class.java)
-                //activity.startActivity(intent)
                 activity.changeFragment(explainFrag())
             }
 
