@@ -37,6 +37,7 @@ class HomeActivity : AppCompatActivity(){
         fun add_item(name: String) {
             items.add(RefrigItem(name))
         }
+
         // Image Pick Code
         val IMAGE_PICK_CODE = 1000
         // Permission Code

@@ -14,14 +14,12 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
-
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 import java.time.ZoneId
-import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 
 
 
