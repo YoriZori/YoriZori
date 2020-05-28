@@ -1,5 +1,7 @@
 package com.e.yorizori.Fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +12,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.LoginActivity
 import com.e.yorizori.R
+import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Interface.BackBtnPressListener
+import com.e.yorizori.MyPage.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_my.view.*
 
-class MyPage: Fragment(){
+class MyPage: BackBtnPressListener, Fragment(){
     lateinit var database : DatabaseReference
-    lateinit var firebaseAuth: FirebaseAuth
-
+    lateinit var firebaseAuth : FirebaseAuth
+    private var savedFragment : Array<Fragment?> = arrayOf(null,null,null,null,null,null)
+    private var goto = -1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,6 +32,34 @@ class MyPage: Fragment(){
     ): View?{
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.activity_my, container, false)
+        if(goto != -1){
+            val fragment = savedFragment[goto]!!
+            (activity as HomeActivity).changeFragment(fragment)
+        }
+        view.text_scrap.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Scrap(this))
+        }
+
+        view.text_wrote.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Wrote(this))
+        }
+
+        view.text_allergy.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Allergy(this))
+        }
+
+        view.text_account_set.setOnClickListener {
+            (activity as HomeActivity).changeFragment(AccountSetting(this))
+        }
+
+        view.text_suggest.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Suggest(this))
+        }
+
+        view.text_donate.setOnClickListener {
+            (activity as HomeActivity).changeFragment(Donate(this))
+        }
+        (activity as HomeActivity).setOnBackBtnListener(this)
 
         // get the user's id
         database = FirebaseDatabase.getInstance().getReference("Users")
@@ -31,7 +67,7 @@ class MyPage: Fragment(){
         val user = firebaseAuth.currentUser
 
         // set the text view
-        val textView = view.findViewById<TextView>(R.id.text_my)
+        val textView = view.findViewById<TextView>(R.id.my_page_title)
         textView.text = user!!.displayName
 
         // for logout
@@ -47,5 +83,31 @@ class MyPage: Fragment(){
 
         return view
     }
+    override fun onResume(){
+        super.onResume()
+    }
+    fun saveInfo(idx: Int, fragment : Fragment?){
+        savedFragment[idx] = fragment
+        if(fragment == null)
+            goto = -1
+        else
+            goto = idx
+    }
 
+    override fun onBack() {
+        dialog()
+    }
+    fun dialog(){
+        var builder = AlertDialog.Builder(this.context)
+        builder.setTitle("YoriZori")
+        builder.setMessage("종료하시겠습니까?")
+        builder.setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            activity!!.finish()
+        })
+        builder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
+        true
+    }
 }
