@@ -44,7 +44,6 @@ class Community_SortedList(position : Int, activity: HomeActivity): Fragment(){
             startActivity(intent)
             //TODO: fragment로 변경하면 아래 코드로 바꿔주세요
             //activity.changeFragment(explain())
-
         })
 
         return view
