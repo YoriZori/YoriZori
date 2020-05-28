@@ -11,13 +11,16 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.widget.*
 import com.e.yorizori.Activity.HomeActivity.Companion.items
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.ChecklistListAdapter
 import com.e.yorizori.CalendarSet
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -25,9 +28,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_checklist.*
 import kotlinx.android.synthetic.main.activity_checklist.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class CheckList: Fragment(){
+class CheckList: BackBtnPressListener,Fragment(){
 
     private lateinit var database: DatabaseReference
     lateinit var firebaseAuth: FirebaseAuth
@@ -80,9 +85,7 @@ class CheckList: Fragment(){
             val clicked = parent.getItemAtPosition(position).toString()
             Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(activity, CalendarSet::class.java)
-            intent.putExtra("ing_name", clicked)
-            startActivity(intent)
+            showDatePicker(clicked,this)
             //activity?.finish()
         }
 
@@ -101,6 +104,7 @@ class CheckList: Fragment(){
             }
             true
         }
+        (activity as HomeActivity).setOnBackBtnListener(this)
 
         /* search bar: done. */
 
@@ -162,5 +166,39 @@ class CheckList: Fragment(){
     }
     override fun onResume(){
         super.onResume()
+    }
+    private fun showDatePicker(name : String, fragment : Fragment) {
+        // Calendar
+        val c = Calendar.getInstance()
+        var year = c.get(Calendar.YEAR)
+        var month = c.get(Calendar.MONTH)
+        var day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(
+            fragment.context!!,
+            DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDayOfMonth ->
+                val date = mYear.toString() + "-" + (mMonth+1).toString() + "-" + mDayOfMonth.toString()
+                val ref_clicked = RefrigItem(name, date)
+                HomeActivity.add_item(name, date)
+                (activity as HomeActivity).changeFragment(CheckList())
+            }, year, month, day)
+        dpd.show()
+    }
+
+    override fun onBack() {
+        dialog()
+    }
+    fun dialog(){
+        var builder = AlertDialog.Builder(this.context)
+        builder.setTitle("YoriZori")
+        builder.setMessage("종료하시겠습니까?")
+        builder.setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            activity!!.finish()
+        })
+        builder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
+        true
     }
 }
