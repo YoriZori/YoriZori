@@ -16,6 +16,7 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.e.yorizori.explain
+import com.e.yorizori.explainFrag
 
 class Community_SortedList(position : Int, activity: HomeActivity, fragment: Community): BackBtnPressListener,Fragment(){
     val position = position
@@ -59,10 +60,9 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
         listview.adapter = adapter
 
         listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
-            val intent = Intent(context, explain::class.java)
-            startActivity(intent)
+
             //TODO: fragment로 변경하면 아래 코드로 바꿔주세요
-            //activity.changeFragment(explain())
+            activity.changeFragment(explainFrag(this,1))
 
         })
         if(goto != -1){
