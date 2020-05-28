@@ -32,7 +32,6 @@
 
         <activity android:name=".CalendarSet"/>
         <activity android:name=".explain"/>
-
-    </application>
+</application>
 
 </manifest>

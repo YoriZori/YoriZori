@@ -47,6 +47,9 @@ dependencies {
 
     // for user login
     implementation 'com.google.firebase:firebase-auth:19.1.0'
+
+    // for JSON
+    implementation 'com.google.code.gson:gson:2.8.6'
     /* server: end of new lines. */
 
 }
