@@ -4,15 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Fragment.Add_Recipe
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
@@ -21,15 +29,22 @@ import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 
-
 class HomeActivity : AppCompatActivity(){
     lateinit var ft : FragmentTransaction
     var backBtnListener : BackBtnPressListener? = null
     var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
     var position = 0
 
+    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+
+    //private val RC_PERMISSIONS = 101
+    //private val RC_SELECT_IMGAE = 103
+
     companion object {
         var items = mutableListOf<RefrigItem>()
+        var picsuc = 0
+        var str : String = ""
 
         fun add_item(name: String, date: String) {
             items.add(RefrigItem(name, date))
@@ -38,6 +53,7 @@ class HomeActivity : AppCompatActivity(){
         fun add_item(name: String) {
             items.add(RefrigItem(name))
         }
+
         // Image Pick Code
         val IMAGE_PICK_CODE = 1000
         // Permission Code
@@ -56,6 +72,7 @@ class HomeActivity : AppCompatActivity(){
         ft.commit()
         true
     }
+
 
     fun perCheck() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -96,15 +113,22 @@ class HomeActivity : AppCompatActivity(){
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            Log.d("@@@@", "DONE")
-            recipeImage.setImageURI(data?.data)
+            //var uri: Uri? = data?.data
+            val uri = data!!.data
+            //recipeImage.setImageURI(uri)
+            str = uri.toString()
+            picsuc = 1
+            //Toast.makeText(this, "Operation Successful", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        //bindView()
+        //askRequiredPermissions()
 
         items.add(RefrigItem("소세지", "2018-12-25"))
         items.add(RefrigItem("돼지고기"))
@@ -179,5 +203,71 @@ class HomeActivity : AppCompatActivity(){
         fragments[p] = f
         position = p
     }
+    /*
+    fun bindView() {
+            selectImage()
+    }
 
+    private fun arePermissionGranted(): Boolean {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            return false
+        }
+        return true
+    }
+
+    private fun askRequiredPermissions() {
+        if (!arePermissionGranted()) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS_REQUIRED, RC_PERMISSIONS)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        when (requestCode) {
+            RC_PERMISSIONS -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun selectImage() {
+        val selectImageIntent = Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media
+            .EXTERNAL_CONTENT_URI)
+        startActivityForResult(selectImageIntent, RC_SELECT_IMGAE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            RC_SELECT_IMGAE -> {
+                if (data != null) {
+                    val uri = data.data
+                    displaySelectedImage(getBitmapFromUri(uri!!))
+                }
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun getBitmapFromUri(uri: Uri): Bitmap {
+        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
+        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        parcelFileDescriptor?.close()
+        return image
+    }
+
+    private fun displaySelectedImage(imageBitmap: Bitmap) {
+        recipeImage.setImageBitmap(imageBitmap)
+    }
+    */
 }

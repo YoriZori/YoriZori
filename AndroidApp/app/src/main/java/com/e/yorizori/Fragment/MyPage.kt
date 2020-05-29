@@ -60,27 +60,6 @@ class MyPage: BackBtnPressListener, Fragment(){
             (activity as HomeActivity).changeFragment(Donate(this))
         }
         (activity as HomeActivity).setOnBackBtnListener(this)
-
-        // get the user's id
-        database = FirebaseDatabase.getInstance().getReference("Users")
-        firebaseAuth = FirebaseAuth.getInstance()
-        val user = firebaseAuth.currentUser
-
-        // set the text view
-        val textView = view.findViewById<TextView>(R.id.my_page_title)
-        textView.text = user!!.displayName
-
-        // for logout
-        textView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                firebaseAuth.signOut()
-                Toast.makeText(requireContext(), R.string.logout, Toast.LENGTH_SHORT).show()
-                val i = Intent(requireContext(), LoginActivity::class.java)
-                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(i)
-            }
-        })
-
         return view
     }
     override fun onResume(){
