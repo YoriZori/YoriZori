@@ -1,7 +1,6 @@
 package com.e.yorizori.Fragment
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.view.LayoutInflater
@@ -17,24 +16,22 @@ import android.content.DialogInterface
 import android.widget.*
 import com.e.yorizori.Activity.HomeActivity.Companion.items
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity.Companion.ing_list
 import com.e.yorizori.Adapter.ChecklistListAdapter
-import com.e.yorizori.CalendarSet
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_checklist.*
 import kotlinx.android.synthetic.main.activity_checklist.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class CheckList: BackBtnPressListener,Fragment(){
 
-    private lateinit var database: DatabaseReference
+    lateinit var database: DatabaseReference
     lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
@@ -43,16 +40,22 @@ class CheckList: BackBtnPressListener,Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         (activity as HomeActivity).saveFragment(1, this)
-
         firebaseAuth = FirebaseAuth.getInstance()
         val user = firebaseAuth.currentUser
         val userUID = user!!.uid
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
-        // activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
+        // check list list view
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
+        // when empty, we will show a cute ref...냉장고
+        if (items.size == 0)
+            view.img_empty_checklist.visibility = View.VISIBLE
+        else
+            view.img_empty_checklist.visibility = View.INVISIBLE
+
+        // for added ingredients
         val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
         val button = view.findViewById<Button>(R.id.delete_button)
 
@@ -65,10 +68,6 @@ class CheckList: BackBtnPressListener,Fragment(){
         })
 
         /* search bar in the checklist: start! */
-
-        // set the list
-        var ing_list : ArrayList<String> = arrayListOf()
-        setList(ing_list)
 
         // for real-time search
         val searchAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.auto_search_checklist)
@@ -83,7 +82,7 @@ class CheckList: BackBtnPressListener,Fragment(){
         searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
             parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "$clicked 선택했습니다.", Toast.LENGTH_SHORT).show()
 
             showDatePicker(clicked,this)
             //activity?.finish()
@@ -133,40 +132,9 @@ class CheckList: BackBtnPressListener,Fragment(){
 
         alertDialog.setView(view)
         alertDialog.show()
-//        changeVisibility(button)
    }
 
-    fun changeVisibility(button: Button){
-        if (ChecklistListAdapter.selected.size == 0){
-            button.visibility = View.INVISIBLE
-        }
-        else if (ChecklistListAdapter.selected.size > 0){
-            button.visibility = View.VISIBLE
-        }
-    }
 
-
-    private fun setList(list : ArrayList<String>) {
-        list.add("ab")
-        list.add("aab")
-        list.add("양파")
-        list.add("양서류(?)")
-        list.add("양고기")
-        list.add("양상추")
-        list.add("양배추")
-        list.add("소세지")
-        list.add("소고기")
-        list.add("소라게(?)")
-        list.add("소수림왕")
-        list.add("소고기무국")
-        list.add("탕수육")
-        list.add("팔보채")
-        list.add("양장피")
-        list.add("맛있다")
-    }
-    override fun onResume(){
-        super.onResume()
-    }
     private fun showDatePicker(name : String, fragment : Fragment) {
         // Calendar
         val c = Calendar.getInstance()
