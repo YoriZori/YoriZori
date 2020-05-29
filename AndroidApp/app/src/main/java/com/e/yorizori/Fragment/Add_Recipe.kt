@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_writing_recipe.view.recipeImage
 
 class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fragment() {
 
-
     private lateinit var database: DatabaseReference
     lateinit var firebaseAuth: FirebaseAuth
     private var fragment = fragment

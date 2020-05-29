@@ -35,12 +35,6 @@ class HomeActivity : AppCompatActivity(){
     var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
     var position = 0
 
-    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-
-    //private val RC_PERMISSIONS = 101
-    //private val RC_SELECT_IMGAE = 103
-
     companion object {
         var items = mutableListOf<RefrigItem>()
         var picsuc = 0
@@ -115,20 +109,15 @@ class HomeActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            //var uri: Uri? = data?.data
             val uri = data!!.data
-            //recipeImage.setImageURI(uri)
             str = uri.toString()
             picsuc = 1
-            //Toast.makeText(this, "Operation Successful", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        //bindView()
-        //askRequiredPermissions()
 
         items.add(RefrigItem("소세지", "2018-12-25"))
         items.add(RefrigItem("돼지고기"))
@@ -198,76 +187,8 @@ class HomeActivity : AppCompatActivity(){
         }
     }
 
-    
     fun saveFragment(p : Int,f: Fragment){
         fragments[p] = f
         position = p
     }
-    /*
-    fun bindView() {
-            selectImage()
-    }
-
-    private fun arePermissionGranted(): Boolean {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            return false
-        }
-        return true
-    }
-
-    private fun askRequiredPermissions() {
-        if (!arePermissionGranted()) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS_REQUIRED, RC_PERMISSIONS)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                                            grantResults: IntArray) {
-        when (requestCode) {
-            RC_PERMISSIONS -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-    }
-
-    private fun selectImage() {
-        val selectImageIntent = Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media
-            .EXTERNAL_CONTENT_URI)
-        startActivityForResult(selectImageIntent, RC_SELECT_IMGAE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            RC_SELECT_IMGAE -> {
-                if (data != null) {
-                    val uri = data.data
-                    displaySelectedImage(getBitmapFromUri(uri!!))
-                }
-            }
-            else -> super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    private fun getBitmapFromUri(uri: Uri): Bitmap {
-        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
-        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-        parcelFileDescriptor?.close()
-        return image
-    }
-
-    private fun displaySelectedImage(imageBitmap: Bitmap) {
-        recipeImage.setImageBitmap(imageBitmap)
-    }
-    */
 }
