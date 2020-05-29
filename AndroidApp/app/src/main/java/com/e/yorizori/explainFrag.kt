@@ -6,40 +6,40 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.e.yorizori.Activity.HomeActivity.Companion.items
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Activity.HomeActivity
-import com.e.yorizori.Adapter.ChecklistListAdapter
-import com.e.yorizori.Adapter.explainAdapter
+import com.e.yorizori.Adapter.FoodDataAdapter
+import com.e.yorizori.Class.FoodModel
+//import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Fragment.Community
+import com.e.yorizori.Fragment.Community_SortedList
+import com.e.yorizori.Fragment.MyPage
+import com.e.yorizori.Interface.BackBtnPressListener
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
 
-class explainFrag : Fragment() {
-
+class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragment() {
+    private val parent = parent
+    private val option = option
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        var mList: ArrayList<String?>
-        var mListView: ListView
-        var mAdapter: ArrayAdapter<*>
-
-        var p : Int = 1
-
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
 
         // 뒤로가기버튼을 누를시 community로 돌아가기
         view.returnBtn.setOnClickListener {
-            val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-            fragmentManager.beginTransaction().remove(this@explainFrag).commit()
-            fragmentManager.popBackStack()
+            onBack()
         }
+
+
+
         //임시저장 레시피
         var recipe1 = Recipe(
             "계란볶음밥",
@@ -57,24 +57,33 @@ class explainFrag : Fragment() {
             arrayOf(3, 19, 20),
             43
         )
+
         view.foodName.text = recipe1.cook_title
         view.scrapNum.text = recipe1.scrap_num.toString()
         view.tag_array.scrapTag.text = recipe1.tag[0]
 
-        val listView  = view.findViewById<ListView>(R.id.ing_listview)
-/*
-        val listViewAdapter =
-            ChecklistListAdapter(
-                this.requireContext(),
-                (activity as HomeActivity).items
-            )
+        val foodList = listOf(
+            FoodModel("밥", "1그릇", false),
+            FoodModel("계란","1개",false),
+            FoodModel("식용유","10스푼",false),
+            FoodModel("소시지","100개",false)
+        )
 
+        val adapter = FoodDataAdapter(foodList)
+        val recyclerview2 = view.findViewById<RecyclerView>(R.id.foodListView)
+        recyclerview2.adapter = adapter
+        recyclerview2.layoutManager = LinearLayoutManager(this.context)
+
+        /*
+        val listView  = view.findViewById<ListView>(R.id.ing_listview)
+        val listViewAdapter = ChecklistListAdapter(this.requireContext(),(activity as HomeActivity).items)
         listView.setAdapter(listViewAdapter)
 */
-        val listView2  = view.findViewById<ListView>(R.id.recipe_listview)
-        val recipeAdapter = explainAdapter()
-        listView2.setAdapter(recipeAdapter)
 
+        val LIST_MENU2 = recipe1.recipe
+        val adapter2 = ArrayAdapter(this.context!!, android.R.layout.simple_list_item_1,LIST_MENU2)
+        val listview2 = view.findViewById<ListView>(R.id.recipe_listview)
+        listview2.setAdapter(adapter2)
 
         view.scrapBtn.setOnClickListener(object : View.OnClickListener
         {
@@ -97,15 +106,25 @@ class explainFrag : Fragment() {
             }
         }
         )
+        if(option == 0)
+            (parent as Community).saveInfo(2,this)
+        else
+            (parent as Community_SortedList).saveInfo(1,this)
 
-
-
-
+        (activity as HomeActivity).setOnBackBtnListener(this)
         return view
 
     }
 
-
+    override fun onBack() {
+        if(option == 0)
+            (parent as Community).saveInfo(2,null)
+        else
+            (parent as Community_SortedList).saveInfo(1,null)
+        var ft = (activity as HomeActivity).supportFragmentManager
+        ft.beginTransaction().remove(this).commit()
+        ft.popBackStack()
+    }
 
 
 }

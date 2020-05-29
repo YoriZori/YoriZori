@@ -12,28 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyPage.AccountSetting"></activity>
-        <activity android:name=".MyPage.Allergy" />
-        <activity android:name=".MyPage.Wrote" />
-        <activity android:name=".AccessGallery" />
-        <activity android:name=".MyPage.Scrap" />
-        <activity android:name=".MyPage.Donate" />
-        <activity android:name=".MyPage.Suggest" />
         <activity android:name=".CalendarSet" />
         <activity android:name=".Activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".explain"></activity>
 
         <!-- for the result of real-time search in the checklist -->
         <activity android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".Activity.LoginActivity"/>
-    </application>
+        <!-- for login & register -->
+        <activity android:name=".Activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".Activity.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".explain"/>
+</application>
 
 </manifest>

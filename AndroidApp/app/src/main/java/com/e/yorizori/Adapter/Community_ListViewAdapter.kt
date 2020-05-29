@@ -127,7 +127,8 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
             listViewItemList.add(
                 Community_HorizontalAdapter(
                     context,
-                    activity as HomeActivity
+                    activity as HomeActivity,
+                    fragment
                 )
             )
             fillList(i)

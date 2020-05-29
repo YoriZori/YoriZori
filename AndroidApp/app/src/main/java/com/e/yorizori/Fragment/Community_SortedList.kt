@@ -1,12 +1,10 @@
 package com.e.yorizori.Fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
@@ -15,7 +13,7 @@ import com.e.yorizori.Adapter.Community_SortedListViewAdapter
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
-import com.e.yorizori.explain
+import com.e.yorizori.explainFrag
 
 class Community_SortedList(position : Int, activity: HomeActivity, fragment: Community): BackBtnPressListener,Fragment(){
     val position = position
@@ -59,11 +57,7 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
         listview.adapter = adapter
 
         listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
-            val intent = Intent(context, explain::class.java)
-            startActivity(intent)
-            //TODO: fragment로 변경하면 아래 코드로 바꿔주세요
-            //activity.changeFragment(explain())
-
+            activity.changeFragment(explainFrag(this,1))
         })
         if(goto != -1){
             val prev_frag = savedFragment[goto]!!

@@ -8,16 +8,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.e.yorizori.Activity.LoginActivity
+import com.e.yorizori.R
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.MyPage.*
-import com.e.yorizori.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_my.view.*
 
 
+
 class MyPage: BackBtnPressListener, Fragment(){
+    lateinit var database : DatabaseReference
+    lateinit var firebaseAuth : FirebaseAuth
     private var savedFragment : Array<Fragment?> = arrayOf(null,null,null,null,null,null)
     private var goto = -1
     override fun onCreateView(
@@ -25,6 +33,7 @@ class MyPage: BackBtnPressListener, Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?{
+        super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.activity_my, container, false)
         if(goto != -1){
             val fragment = savedFragment[goto]!!
@@ -53,6 +62,27 @@ class MyPage: BackBtnPressListener, Fragment(){
         view.text_donate.setOnClickListener {
             (activity as HomeActivity).changeFragment(Donate(this))
         }
+        (activity as HomeActivity).setOnBackBtnListener(this)
+
+        // get the user's id
+        database = FirebaseDatabase.getInstance().getReference("Users")
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+
+        // set the text view
+        val textView = view.findViewById<TextView>(R.id.my_page_title)
+        textView.text = user!!.displayName
+
+        // for logout
+        textView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                firebaseAuth.signOut()
+                Toast.makeText(requireContext(), R.string.logout, Toast.LENGTH_SHORT).show()
+                val i = Intent(requireContext(), LoginActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+            }
+        })
 
         return view
     }
@@ -60,10 +90,19 @@ class MyPage: BackBtnPressListener, Fragment(){
         super.onResume()
     }
 
+
+    fun saveInfo(idx: Int, fragment : Fragment?){
+        savedFragment[idx] = fragment
+        if(fragment == null)
+            goto = -1
+        else
+            goto = idx
+    }
+
     override fun onBack() {
         dialog()
     }
-    fun dialog() {
+    fun dialog(){
         var builder = AlertDialog.Builder(this.context)
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
@@ -75,12 +114,5 @@ class MyPage: BackBtnPressListener, Fragment(){
         })
         builder.show()
         true
-    }
-    fun saveInfo(idx: Int, fragment : Fragment?){
-        savedFragment[idx] = fragment
-        if(fragment == null)
-            goto = -1
-        else
-            goto = idx
     }
 }

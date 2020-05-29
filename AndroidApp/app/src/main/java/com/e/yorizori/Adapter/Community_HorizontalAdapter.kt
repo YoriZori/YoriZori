@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
@@ -19,12 +20,14 @@ import com.e.yorizori.explainFrag
 
 class Community_HorizontalAdapter(
     context: Context,
-    activity: HomeActivity
+    activity: HomeActivity,
+    fragment : Fragment
 ) :
     RecyclerView.Adapter<Community_HorizontalAdapter.ViewHolder>() {
     private var listViewItemList=ArrayList<Community_ListViewItem>()
     private val context: Context
     private val activity = activity
+    private val fragment = fragment
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -49,10 +52,8 @@ class Community_HorizontalAdapter(
             holder.rpicview.setImageDrawable(item.iconDrawable)
         }
         holder.itemView.setOnClickListener{
-            /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-            val intent = Intent(context, explain::class.java)
-            activity.startActivity(intent)
-            //activity.changeFragment(explain())
+
+            activity.changeFragment(explainFrag(fragment,0))
 
         }
     }
@@ -71,10 +72,7 @@ class Community_HorizontalAdapter(
             rpicview=itemView.findViewById(R.id.list_imageView1)
             itemView.setOnClickListener() {
 
-                /* TODO: 자세한 레시피 확인하는 fragment로 이동 */
-                val intent = Intent(context, explain::class.java)
-                //activity.startActivity(intent)
-                activity.changeFragment(explainFrag())
+               activity.changeFragment(explainFrag(fragment, 0))
             }
 
         }

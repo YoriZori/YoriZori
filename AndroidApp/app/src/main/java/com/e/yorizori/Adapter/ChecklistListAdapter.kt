@@ -15,12 +15,11 @@ import androidx.core.view.isVisible
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChecklistListAdapter (val context: Context, val _button : Button, val _items: MutableList<RefrigItem>): BaseAdapter() {
+class ChecklistListAdapter (val context: Context, val _items: MutableList<RefrigItem>): BaseAdapter() {
 
     val mContext: Context = context
     val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val items : MutableList<RefrigItem> = _items
-    val del_button : Button = _button
     companion object{
         val selected : MutableList<RefrigItem> = mutableListOf()
     }
@@ -82,12 +81,6 @@ class ChecklistListAdapter (val context: Context, val _button : Button, val _ite
                     }
                 }
             }
-//            if (selected.size == 0){
-//                del_button.visibility = View.INVISIBLE
-//            }
-//            else{
-//                del_button.visibility = View.VISIBLE
-//            }
         }
 
         var check = true

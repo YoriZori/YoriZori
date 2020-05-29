@@ -1,11 +1,10 @@
 package com.e.yorizori.Fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 import java.time.ZoneId
+import com.google.firebase.auth.FirebaseAuth
 
 
 
@@ -27,6 +27,7 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
 
 
     private lateinit var database: DatabaseReference
+    lateinit var firebaseAuth: FirebaseAuth
     private var fragment = fragment
     private var fromwhere : Int = option
 
@@ -37,6 +38,11 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
     ): View? {
         val view = inflater.inflate(R.layout.activity_writing_recipe,container,false)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+        val userUID = user!!.uid
+
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         val backBtn = view.findViewById(R.id.backBtn) as ImageButton
         val doneBtn = view.findViewById(R.id.doneBtn) as ImageButton
         if(fromwhere == 0){
@@ -46,7 +52,6 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
             (fragment as Community_SortedList).saveInfo(0,this)
         }
         (activity as HomeActivity).setOnBackBtnListener(this)
-
 
         //back 버튼을 누르면 community뷰로 돌아감
         view.backBtn.setOnClickListener {
@@ -66,6 +71,7 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
             recipe.tag = arrayOf(view.tagInput.text.toString())
             recipe.ings = arrayOf(Pair(view.ingInput.text.toString(), view.ingNumInput.text.toString()))
             recipe.recipe = arrayOf(view.recipeInput.text.toString())
+            recipe.writer_UID = userUID
 
             //Gson().fromJson<Recipe>("", Recipe::class.java)
 
