@@ -3,16 +3,17 @@ package com.e.yorizori.Fragment
 import android.app.Activity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import android.view.KeyEvent
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.net.wifi.p2p.WifiP2pManager
+import android.text.method.KeyListener
+import android.util.Log
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import com.e.yorizori.Activity.HomeActivity.Companion.items
 import com.e.yorizori.Activity.HomeActivity
@@ -40,20 +41,21 @@ class CheckList: BackBtnPressListener,Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         (activity as HomeActivity).saveFragment(1, this)
+
         firebaseAuth = FirebaseAuth.getInstance()
         val user = firebaseAuth.currentUser
         val userUID = user!!.uid
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
 
-        // check list list view
-        val listView  = view.findViewById<ListView>(R.id.list_checklist)
-
         // when empty, we will show a cute ref...냉장고
         if (items.size == 0)
             view.img_empty_checklist.visibility = View.VISIBLE
         else
             view.img_empty_checklist.visibility = View.INVISIBLE
+
+        // check list list view
+        val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
         // for added ingredients
         val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
@@ -78,12 +80,22 @@ class CheckList: BackBtnPressListener,Fragment(){
         searchAutoComplete.threshold = 0
         searchAutoComplete.setAdapter(searchAdapter)
 
-        // for click event
+        // for click and enter
+        searchAutoComplete.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                val selected = v!!.text.toString()
+//                엔터키 누른 애가 서버에 있는 재료라면????
+                Toast.makeText(requireContext(), "$selected 선택했습니다.", Toast.LENGTH_SHORT).show()
+                //showDatePicker(selected, requireParentFragment())
+                return false
+            }
+        })
+
+
         searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
             parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
             Toast.makeText(requireContext(), "$clicked 선택했습니다.", Toast.LENGTH_SHORT).show()
-
             showDatePicker(clicked,this)
             //activity?.finish()
         }
@@ -127,7 +139,7 @@ class CheckList: BackBtnPressListener,Fragment(){
                 listViewAdapter.notifyDataSetChanged()
                 Toast.makeText(this.requireContext(), "삭제", Toast.LENGTH_SHORT).show()
             }
-            .setNeutralButton("취소", null)
+            .setNegativeButton("취소", null)
             .create()
 
         alertDialog.setView(view)
