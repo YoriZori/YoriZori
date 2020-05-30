@@ -36,6 +36,7 @@ class CheckList: BackBtnPressListener,Fragment(){
 
     private lateinit var database: DatabaseReference
     lateinit var firebaseAuth: FirebaseAuth
+    val ele_num : Int = 1 // Number of elements in list
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,6 +109,13 @@ class CheckList: BackBtnPressListener,Fragment(){
 
         /* search bar: done. */
 
+        if (ele_num == 0) {
+            emptyChk?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0){
+            emptyChk?.visibility = View.INVISIBLE
+        }
+
         return view
     }
 
@@ -166,6 +174,12 @@ class CheckList: BackBtnPressListener,Fragment(){
     }
     override fun onResume(){
         super.onResume()
+        if (ele_num == 0) {
+            emptyChk?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0){
+            emptyChk?.visibility = View.INVISIBLE
+        }
     }
     private fun showDatePicker(name : String, fragment : Fragment) {
         // Calendar

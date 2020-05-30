@@ -30,6 +30,8 @@ class HomeActivity : AppCompatActivity(){
 
     companion object {
         var items = mutableListOf<RefrigItem>()
+        var picsuc = 0
+        var str : String = ""
 
         fun add_item(name: String, date: String) {
             items.add(RefrigItem(name, date))
@@ -97,8 +99,9 @@ class HomeActivity : AppCompatActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            Log.d("@@@@", "DONE")
-            recipeImage.setImageURI(data?.data)
+            val uri = data!!.data
+            str = uri.toString()
+            picsuc = 1
         }
     }
 

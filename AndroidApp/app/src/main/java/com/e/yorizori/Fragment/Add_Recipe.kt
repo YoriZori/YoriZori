@@ -1,5 +1,6 @@
 package com.e.yorizori.Fragment
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +18,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
-
+import kotlinx.android.synthetic.main.activity_writing_recipe.view.recipeImage
 
 
 class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fragment() {
@@ -111,4 +113,13 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (HomeActivity.picsuc == 1) {
+            var uri = Uri.parse(HomeActivity.str)
+            recipeImage.setImageURI(uri)
+        }
+    }
+
 }

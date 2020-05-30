@@ -10,10 +10,13 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
+import kotlinx.android.synthetic.main.activity_wrote.*
 import kotlinx.android.synthetic.main.activity_wrote.view.*
+import kotlinx.android.synthetic.main.activity_wrote.view.emptyWrote
 
 class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
     val parent = parent
+    var ele_num : Int = 0 // Manipulate this variable to show empty
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +30,13 @@ class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
         (parent as MyPage).saveInfo(1,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
 
+        if (ele_num == 0) {
+            emptyWrote?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0){
+            emptyWrote?.visibility = View.INVISIBLE
+        }
+
         return view
     }
 
@@ -36,4 +46,15 @@ class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (ele_num == 0) {
+            emptyWrote?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0){
+            emptyWrote?.visibility = View.INVISIBLE
+        }
+    }
+
 }

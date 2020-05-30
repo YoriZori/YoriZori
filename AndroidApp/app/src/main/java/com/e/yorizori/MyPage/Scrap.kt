@@ -1,6 +1,5 @@
 package com.e.yorizori.MyPage
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,12 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
+import kotlinx.android.synthetic.main.activity_scrap.*
 import kotlinx.android.synthetic.main.activity_scrap.view.*
 
 class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
     val parent = parent
+    private var ele_num : Int = 0 // Connect to element number of list
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,6 +29,13 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         (parent as MyPage).saveInfo(0,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
 
+        if (ele_num == 0) {
+            emptyScrap?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0){
+            emptyScrap?.visibility = View.INVISIBLE
+        }
+
         return view
     }
 
@@ -37,4 +45,15 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (ele_num == 0) {
+            emptyScrap?.visibility = View.VISIBLE
+        }
+        else if (ele_num != 0) {
+            emptyScrap?.visibility = View.INVISIBLE
+        }
+    }
+
 }
