@@ -65,6 +65,7 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
         view.price_num.text = recipe1.like_num[2].toString()
         view.simple_num.text = recipe1.like_num[1].toString()
         view.del_num.text = recipe1.like_num[0].toString()
+        view.scrapNum.text = recipe1.scrap_num.toString()
 
         /*
         view.foodName.text = recipe20.toString()
@@ -191,7 +192,7 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
                     del_num.text = recipe1.like_num[0].toString()
                 }
                 else {
-                    price_btn.setSelected(false)
+                    del_btn.setSelected(false)
                     recipe1.like_num[0] -= 1
                     del_num.text = recipe1.like_num[0].toString()
                 }

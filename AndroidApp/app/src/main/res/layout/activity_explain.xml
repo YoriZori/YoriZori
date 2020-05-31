@@ -44,7 +44,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@android:drawable/button_onoff_indicator_off"
+                android:background="@drawable/button_change"
                 android:text="맛있어요"
                 app:layout_constraintEnd_toStartOf="@+id/simple_btn"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
@@ -66,7 +66,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@android:drawable/button_onoff_indicator_off"
+                android:background="@drawable/button_change"
                 android:text="간단해요"
                 app:layout_constraintEnd_toStartOf="@+id/price_btn"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
@@ -78,7 +78,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@android:drawable/button_onoff_indicator_off"
+                android:background="@drawable/button_change"
                 android:text="가성비가 좋아요!"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
