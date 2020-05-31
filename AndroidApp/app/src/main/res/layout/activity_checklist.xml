@@ -40,24 +40,20 @@
     <LinearLayout
         android:id="@+id/search_checklist"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginBottom="5pt"
+        app:layout_constraintHeight_percent = "0.07"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:src="@drawable/ic_search_gray_24dp"/>
 
-        <LinearLayout
-            android:id="@+id/result_search_checklist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
 
         <AutoCompleteTextView
             android:id = "@+id/auto_search_checklist"

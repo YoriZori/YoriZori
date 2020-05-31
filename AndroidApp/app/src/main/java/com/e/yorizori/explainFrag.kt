@@ -43,18 +43,18 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
         //임시저장 레시피
         var recipe1 = Recipe(
             "계란볶음밥",
-            arrayOf(
+            arrayListOf(
                 "1. 기름을 두른다",
                 "2. 계란을 깨서 넣고 마구 젓는다",
                 "3. 밥을 넣어 잘 풀어준다",
                 "4. 밥이 모두 풀어지면 소금간을 한다",
                 "5. 완성!"
             ),
-            arrayOf("5분 완성", "밥과 계란", "응용 가능"),
-            arrayOf("대충 사진"),
+            arrayListOf("5분 완성", "밥과 계란", "응용 가능"),
+            arrayListOf("대충 사진"),
             "내가 쓴거 아님",
-            arrayOf(Pair("밥", "1그릇"), Pair("계란", "1개"), Pair("식용유", "10스푼")),
-            arrayOf(3, 19, 20),
+            arrayListOf(Pair("밥", "1그릇"), Pair("계란", "1개"), Pair("식용유", "10스푼")),
+            arrayListOf(3, 19, 20),
             43
         )
 
