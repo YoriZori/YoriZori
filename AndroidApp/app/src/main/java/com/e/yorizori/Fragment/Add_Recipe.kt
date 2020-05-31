@@ -13,11 +13,13 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_writing_recipe.*
 import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
+import java.time.ZoneId
+import com.google.firebase.auth.FirebaseAuth
 
 
 
@@ -66,9 +68,9 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
         view.doneBtn.setOnClickListener {
             val recipe = Recipe()
             recipe.cook_title = view.titleInput.text.toString()
-            recipe.tag = arrayOf(view.tagInput.text.toString())
-            recipe.ings = arrayOf(Pair(view.ingInput.text.toString(), view.ingNumInput.text.toString()))
-            recipe.recipe = arrayOf(view.recipeInput.text.toString())
+            recipe.tag = arrayListOf(view.tagInput.text.toString())
+            recipe.ings = arrayListOf(Pair(view.ingInput.text.toString(), view.ingNumInput.text.toString()))
+            recipe.recipe = arrayListOf(view.recipeInput.text.toString())
             recipe.writer_UID = userUID
 
             //Gson().fromJson<Recipe>("", Recipe::class.java)
@@ -79,9 +81,7 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
                     val toast = Toast.makeText(activity, "저장되었습니다 :)", Toast.LENGTH_SHORT)
                     toast.show()
 
-                    val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-                    fragmentManager.beginTransaction().remove(this).commit()
-                    fragmentManager.popBackStack()
+                    onBack()
                 }
                 .addOnFailureListener {
                     val toast = Toast.makeText(activity, "저장에 실패 :(", Toast.LENGTH_SHORT)
@@ -91,7 +91,7 @@ class Add_Recipe(fragment: Fragment, option :Int = 0) :BackBtnPressListener, Fra
 
 
         view.backBtn.setOnClickListener {
-            (activity as HomeActivity).changeFragment(Community())
+            onBack()
         }
 
         // Image Click

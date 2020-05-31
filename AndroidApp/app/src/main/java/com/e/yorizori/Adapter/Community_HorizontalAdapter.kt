@@ -2,12 +2,17 @@ package com.e.yorizori.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toIcon
+import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
@@ -16,24 +21,30 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.R
 import com.e.yorizori.explain
 import com.e.yorizori.explainFrag
+import com.squareup.picasso.Picasso
+import java.io.BufferedInputStream
+import java.net.URL
 
 
 class Community_HorizontalAdapter(
     context: Context,
     activity: HomeActivity,
-    fragment : Fragment
+    fragment : Fragment,
+    position : Int
 ) :
     RecyclerView.Adapter<Community_HorizontalAdapter.ViewHolder>() {
     private var listViewItemList=ArrayList<Community_ListViewItem>()
     private val context: Context
     private val activity = activity
     private val fragment = fragment
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder { // context 와 parent.getContext() 는 같다.
         val view: View = LayoutInflater.from(context)
             .inflate(R.layout.community_list_item_2, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -49,14 +60,16 @@ class Community_HorizontalAdapter(
         else {
             holder.rnameview.text = item.titleStr
             holder.rtagview.text = item.tagStr
-            holder.rpicview.setImageDrawable(item.iconDrawable)
+            Picasso.get().load(item.iconurl).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
-
+            // TODO: explainFragment 생성하는 부분
+            // explainFrag가 recipe를 인자로 받도록 해서 넘겨주는 방식으로 해도 될것 같습니다!
+            // 해당하는 recipe는 item.argRecipe에 들어있습니다!
             activity.changeFragment(explainFrag(fragment,0))
-
         }
     }
+
 
     override fun getItemCount(): Int {
         return listViewItemList.size
@@ -70,10 +83,6 @@ class Community_HorizontalAdapter(
             rnameview = itemView.findViewById(R.id.list_title)
             rtagview = itemView.findViewById(R.id.list_tag1)
             rpicview=itemView.findViewById(R.id.list_imageView1)
-            itemView.setOnClickListener() {
-
-               activity.changeFragment(explainFrag(fragment, 0))
-            }
 
         }
     }
@@ -84,17 +93,17 @@ class Community_HorizontalAdapter(
     }
     fun addItem(recipe: Recipe?) {
         val item = Community_ListViewItem()
-        item.iconDrawable = ContextCompat.getDrawable(
-            context,
-            R.drawable.turkey_looking_left
-        )
         if (recipe == null){
             item.titleStr = null
             item.tagStr=null
+            item.iconurl = null
+            item.argRecipe = null
         }
         else {
-            item.titleStr = recipe!!.cook_title
-            item.tagStr = mktag(recipe!!)
+            item.titleStr = recipe.cook_title
+            item.tagStr = mktag(recipe)
+            item.iconurl = recipe.pics[0]
+            item.argRecipe = recipe
         }
         listViewItemList.add(item)
     }

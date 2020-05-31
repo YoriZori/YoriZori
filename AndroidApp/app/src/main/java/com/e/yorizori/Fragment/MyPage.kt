@@ -1,5 +1,6 @@
 package com.e.yorizori.Fragment
 
+import android.R.attr.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_my.view.*
+
+
 
 class MyPage: BackBtnPressListener, Fragment(){
     lateinit var database : DatabaseReference
@@ -86,6 +89,8 @@ class MyPage: BackBtnPressListener, Fragment(){
     override fun onResume(){
         super.onResume()
     }
+
+
     fun saveInfo(idx: Int, fragment : Fragment?){
         savedFragment[idx] = fragment
         if(fragment == null)
