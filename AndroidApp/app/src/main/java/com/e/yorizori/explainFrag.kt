@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Activity.HomeActivity
@@ -17,7 +16,6 @@ import com.e.yorizori.Class.FoodModel
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
-import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
@@ -30,17 +28,22 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
-
         // 뒤로가기버튼을 누를시 community로 돌아가기
         view.returnBtn.setOnClickListener {
             onBack()
         }
 
 
+        /*
+        val database = FirebaseDatabase.getInstance()
+        val recipe10 = database.getReference("recipe")
+        val recipe20 = recipe10.child("간장계란밥").child("cook_title")
+*/
 
-        //임시저장 레시피
         var recipe1 = Recipe(
             "계란볶음밥",
             arrayOf(
@@ -59,8 +62,15 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
         )
 
         view.foodName.text = recipe1.cook_title
+        view.price_num.text = recipe1.like_num[2].toString()
+        view.simple_num.text = recipe1.like_num[1].toString()
+        view.del_num.text = recipe1.like_num[0].toString()
+
+        /*
+        view.foodName.text = recipe20.toString()
         view.scrapNum.text = recipe1.scrap_num.toString()
         view.tag_array.scrapTag.text = recipe1.tag[0]
+*/
 
         val foodList = listOf(
             FoodModel("밥", "1그릇", false),
@@ -69,43 +79,126 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
             FoodModel("소시지","100개",false)
         )
 
+        // 재료 리사이클러뷰
         val adapter = FoodDataAdapter(foodList)
         val recyclerview2 = view.findViewById<RecyclerView>(R.id.foodListView)
         recyclerview2.adapter = adapter
         recyclerview2.layoutManager = LinearLayoutManager(this.context)
 
-        /*
-        val listView  = view.findViewById<ListView>(R.id.ing_listview)
-        val listViewAdapter = ChecklistListAdapter(this.requireContext(),(activity as HomeActivity).items)
-        listView.setAdapter(listViewAdapter)
-*/
-
+        // 조리법 리스트뷰
         val LIST_MENU2 = recipe1.recipe
         val adapter2 = ArrayAdapter(this.context!!, android.R.layout.simple_list_item_1,LIST_MENU2)
         val listview2 = view.findViewById<ListView>(R.id.recipe_listview)
         listview2.setAdapter(adapter2)
 
-        view.scrapBtn.setOnClickListener(object : View.OnClickListener
-        {
+        //Listview의 높이를 Item의 갯수에 따라 조정하는 함수
+        fun setListViewHeightBasedOnItems(listView:ListView):Boolean {
+            val listAdapter = listView.getAdapter()
+            if (listAdapter != null)
+            {
+                val numberOfItems = listAdapter.getCount()
+                // Get total height of all items.
+                var totalItemsHeight = 0
+                for (itemPos in 0 until numberOfItems)
+                {
+                    val item = listAdapter.getView(itemPos, null, listView)
+                    val px = 500 * (listView.getResources().getDisplayMetrics().density)
+                    item.measure(View.MeasureSpec.makeMeasureSpec(px.toInt(), View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+                    totalItemsHeight += item.getMeasuredHeight()
+                }
+                // Get total height of all item dividers.
+                val totalDividersHeight = (listView.getDividerHeight() * (numberOfItems - 1))
+                // Get padding
+                val totalPadding = listView.getPaddingTop() + listView.getPaddingBottom()
+                // Set list height.
+                val params = listView.getLayoutParams()
+                params.height = totalItemsHeight + totalDividersHeight + totalPadding
+                listView.setLayoutParams(params)
+                listView.requestLayout()
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+        setListViewHeightBasedOnItems(listview2)
+
+        // 스크랩버튼 누를 때
+        view.scrapBtn.setOnClickListener(object : View.OnClickListener {
             var isDefault = false
             override fun onClick(v: View?) {
                 isDefault = !isDefault
-                if(isDefault)
-                {
+                if (isDefault) {
                     scrapBtn.setSelected(true)
-                    recipe1.scrap_num +=1
+                    recipe1.scrap_num += 1
                     scrapNum.text = recipe1.scrap_num.toString()
 
-                }
-                else
-                {
+                } else {
                     scrapBtn.setSelected(false)
-                    recipe1.scrap_num -=1
+                    recipe1.scrap_num -= 1
                     scrapNum.text = recipe1.scrap_num.toString()
                 }
             }
-        }
-        )
+        })
+
+        // 가성비버튼 누를 때
+        view.price_btn.setOnClickListener(object : View.OnClickListener {
+            var isDefault = false
+            override fun onClick(v: View?) {
+                isDefault = !isDefault
+                if(isDefault) {
+                    price_btn.setSelected(true)
+                    recipe1.like_num[2] += 1
+                    price_num.text = recipe1.like_num[2].toString()
+                }
+                else {
+                    price_btn.setSelected(false)
+                    recipe1.like_num[2] -= 1
+                    price_num.text = recipe1.like_num[2].toString()
+                }
+            }
+
+        })
+
+        // 간단해요버튼 누를 때
+        view.simple_btn.setOnClickListener(object : View.OnClickListener {
+            var isDefault = false
+            override fun onClick(v: View?) {
+                isDefault = !isDefault
+                if(isDefault) {
+                    simple_btn.setSelected(true)
+                    recipe1.like_num[1] += 1
+                    simple_num.text = recipe1.like_num[1].toString()
+                }
+                else {
+                    simple_btn.setSelected(false)
+                    recipe1.like_num[1] -= 1
+                    simple_num.text = recipe1.like_num[1].toString()
+                }
+            }
+
+        })
+
+        // 맛있어요버튼 누를 때
+        view.del_btn.setOnClickListener(object : View.OnClickListener {
+            var isDefault = false
+            override fun onClick(v: View?) {
+                isDefault = !isDefault
+                if(isDefault) {
+                    del_btn.setSelected(true)
+                    recipe1.like_num[0] += 1
+                    del_num.text = recipe1.like_num[0].toString()
+                }
+                else {
+                    price_btn.setSelected(false)
+                    recipe1.like_num[0] -= 1
+                    del_num.text = recipe1.like_num[0].toString()
+                }
+            }
+
+        })
+
         if(option == 0)
             (parent as Community).saveInfo(2,this)
         else
