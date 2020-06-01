@@ -69,10 +69,8 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
         Picasso.get().load(listViewItemList[position].iconurl).into(imageView)
 
         view.setOnClickListener {
-            // TODO : explain fragment 넣는 부분
-            // 여기도 HorizontalAdapter에서와 마찬가지로 recipe를 넣어주는 걸로 하면 될거 같습니다
-            // 여기서는 listViewItemList[position].argRecipe를 사용해주시면 될거 같습니다!
-            (activity as HomeActivity).changeFragment(explainFrag(fragment,1))
+            (activity as HomeActivity).changeFragment(explainFrag(fragment,1,listViewItemList[position].argRecipe,listViewItemList[position].iconurl
+            ,listViewItemList[position].tagStr))
         }
 
         return view

@@ -1,28 +1,40 @@
 package com.e.yorizori
 
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.Adapter.Community_HorizontalAdapter
 import com.e.yorizori.Adapter.FoodDataAdapter
+import com.e.yorizori.Adapter.ingAdapter
 import com.e.yorizori.Class.FoodModel
 //import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.google.firebase.database.*
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
 
-class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragment() {
+class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?, tag : String?) : BackBtnPressListener,Fragment() {
     private val parent = parent
     private val option = option
+    private val recipeAll = item
+    private val picStr = pic
+    private val tagStr = tag
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,63 +46,59 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
         // Inflate the layout for this fragment
         // 뒤로가기버튼을 누를시 community로 돌아가기
         view.returnBtn.setOnClickListener {
+
             onBack()
         }
 
+        // 레시피클래스 가져오기
+        var recipe1 = recipeAll
 
-        /*
-        val database = FirebaseDatabase.getInstance()
-        val recipe10 = database.getReference("recipe")
-        val recipe20 = recipe10.child("간장계란밥").child("cook_title")
-*/
+        //초기값 설정
+        view.foodName.text = recipe1?.cook_title
+        view.price_num.text = recipe1?.like_num!![2].toString()
+        view.simple_num.text = recipe1?.like_num[1].toString()
+        view.del_num.text = recipe1?.like_num[0].toString()
+        view.scrapNum.text = recipe1?.scrap_num.toString()
+        view.scrapTag.text = tagStr
+        val picc = view.findViewById<ImageView>(R.id.photoView)
+        Picasso.get().load(picStr).into(picc)
 
-        var recipe1 = Recipe(
-            "계란볶음밥",
-            arrayListOf(
-                "1. 기름을 두른다",
-                "2. 계란을 깨서 넣고 마구 젓는다",
-                "3. 밥을 넣어 잘 풀어준다",
-                "4. 밥이 모두 풀어지면 소금간을 한다",
-                "5. 완성!"
-            ),
-            arrayListOf("5분 완성", "밥과 계란", "응용 가능"),
-            arrayListOf("대충 사진"),
-            "내가 쓴거 아님",
-            arrayListOf(Pair("밥", "1그릇"), Pair("계란", "1개"), Pair("식용유", "10스푼")),
-            arrayListOf(3, 19, 20),
-            43
-        )
+        /* get ingredients from the server. START */
 
-        view.foodName.text = recipe1.cook_title
-        view.price_num.text = recipe1.like_num[2].toString()
-        view.simple_num.text = recipe1.like_num[1].toString()
-        view.del_num.text = recipe1.like_num[0].toString()
-        view.scrapNum.text = recipe1.scrap_num.toString()
+        val listener = object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
-        /*
-        view.foodName.text = recipe20.toString()
-        view.scrapNum.text = recipe1.scrap_num.toString()
-        view.tag_array.scrapTag.text = recipe1.tag[0]
-*/
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
 
-        val foodList = listOf(
-            FoodModel("밥", "1그릇", false),
-            FoodModel("계란","1개",false),
-            FoodModel("식용유","10스푼",false),
-            FoodModel("소시지","100개",false)
-        )
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
 
-        // 재료 리사이클러뷰
-        val adapter = FoodDataAdapter(foodList)
-        val recyclerview2 = view.findViewById<RecyclerView>(R.id.foodListView)
-        recyclerview2.adapter = adapter
-        recyclerview2.layoutManager = LinearLayoutManager(this.context)
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        // 재료 리스트뷰
+        val LIST_MENU1 = recipe1.ings
+        val adapter1 = ingAdapter(this.context!!,recipe1.ings)
+        val listview1 = view.findViewById<ListView>(R.id.ing_ListView)
+        listview1.setAdapter(adapter1)
 
         // 조리법 리스트뷰
         val LIST_MENU2 = recipe1.recipe
         val adapter2 = ArrayAdapter(this.context!!, android.R.layout.simple_list_item_1,LIST_MENU2)
         val listview2 = view.findViewById<ListView>(R.id.recipe_listview)
         listview2.setAdapter(adapter2)
+
 
         //Listview의 높이를 Item의 갯수에 따라 조정하는 함수
         fun setListViewHeightBasedOnItems(listView:ListView):Boolean {
@@ -123,7 +131,9 @@ class explainFrag(parent : Fragment, option : Int) : BackBtnPressListener,Fragme
                 return false
             }
         }
+        setListViewHeightBasedOnItems(listview1)
         setListViewHeightBasedOnItems(listview2)
+
 
         // 스크랩버튼 누를 때
         view.scrapBtn.setOnClickListener(object : View.OnClickListener {

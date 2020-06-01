@@ -83,20 +83,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/foodListView"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@android:drawable/editbox_dropdown_light_frame"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ing" />
-
             <ListView
                 android:id="@+id/recipe_listview"
                 android:layout_width="0dp"
@@ -107,7 +93,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@android:drawable/editbox_dropdown_light_frame"
-                android:divider="@color/design_default_color_on_secondary"
+                android:divider="@android:color/darker_gray"
                 android:dividerHeight="1dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +113,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/foodListView" />
+                app:layout_constraintTop_toBottomOf="@+id/ing_ListView" />
 
             <TextView
 
@@ -232,6 +218,22 @@
                     android:gravity="center|right"
                     android:text="TextView" />
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/ing_ListView"
+                android:layout_width="0dp"
+                android:layout_height="146dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:drawable/editbox_dropdown_light_frame"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ing" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
