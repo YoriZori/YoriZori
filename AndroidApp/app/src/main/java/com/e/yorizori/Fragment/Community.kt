@@ -45,7 +45,7 @@ class Community: BackBtnPressListener,Fragment(){
         Search_btn.visibility = View.VISIBLE
         Search_btn.setOnClickListener {
             //Todo: search 옮겨붙이기
-            (activity as HomeActivity).changeFragment(Community_Search(context!!))
+            (activity as HomeActivity).changeFragment(Community_Search(context!!, this))
         }
         val adapter =
             Community_ListViewAdapter(

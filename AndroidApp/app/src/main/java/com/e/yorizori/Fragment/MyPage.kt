@@ -84,6 +84,8 @@ class MyPage: BackBtnPressListener, Fragment(){
             }
         })
 
+        (activity as HomeActivity).saveFragment(2,this)
+
         return view
     }
     override fun onResume(){

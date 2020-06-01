@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/commu_backBtn"
             android:src = "@drawable/ic_arrow_left"
+            android:scaleType="centerInside"
             android:background="#ffffff"
             android:layout_alignBottom="@id/add_recipe"
             android:visibility = "gone"

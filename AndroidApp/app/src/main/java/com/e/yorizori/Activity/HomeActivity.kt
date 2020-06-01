@@ -149,13 +149,22 @@ class HomeActivity : AppCompatActivity(){
             var selected:Fragment
             when(it.itemId){
                 R.id.tab_community -> {
-                    selected = fragments[0]!!
+                    if(position == 0){
+                        selected = Community()
+                    }
+                    else selected = fragments[0]!!
                 }
                 R.id.tab_check ->{
-                    selected = fragments[1]!!
+                    if(position == 1){
+                        selected = CheckList()
+                    }
+                    else selected = fragments[1]!!
                 }
                 else ->{
-                    selected = fragments[2]!!
+                    if(position == 2) {
+                        selected = MyPage()
+                    }
+                    else selected = fragments[2]!!
                 }
 
             }
