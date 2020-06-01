@@ -73,7 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="회원 가입하기"
-        android:textColorHighlight="@color/colorAccent"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintLeft_toLeftOf="@id/login_pw"
         app:layout_constraintRight_toLeftOf="@id/login_find"

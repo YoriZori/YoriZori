@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.Community_ListViewAdapter
