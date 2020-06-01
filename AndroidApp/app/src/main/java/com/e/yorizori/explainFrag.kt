@@ -35,6 +35,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
     private val recipeAll = item
     private val picStr = pic
     private val tagStr = tag
+    private val Refer = OpeningActivity.ref
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -144,12 +145,12 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
                     scrapBtn.setSelected(true)
                     recipe1.scrap_num += 1
                     scrapNum.text = recipe1.scrap_num.toString()
-
                 } else {
                     scrapBtn.setSelected(false)
                     recipe1.scrap_num -= 1
                     scrapNum.text = recipe1.scrap_num.toString()
                 }
+                Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
         })
 
@@ -168,6 +169,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
                     recipe1.like_num[2] -= 1
                     price_num.text = recipe1.like_num[2].toString()
                 }
+                Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
 
         })
@@ -187,6 +189,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
                     recipe1.like_num[1] -= 1
                     simple_num.text = recipe1.like_num[1].toString()
                 }
+                Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
 
         })
@@ -206,6 +209,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
                     recipe1.like_num[0] -= 1
                     del_num.text = recipe1.like_num[0].toString()
                 }
+                Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
 
         })

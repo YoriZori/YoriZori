@@ -21,6 +21,7 @@ class OpeningActivity : AppCompatActivity(){
     companion object {
         var ing_list = arrayListOf<String>()
         var recipe_list = arrayListOf<Recipe>()
+        var ref:DatabaseReference? = null
 
         fun add(str : String) {
             ing_list.add(str)
@@ -58,12 +59,14 @@ class OpeningActivity : AppCompatActivity(){
                 for (ing in shot.children) {
                     val child = ing.value.toString()
                     ing_list.add(child)
+
                 }
             }
         }
         child.addListenerForSingleValueEvent(listener)
 
         val recipes = rootRef.child("recipe")
+        ref = recipes
         val rlistener = object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(applicationContext,R.string.connection_err,Toast.LENGTH_SHORT)
