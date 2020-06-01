@@ -38,6 +38,9 @@ class OpeningActivity : AppCompatActivity(){
         fun add_item(name: String) {
             my_ing.add(RefrigItem(name))
         }
+        fun add_item(ref : RefrigItem){
+            my_ing.add(ref)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,16 +80,15 @@ class OpeningActivity : AppCompatActivity(){
 
         /* get my own ingredients. START */
         val pref = getSharedPreferences("having", 0)
-        val get_json = pref.getString("having", "")
+        val get_json = pref.all
 
         // change the format and add to the list
         val json = Gson()
-        if (get_json != "") {
-            val tmp_ing = json.fromJson(get_json, my_ing::class.java)
-            my_ing.map {
-                json.fromJson(it.toString(), RefrigItem::class.java)
-                } as MutableList<RefrigItem>
+        for (entry in get_json.entries){
+            val ref_item = json.fromJson(entry.value.toString(),RefrigItem::class.java)
+            add_item(ref_item)
         }
+
         /* get my own ingeredients. DONE */
 
         windowManager.defaultDisplay.getMetrics(metrics)
