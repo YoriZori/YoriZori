@@ -1,5 +1,6 @@
 package com.e.yorizori.Class
 
+import android.util.Log
 import com.e.yorizori.DateUtils.Companion.simpleDate
 import java.text.SimpleDateFormat
 

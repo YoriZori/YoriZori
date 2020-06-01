@@ -138,7 +138,7 @@
             android:layout_marginTop="5pt"
             android:layout_marginLeft="5pt"
             android:layout_marginRight="5pt"
-            android:background="#ff7d5a"
+            android:background="@color/colorPink"
             app:layout_constraintTop_toBottomOf="@id/acn_text_exp"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

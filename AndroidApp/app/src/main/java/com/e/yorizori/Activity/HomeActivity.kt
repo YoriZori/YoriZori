@@ -32,21 +32,10 @@ class HomeActivity : AppCompatActivity(){
     var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
     var position = 0
 
-    companion object {
-        var items = mutableListOf<RefrigItem>()
-
-        fun add_item(name: String, date: String) {
-            items.add(RefrigItem(name, date))
-        }
-
-        fun add_item(name: String) {
-            items.add(RefrigItem(name))
-        }
-        // Image Pick Code
-        val IMAGE_PICK_CODE = 1000
-        // Permission Code
-        val PERMISSION_CODE = 1001
-    }
+    // Image Pick Code
+    val IMAGE_PICK_CODE = 1000
+    // Permission Code
+    val PERMISSION_CODE = 1001
 
     fun setOnBackBtnListener(listener:BackBtnPressListener?){
         backBtnListener = listener
@@ -131,7 +120,6 @@ class HomeActivity : AppCompatActivity(){
                 else ->{
                     selected = fragments[2]!!
                 }
-
             }
             changeFragment(selected)
             true
@@ -149,7 +137,6 @@ class HomeActivity : AppCompatActivity(){
         }
     }
 
-    
     fun saveFragment(p : Int,f: Fragment){
         fragments[p] = f
         position = p

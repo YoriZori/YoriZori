@@ -6,19 +6,18 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.net.wifi.p2p.WifiP2pManager
-import android.text.method.KeyListener
+import android.database.DataSetObservable
+import android.database.DataSetObserver
 import android.util.Log
 import android.view.*
-import android.view.inputmethod.EditorInfo
 import android.widget.*
-import com.e.yorizori.Activity.HomeActivity.Companion.items
 import com.e.yorizori.Activity.HomeActivity
-import com.e.yorizori.Activity.OpeningActivity.Companion.ing_list
+import com.e.yorizori.Activity.OpeningActivity.Companion.my_ing
+import com.e.yorizori.Activity.OpeningActivity.Companion.server_ing
 import com.e.yorizori.Adapter.ChecklistListAdapter
+import com.e.yorizori.CheckListPicker
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
@@ -27,7 +26,7 @@ import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_checklist.*
 import kotlinx.android.synthetic.main.activity_checklist.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.checklist_date_picker.view.*
 
 
 class CheckList: BackBtnPressListener,Fragment(){
@@ -49,7 +48,7 @@ class CheckList: BackBtnPressListener,Fragment(){
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
 
         // when empty, we will show a cute ref...냉장고
-        if (items.size == 0)
+        if (my_ing.size == 0)
             view.img_empty_checklist.visibility = View.VISIBLE
         else
             view.img_empty_checklist.visibility = View.INVISIBLE
@@ -58,7 +57,13 @@ class CheckList: BackBtnPressListener,Fragment(){
         val listView  = view.findViewById<ListView>(R.id.list_checklist)
 
         // for added ingredients
-        val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
+        val listViewAdapter = ChecklistListAdapter(this.requireContext(), my_ing)
+        listViewAdapter.registerDataSetObserver(object : DataSetObserver() {
+            override fun onChanged() {
+                Log.d("###", "NOTIFY")
+                super.onChanged()
+            }
+        })
         val button = view.findViewById<Button>(R.id.delete_button)
 
         listView.setAdapter(listViewAdapter)
@@ -76,28 +81,24 @@ class CheckList: BackBtnPressListener,Fragment(){
         val searchAdapter = ArrayAdapter<String>(requireContext(),
                                                 android.R.layout.simple_list_item_1,
                                                 /*android.R.layout.simple_list_item_1,*/
-                                                ing_list)
+                                                server_ing)
         searchAutoComplete.threshold = 0
         searchAutoComplete.setAdapter(searchAdapter)
 
-        // for click and enter
+        // for enter and click
         searchAutoComplete.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 val selected = v!!.text.toString()
 //                엔터키 누른 애가 서버에 있는 재료라면????
-                Toast.makeText(requireContext(), "$selected 선택했습니다.", Toast.LENGTH_SHORT).show()
-                //showDatePicker(selected, requireParentFragment())
-                return false
+                CheckListPicker(selected).show(fragmentManager!!, "HI")
+                return true
             }
         })
-
 
         searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
             parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "$clicked 선택했습니다.", Toast.LENGTH_SHORT).show()
-            showDatePicker(clicked,this)
-            //activity?.finish()
+            CheckListPicker(clicked).show(fragmentManager!!, "HI")
         }
 
         //input new ingredients
@@ -122,6 +123,7 @@ class CheckList: BackBtnPressListener,Fragment(){
         return view
     }
 
+    // remove the item from my_ings
     private fun showSettingPopup(listView: ListView,  listViewAdapter: ChecklistListAdapter, button:Button) {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.alert_delete, null)
@@ -132,7 +134,7 @@ class CheckList: BackBtnPressListener,Fragment(){
             .setTitle("  ")
             .setPositiveButton("삭제") { dialog, which ->
                 for (i in 0 until ChecklistListAdapter.selected.size){
-                    items.remove(ChecklistListAdapter.selected[i])
+                    my_ing.remove(ChecklistListAdapter.selected[i])
                 }
                 ChecklistListAdapter.selected.clear()
                 listView.clearChoices()
@@ -146,28 +148,10 @@ class CheckList: BackBtnPressListener,Fragment(){
         alertDialog.show()
    }
 
-
-    private fun showDatePicker(name : String, fragment : Fragment) {
-        // Calendar
-        val c = Calendar.getInstance()
-        var year = c.get(Calendar.YEAR)
-        var month = c.get(Calendar.MONTH)
-        var day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
-            fragment.context!!,
-            DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDayOfMonth ->
-                val date = mYear.toString() + "-" + (mMonth+1).toString() + "-" + mDayOfMonth.toString()
-                val ref_clicked = RefrigItem(name, date)
-                HomeActivity.add_item(name, date)
-                (activity as HomeActivity).changeFragment(CheckList())
-            }, year, month, day)
-        dpd.show()
-    }
-
     override fun onBack() {
         dialog()
     }
+
     fun dialog(){
         var builder = AlertDialog.Builder(this.context)
         builder.setTitle("YoriZori")
