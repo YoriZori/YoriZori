@@ -11,10 +11,11 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import android.widget.*
-import com.e.yorizori.HomeActivity.Companion.items
+import com.e.yorizori.HomeActivity.Companion.add_hate
+import com.e.yorizori.HomeActivity.Companion.hate_items
 import kotlin.collections.ArrayList
 
-class CheckList: Fragment(){
+class HateList: Fragment(){
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,12 +23,12 @@ class CheckList: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.activity_checklist, container, false)
+        val view = inflater.inflate(R.layout.activity_hatelist, container, false)
 
-        val listView  = view.findViewById<ListView>(R.id.list_checklist)
+        val listView  = view.findViewById<ListView>(R.id.list_hatelist)
 
         val button = view.findViewById<Button>(R.id.delete_button)
-        val listViewAdapter = ChecklistListAdapter(this.requireContext(), items)
+        val listViewAdapter = HateListAdapter(this.requireContext(), hate_items)
 
         listView.setAdapter(listViewAdapter)
 
@@ -44,7 +45,7 @@ class CheckList: Fragment(){
         setList(ing_list)
 
         // for real-time search
-        val searchAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.auto_search_checklist)
+        val searchAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.auto_search_hatelist)
         val searchAdapter = ArrayAdapter<String>(requireContext(),
                                                 android.R.layout.simple_list_item_1,
                                                 /*android.R.layout.simple_list_item_1,*/
@@ -56,12 +57,13 @@ class CheckList: Fragment(){
         searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
             parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(activity, CalendarSet::class.java)
-            intent.putExtra("ing_name", clicked)
-            startActivity(intent)
-            //activity?.finish()
+            add_hate(clicked)
+//            Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
+//
+//            val intent = Intent(activity, CalendarSet::class.java)
+//            intent.putExtra("ing_name", clicked)
+//            startActivity(intent)
+//            activity?.finish()
         }
 
         /* search bar: done. */
@@ -69,20 +71,20 @@ class CheckList: Fragment(){
         return view
     }
 
-    private fun showSettingPopup(listView: ListView,  listViewAdapter: ChecklistListAdapter, button:Button) {
+    private fun showSettingPopup(listView: ListView, listViewAdapter: HateListAdapter, button:Button) {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.alert_delete, null)
         val textView: TextView = view.findViewById<TextView>(R.id.alert_textview)
-        textView.text = ChecklistListAdapter.selected.size.toString() + "개 항목을 삭제하시겠습니까?"
+        textView.text = HateListAdapter.selected.size.toString() + "개 항목을 삭제하시겠습니까?"
 
         val alertDialog = AlertDialog.Builder(this.requireContext())
             .setTitle("  ")
             .setPositiveButton("삭제") { dialog, which ->
-                for (i in 0 until ChecklistListAdapter.selected.size){
-                    HomeActivity.delete_checklist(ChecklistListAdapter.selected[i])
-                    items.remove(ChecklistListAdapter.selected[i])
+                for (i in 0 until HateListAdapter.selected.size){
+                    HomeActivity.delete_hate(HateListAdapter.selected[i])
+                    hate_items.remove(HateListAdapter.selected[i])
                 }
-                ChecklistListAdapter.selected.clear()
+                HateListAdapter.selected.clear()
                 listView.clearChoices()
                 listViewAdapter.notifyDataSetChanged()
                 Toast.makeText(this.requireContext(), "삭제", Toast.LENGTH_SHORT).show()

@@ -18,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         var items = mutableListOf<RefrigItem>()
+        var hate_items = mutableListOf<RefrigItem>()
         var checklist_prefs : SharedPreferences? = null
         var hate_prefs : SharedPreferences? = null
         var checklist_edit : SharedPreferences.Editor? = null
@@ -46,21 +47,22 @@ class HomeActivity : AppCompatActivity() {
 
         fun add_hate(name: String) {
             val tmp : RefrigItem = RefrigItem(name)
-            items.add(tmp)
-            checklist_edit?.putString(name, tmp.print_due())
+            hate_items.add(tmp)
+            hate_edit?.putString(name, tmp.print_due())
+            hate_edit?.commit()
         }
 
         fun load_checklist() {
             var tmp = checklist_prefs?.all
             for(name in tmp!!.keys){
-                add_item(name, tmp.get(name) as String)
+                items.add(RefrigItem(name, tmp.get(name) as String))
             }
         }
 
         fun load_hate() {
             var tmp = hate_prefs?.all
             for(name in tmp!!.keys){
-                add_item(name, tmp.get(name) as String)
+                hate_items.add(RefrigItem(name))
             }
         }
 
@@ -88,11 +90,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        Log.d("1", "1")
         set_prefs(applicationContext)
-        Log.d("2", "2")
         load_checklist()
-        Log.d("3", "3")
         load_hate()
 
 //        items.add(RefrigItem("소세지", "2018-12-25"))
@@ -134,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 else ->{
-                    selected = MyPage()
+                    selected = HateList()
                     true
                 }
             }
