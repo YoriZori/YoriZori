@@ -79,6 +79,7 @@ class CheckList: Fragment(){
             .setTitle("  ")
             .setPositiveButton("삭제") { dialog, which ->
                 for (i in 0 until ChecklistListAdapter.selected.size){
+                    HomeActivity.delete_checklist(ChecklistListAdapter.selected[i])
                     items.remove(ChecklistListAdapter.selected[i])
                 }
                 ChecklistListAdapter.selected.clear()
@@ -108,8 +109,32 @@ class CheckList: Fragment(){
 
 
     private fun setList(list : ArrayList<String>) {
-        list.add("ab")
-        list.add("aab")
+        list.add("a")
+        list.add("b")
+        list.add("c")
+        list.add("d")
+        list.add("e")
+        list.add("f")
+        list.add("g")
+        list.add("h")
+        list.add("i")
+        list.add("j")
+        list.add("k")
+        list.add("l")
+        list.add("m")
+        list.add("n")
+        list.add("o")
+        list.add("p")
+        list.add("q")
+        list.add("r")
+        list.add("s")
+        list.add("t")
+        list.add("u")
+        list.add("v")
+        list.add("w")
+        list.add("x")
+        list.add("y")
+        list.add("z")
         list.add("양파")
         list.add("양서류(?)")
         list.add("양고기")
