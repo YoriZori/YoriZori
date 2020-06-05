@@ -68,10 +68,7 @@ class Community_HorizontalAdapter(
             Picasso.get().load(item.iconurl).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
-            // TODO: explainFragment 생성하는 부분
-            // explainFrag가 recipe를 인자로 받도록 해서 넘겨주는 방식으로 해도 될것 같습니다!
-            // 해당하는 recipe는 item.argRecipe에 들어있습니다!
-            activity.changeFragment(explainFrag(fragment,0))
+            activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.iconurl,item.tagStr))
         }
     }
 
