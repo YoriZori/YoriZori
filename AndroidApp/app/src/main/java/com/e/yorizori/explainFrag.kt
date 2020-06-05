@@ -20,9 +20,12 @@ import com.e.yorizori.Adapter.ingAdapter
 import com.e.yorizori.Class.FoodModel
 //import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Class.likeCheck
+import com.e.yorizori.Class.scrapCheck
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
@@ -41,7 +44,12 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        lateinit var firebaseAuth: FirebaseAuth
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+        val userUID = user!!.uid
+        val rootRef = FirebaseDatabase.getInstance().reference
+        //val child = rootRef.child("재료")
 
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
@@ -63,30 +71,6 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
         view.scrapTag.text = tagStr
         val picc = view.findViewById<ImageView>(R.id.photoView)
         Picasso.get().load(picStr).into(picc)
-
-        /* get ingredients from the server. START */
-
-        val listener = object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-        }
 
         // 재료 리스트뷰
         val LIST_MENU1 = recipe1.ings
@@ -136,19 +120,27 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
         setListViewHeightBasedOnItems(listview2)
 
 
+
         // 스크랩버튼 누를 때
         view.scrapBtn.setOnClickListener(object : View.OnClickListener {
             var isDefault = false
             override fun onClick(v: View?) {
+                var scrapNumC = scrapCheck()
+                var scrapChecked = rootRef.child("scrap").child(userUID).key
+                scrapNumC.scrap_num = !scrapNumC.scrap_num
                 isDefault = !isDefault
-                if (isDefault) {
+                if(scrapChecked==null)
+                    rootRef.child("scrap").child(userUID).push().setValue(Gson().toJson(isDefault))
+                if (isDefault&&scrapNumC.scrap_num) {
                     scrapBtn.setSelected(true)
                     recipe1.scrap_num += 1
                     scrapNum.text = recipe1.scrap_num.toString()
+                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
                 } else {
                     scrapBtn.setSelected(false)
                     recipe1.scrap_num -= 1
                     scrapNum.text = recipe1.scrap_num.toString()
+                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
                 }
                 Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
