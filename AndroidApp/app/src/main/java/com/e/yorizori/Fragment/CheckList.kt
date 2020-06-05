@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.database.DataSetObserver
 import android.view.*
 import android.widget.*
+import androidx.core.app.ActivityCompat.finishAffinity
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity.Companion.my_ing
 import com.e.yorizori.Activity.OpeningActivity.Companion.server_ing
@@ -90,7 +91,7 @@ class CheckList: BackBtnPressListener,Fragment(){
         searchAutoComplete.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 val selected = v!!.text.toString()
-//                엔터키 누른 애가 서버에 있는 재료라면????
+//                엔터키 누른 애가 서버에 있는 재료라면???? -> 상관없어!
                 CheckListPicker(selected).show(fragmentManager!!, "HI")
                 return true
             }
@@ -104,6 +105,7 @@ class CheckList: BackBtnPressListener,Fragment(){
         }
 
         //input new ingredients
+        /*
         view.auto_search_checklist.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
                 val refrigItem = RefrigItem(auto_search_checklist.text.toString())
@@ -118,6 +120,7 @@ class CheckList: BackBtnPressListener,Fragment(){
             }
             true
         }
+        */
         (activity as HomeActivity).setOnBackBtnListener(this)
 
         /* search bar: done. */
@@ -130,6 +133,9 @@ class CheckList: BackBtnPressListener,Fragment(){
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.alert_delete, null)
         val textView: TextView = view.findViewById<TextView>(R.id.alert_textview)
+        val pref = activity!!.getSharedPreferences("having",0)
+        val editor = pref.edit()
+
         textView.text = ChecklistListAdapter.selected.size.toString() + "개 항목을 삭제하시겠습니까?"
 
         val alertDialog = AlertDialog.Builder(this.requireContext())
@@ -137,7 +143,9 @@ class CheckList: BackBtnPressListener,Fragment(){
             .setPositiveButton("삭제") { dialog, which ->
                 for (i in 0 until ChecklistListAdapter.selected.size){
                     my_ing.remove(ChecklistListAdapter.selected[i])
+                    editor.remove(ChecklistListAdapter.selected[i].item)
                 }
+                editor.commit()
                 ChecklistListAdapter.selected.clear()
                 listView.clearChoices()
                 listViewAdapter.notifyDataSetChanged()
@@ -191,7 +199,9 @@ class CheckList: BackBtnPressListener,Fragment(){
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
         builder.setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-            activity!!.finish()
+            finishAffinity(requireActivity());
+            System.runFinalization();
+            System.exit(0);
         })
         builder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()

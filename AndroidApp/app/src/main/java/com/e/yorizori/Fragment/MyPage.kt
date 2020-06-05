@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.LoginActivity
 import com.e.yorizori.R
@@ -110,7 +111,9 @@ class MyPage: BackBtnPressListener, Fragment(){
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
         builder.setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-            activity!!.finish()
+            finishAffinity(requireActivity());
+            System.runFinalization();
+            System.exit(0);
         })
         builder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()

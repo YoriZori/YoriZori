@@ -93,7 +93,7 @@ class OpeningActivity : AppCompatActivity(){
                     val trimmed = recipe_str!!.trim()
                     val gson = Gson()
                     val recipe = gson.fromJson(trimmed,Recipe::class.java)
-                    recipe_list.add(recipe)
+                    add_recipe(recipe)
                 }
             }
 

@@ -58,10 +58,12 @@ class CheckListPicker(input : String) : DialogFragment() {
 
                 // for json
                 val json = Gson()
-                val put_me = json.toJson(OpeningActivity.my_ing)
+                val put_me = json.toJson(RefrigItem(name))
 
                 // put into the shared preference.
-                editor.putString("having", put_me).commit()
+                Log.d("@@@@@", "before put $put_me")
+                editor.putString(name, put_me).commit()
+                Log.d("@@@@@@", "DONE put $put_me")
 
                 (requireActivity() as HomeActivity).changeFragment(CheckList())
                 dismiss()

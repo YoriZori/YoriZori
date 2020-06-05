@@ -52,14 +52,14 @@
     <LinearLayout
         android:id="@+id/search_checklist"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginBottom="5pt"
-        app:layout_constraintHeight_percent = "0.07"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_weight="5">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -70,7 +70,7 @@
         <AutoCompleteTextView
             android:id = "@+id/auto_search_checklist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:singleLine="true"

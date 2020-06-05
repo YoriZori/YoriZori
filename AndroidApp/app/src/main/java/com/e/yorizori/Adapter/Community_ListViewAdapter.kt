@@ -1,6 +1,7 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Enum.Like
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.R
@@ -97,7 +99,21 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             1->{
-                for (i in OpeningActivity.recipe_list){
+                val possible = OpeningActivity.recipe_list.filter{
+                    val require_ings = it.ings.map{
+                        it.first
+                    }.toSet()
+                    Log.d("why?",require_ings.toString())
+                    val ing_set = OpeningActivity.my_ing.map{
+                        it.item
+                    }.toSet()
+                    Log.d("why?",ing_set.toString())
+                    (require_ings - ing_set).isEmpty()
+                }
+                if(possible.isEmpty()){
+                    listViewItemList[position].addItem(Recipe())
+                }
+                for (i in possible){
                     listViewItemList[position].addItem(i)
                 }
             }

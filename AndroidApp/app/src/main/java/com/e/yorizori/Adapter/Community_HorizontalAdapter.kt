@@ -57,6 +57,11 @@ class Community_HorizontalAdapter(
             holder.rtagview.visibility = View.GONE
             holder.rpicview.setImageDrawable(drawable_tmp)
         }
+        else if(item.titleStr==""){
+            holder.rnameview.text=  "당장 가능한 요리가 없습니다..."
+            holder.rtagview.text = item.tagStr
+            holder.rpicview.visibility = View.GONE
+        }
         else {
             holder.rnameview.text = item.titleStr
             holder.rtagview.text = item.tagStr
@@ -98,6 +103,10 @@ class Community_HorizontalAdapter(
             item.tagStr=null
             item.iconurl = null
             item.argRecipe = null
+        }
+        else if(recipe.cook_title == ""){
+            item.titleStr=""
+            item.tagStr="체크리스트 추가하러 가기!"
         }
         else {
             item.titleStr = recipe.cook_title
