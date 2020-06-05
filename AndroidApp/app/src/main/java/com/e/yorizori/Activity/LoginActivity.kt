@@ -3,6 +3,7 @@ package com.e.yorizori.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,33 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+
+        //email 입력 칸에서 enter
+        login_email.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
+                val email = login_email.text.toString()
+                val pw = login_pw.text.toString()
+
+                if (validateForm()) {
+                    logIn(email, pw)
+                }
+            }
+            true
+        }
+
+        //pw 입력 칸에서 enter
+        login_pw.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
+                val email = login_email.text.toString()
+                val pw = login_pw.text.toString()
+
+                if (validateForm()) {
+                    logIn(email, pw)
+                }
+            }
+            true
+        }
+
 
         login_register.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
