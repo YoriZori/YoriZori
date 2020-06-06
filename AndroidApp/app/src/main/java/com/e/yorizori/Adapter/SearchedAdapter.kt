@@ -44,7 +44,7 @@ class SearchedAdapter(keyword : String, activity : FragmentActivity, fragment: F
         Picasso.get().load(SearchedRecipe[position].pics[0]).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(this.parent,4))
+            (activity as HomeActivity).changeFragment(explainFrag(this.parent,4, SearchedRecipe[position],mktag(SearchedRecipe[position])))
         }
 
 

@@ -68,12 +68,20 @@ class Community_HorizontalAdapter(
             Picasso.get().load(item.iconurl).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
-            activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.iconurl,item.tagStr))
+            activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.tagStr))
         }
     }
 
 
     override fun getItemCount(): Int {
+        if(listViewItemList.size == 0){
+            addItem(Recipe())
+        }
+        else if(listViewItemList.size != 1){
+            listViewItemList = listViewItemList.filter{
+                it.titleStr != ""
+            } as ArrayList<Community_ListViewItem>
+        }
         return listViewItemList.size
     }
 

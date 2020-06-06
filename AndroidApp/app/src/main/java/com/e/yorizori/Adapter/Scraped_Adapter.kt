@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.MyPage.Scrap
 import com.e.yorizori.R
@@ -17,10 +18,19 @@ import com.e.yorizori.explainFrag
 import com.squareup.picasso.Picasso
 
 class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment : Fragment) : BaseAdapter() {
-    private var scrapedRecipe :Array<Recipe> = arrayOf()
+    private var scrapedRecipe :ArrayList<Recipe> = arrayListOf()
     private val context = context
     private val activity = activity as HomeActivity
     private val fragment = fragment as Scrap
+
+    init{
+        val tmp_test = HomeActivity.scrap_info.map{
+            Pair(it.title, it.writer)
+        } as ArrayList<Pair<String,String>>
+        scrapedRecipe = OpeningActivity.recipe_list.filter{
+            tmp_test.contains(Pair(it.cook_title,it.writer_UID))
+        } as ArrayList<Recipe>
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -39,7 +49,7 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
         Picasso.get().load(scrapedRecipe[position].pics[0]).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(fragment,2))
+            (activity as HomeActivity).changeFragment(explainFrag(fragment,2, scrapedRecipe[position], mktag(scrapedRecipe[position])))
         }
 
 

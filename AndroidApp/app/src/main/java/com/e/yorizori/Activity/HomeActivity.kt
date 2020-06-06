@@ -12,13 +12,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Class.ScrapInfo
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -32,7 +33,13 @@ class HomeActivity : AppCompatActivity(){
     var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
     var position = 0
 
+    companion object{
+        var scrap_info: ArrayList<ScrapInfo> = arrayListOf()
 
+        fun add_scrap(key: String, title: String, writer:String){
+            scrap_info.add(ScrapInfo(key,title,writer))
+        }
+    }
     // Image Pick Code
     val IMAGE_PICK_CODE = 1000
     // Permission Code
@@ -96,6 +103,28 @@ class HomeActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        var user = FirebaseAuth.getInstance().currentUser
+        var rootRef = FirebaseDatabase.getInstance().reference
+        var userUID = user!!.uid
+        var scraped =  rootRef.child("$userUID/scrap")
+        var listener = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                scrap_info = tmp_list
+            }
+
+        }
+        scraped.addValueEventListener(listener)
     }
 
     override fun onResume(){

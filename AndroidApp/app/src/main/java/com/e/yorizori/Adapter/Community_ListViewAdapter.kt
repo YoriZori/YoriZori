@@ -96,6 +96,8 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
             0 -> {//Event Tab...!? 어떻게 채우지 ㄷㄷㄷㄷㄷ
                 for(i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(null)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             1->{
@@ -103,48 +105,55 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     val require_ings = it.ings.map{
                         it.first
                     }.toSet()
-                    Log.d("why?",require_ings.toString())
                     val ing_set = OpeningActivity.my_ing.map{
                         it.item
                     }.toSet()
-                    Log.d("why?",ing_set.toString())
                     (require_ings - ing_set).isEmpty()
-                }
-                if(possible.isEmpty()){
-                    listViewItemList[position].addItem(Recipe())
                 }
                 for (i in possible){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             2->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             3->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.QUICK.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             4-> {
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
                 for (i in OpeningActivity.recipe_list) {
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             5->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             else->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
 

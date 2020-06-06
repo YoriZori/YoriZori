@@ -45,7 +45,7 @@ class WroteAdapter(fragment : Fragment, activity : FragmentActivity) : BaseAdapt
         Picasso.get().load(Wrote_Recipe[position].pics[0]).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(this.parent,3))
+            (activity as HomeActivity).changeFragment(explainFrag(this.parent,3, Wrote_Recipe[position],mktag(Wrote_Recipe[position])))
         }
 
 

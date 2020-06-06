@@ -85,13 +85,16 @@ class OpeningActivity : AppCompatActivity(){
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                Log.d("ok?","바로된다고!?")
+                var tmp_recipe : ArrayList<Recipe> = arrayListOf()
                 for(recipe in p0.children){
                     val recipe_str= recipe.getValue(String::class.java)
                     val trimmed = recipe_str!!.trim()
                     val gson = Gson()
                     val recipe = gson.fromJson(trimmed,Recipe::class.java)
-                    add_recipe(recipe)
+                    tmp_recipe.add(recipe)
                 }
+                recipe_list = tmp_recipe
             }
 
         }

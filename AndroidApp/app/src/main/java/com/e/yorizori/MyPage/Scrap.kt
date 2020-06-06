@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Adapter.Scraped_Adapter
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
@@ -25,6 +26,8 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         view.scr_backBtn.setOnClickListener {
             onBack()
         }
+        val adapter = Scraped_Adapter(this.context!!, activity!!,this)
+        listView.adapter = adapter
         (parent as MyPage).saveInfo(0,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
 
