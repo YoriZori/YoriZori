@@ -130,7 +130,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
                 scrapNumC.scrap_num = !scrapNumC.scrap_num
                 isDefault = !isDefault
                 if(scrapChecked==null)
-                    rootRef.child("scrap").child(userUID).push().setValue(Gson().toJson(isDefault))
+                    rootRef.child("scrap").child(userUID).push().setValue(Gson().toJson(scrapNumC))
                 if (isDefault&&scrapNumC.scrap_num) {
                     scrapBtn.setSelected(true)
                     recipe1.scrap_num += 1
@@ -149,17 +149,26 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, pic : String?
         // 가성비버튼 누를 때
         view.price_btn.setOnClickListener(object : View.OnClickListener {
             var isDefault = false
+            var priceChecked = rootRef.child("like").child(userUID).key
             override fun onClick(v: View?) {
+                var priceNumC = likeCheck().like_num[2]
+                //var priceChecked = rootRef.child("like").child(userUID).key
                 isDefault = !isDefault
+                if(priceChecked == null) {
+                    //priceNumC.like_num[2] = 1
+                    rootRef.child("like").child(userUID).push().setValue(Gson().toJson(priceNumC))
+                }
                 if(isDefault) {
                     price_btn.setSelected(true)
                     recipe1.like_num[2] += 1
                     price_num.text = recipe1.like_num[2].toString()
+                    rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
                 }
                 else {
                     price_btn.setSelected(false)
                     recipe1.like_num[2] -= 1
                     price_num.text = recipe1.like_num[2].toString()
+                    rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
                 }
                 Refer?.child("간장계란밥")!!.setValue(Gson().toJson(recipe1))
             }
