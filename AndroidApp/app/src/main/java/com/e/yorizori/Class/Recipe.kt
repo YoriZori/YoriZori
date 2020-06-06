@@ -1,7 +1,18 @@
 package com.e.yorizori.Class
 
+import java.util.*
 
-class Recipe(cook_title: String, recipe : Array<String>, tag : Array<String>, pics : Array<String>, writer_UID : String, ings: Array<Pair<String,String>>, like_num: Array<Int>, scrap_num : Int){
+
+class Recipe(
+    cook_title: String,
+    recipe: Array<String>,
+    tag: Array<String>,
+    pics: Array<String>,
+    writer_UID: String,
+    ings: Array<Pair<String,String>>,
+    like_num: Array<Int>,
+    scrap_num: Int
+){
     /*구조를 만들어 주세요~!*/
 
     var cook_title : String = cook_title // 제목
@@ -12,10 +23,14 @@ class Recipe(cook_title: String, recipe : Array<String>, tag : Array<String>, pi
     var ings : Array<Pair<String,String>> = ings//재료
     var scrap_num :Int = scrap_num//스크랩 수
     var like_num : Array<Int> = like_num//추천수
+    var date : Date? = Date()//작성시간
 
     constructor() : this("",arrayOf<String>(),arrayOf<String>(),arrayOf<String>(),"",arrayOf<Pair<String,String>>(),arrayOf<Int>(0,0,0),0)
-
-    constructor(cook_title:String,recipe:Array<String>,tag:Array<String>,pics:Array<String>,writer_UID:String,ings: Array<Pair<String,String>>): this(cook_title,recipe,tag, pics, writer_UID, ings, arrayOf<Int>(0,0,0), 0)
-
-
+    constructor(cook_title:String,
+                recipe:Array<String>,
+                tag:Array<String>,
+                pics:Array<String>,
+                writer_UID:String,
+                ings: Array<Pair<String,String>>) :
+            this(cook_title,recipe,tag, pics, writer_UID, ings, arrayOf<Int>(0,0,0), 0)
 }
