@@ -12,26 +12,21 @@ import androidx.fragment.app.FragmentActivity
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Recipe
-import com.e.yorizori.MyPage.Scrap
 import com.e.yorizori.R
 import com.e.yorizori.explainFrag
 import com.squareup.picasso.Picasso
 
-class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment : Fragment) : BaseAdapter() {
-    private var scrapedRecipe :ArrayList<Recipe> = arrayListOf()
-    private val context = context
-    private val activity = activity as HomeActivity
-    private val fragment = fragment as Scrap
+class SearchedAdapter(keyword : String, activity : FragmentActivity, fragment: Fragment) : BaseAdapter() {
+    private var SearchedRecipe : ArrayList<Recipe> = arrayListOf()
+    private val keyword = keyword
+    private val activity = activity
+    private val parent = fragment
 
     init{
-        val tmp_test = HomeActivity.scrap_info.map{
-            Pair(it.title, it.writer)
-        } as ArrayList<Pair<String,String>>
-        scrapedRecipe = OpeningActivity.recipe_list.filter{
-            tmp_test.contains(Pair(it.cook_title,it.writer_UID))
+        SearchedRecipe = OpeningActivity.recipe_list.filter{
+            it.cook_title.contains(keyword) || it.ings.map{ it.first}.contains(keyword)
         } as ArrayList<Recipe>
     }
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         val context = parent.context
@@ -44,12 +39,12 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
         val tagView  = view.findViewById(R.id.list_tag1) as TextView
         val imageView = view.findViewById(R.id.list_imageView1) as ImageView
 
-        titleView.text = scrapedRecipe[position].cook_title
-        tagView.text = mktag(scrapedRecipe[position])
-        Picasso.get().load(scrapedRecipe[position].pics[0]).into(imageView)
+        titleView.text = SearchedRecipe[position].cook_title
+        tagView.text = mktag(SearchedRecipe[position])
+        Picasso.get().load(SearchedRecipe[position].pics[0]).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(fragment,2, scrapedRecipe[position], mktag(scrapedRecipe[position])))
+            (activity as HomeActivity).changeFragment(explainFrag(this.parent,4, SearchedRecipe[position],mktag(SearchedRecipe[position])))
         }
 
 
@@ -57,7 +52,7 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
     }
 
     override fun getItem(position: Int): Any {
-        return scrapedRecipe[position]
+        return SearchedRecipe[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -65,9 +60,8 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
     }
 
     override fun getCount(): Int {
-        return scrapedRecipe.size
+        return SearchedRecipe.size
     }
-
     fun mktag(recipe: Recipe): String{
         var ret=""
         val like = arrayOf("맛있어요","간단해요","저렴해요")

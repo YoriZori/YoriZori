@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageButton
-            android:id="@+id/doneBtn"
+            android:id="@+id/wrt_deleteBtn"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_delete_black_24dp"
@@ -60,5 +60,16 @@
         app:layout_constraintTop_toBottomOf="@id/wrt_headerLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_written"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wrt_headerLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

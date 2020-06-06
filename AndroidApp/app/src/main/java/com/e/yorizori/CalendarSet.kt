@@ -3,7 +3,7 @@ package com.e.yorizori
 import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.RefrigItem
 import java.util.*
 
@@ -31,7 +31,7 @@ class CalendarSet : AppCompatActivity() {
                 val date = mYear.toString() + "-" + (mMonth+1).toString() + "-" + mDayOfMonth.toString()
 
                 val ref_clicked = RefrigItem(name, date)
-                HomeActivity.add_item(name, date)
+                OpeningActivity.add_item(name, date)
                 finish()
             }, year, month, day)
         dpd.show()

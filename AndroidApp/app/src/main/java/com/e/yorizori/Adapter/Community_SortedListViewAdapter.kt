@@ -69,8 +69,7 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
         Picasso.get().load(listViewItemList[position].iconurl).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(fragment,1,listViewItemList[position].argRecipe,listViewItemList[position].iconurl
-            ,listViewItemList[position].tagStr))
+            (activity as HomeActivity).changeFragment(explainFrag(fragment,1,listViewItemList[position].argRecipe, listViewItemList[position].tagStr))
         }
 
         return view

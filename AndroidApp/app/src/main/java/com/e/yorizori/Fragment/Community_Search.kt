@@ -2,44 +2,30 @@ package com.e.yorizori.Fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
-import com.google.firebase.database.*
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_community_search.view.*
+import kotlinx.android.synthetic.main.activity_community_search.view.auto_search_community
 
-class Community_Search(context: Context) : Fragment(){
-    private var recipes : MutableList<String> = ArrayList()
-    lateinit var database: DatabaseReference
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val rootRef = FirebaseDatabase.getInstance().reference
-        database = rootRef.child("recipe")
+class Community_Search(context: Context, fragment : Fragment) : BackBtnPressListener,Fragment(){
+    private var recipes : ArrayList<String> = ArrayList()
+    private var fragment = fragment
+    var savedFragment : Fragment? = null
 
-        val listener = object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("DatabaseError",p0.message)
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                Log.d("onDataChange","in!")
-                for (child in p0.children) {
-                    val recipe_str= child.getValue(String::class.java)
-                    val trimmed = recipe_str!!.trim()
-                    val gson = Gson()
-                    val recipe = gson.fromJson(trimmed,Recipe::class.java)
-                    recipes.add(recipe.cook_title)
-                }
-            }
-        }
-        database.addValueEventListener(listener)
+    init{
+        recipes = OpeningActivity.recipe_list.map{
+            it.cook_title
+        } as ArrayList<String>
     }
 
 
@@ -49,26 +35,41 @@ class Community_Search(context: Context) : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val view=  inflater.inflate(R.layout.activity_community_search,container,false)
+        val searchView = view.findViewById(R.id.auto_search_community) as AutoCompleteTextView
+        if(savedFragment != null){
+            (activity as HomeActivity).changeFragment(savedFragment!!)
+        }
+
         val searchAdapter = ArrayAdapter<String>(requireContext(),
             android.R.layout.simple_list_item_1,
             recipes
             )
-        view.auto_search_community.threshold = 0
-        view.auto_search_community.setAdapter(searchAdapter)
+        searchView.threshold = 0
+        searchView.setAdapter(searchAdapter)
 
-        if(recipes.isEmpty()){
-            Toast.makeText(this.context,"Empty!",Toast.LENGTH_SHORT).show()
-        }
-        else{
-            Toast.makeText(this.context,"${recipes.size} item exists",Toast.LENGTH_SHORT).show()
-        }
 
-        view.auto_search_community.setOnItemClickListener { parent, view, position, id ->
+        searchView.setOnItemClickListener { parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
-
+            (activity as HomeActivity).changeFragment(SearchResult(this, clicked))
+        }
+        searchView.setOnEditorActionListener { v, actionId, event ->
+            val text = v.text.toString()
+            (activity as HomeActivity).changeFragment(SearchResult(this,text))
+            true
         }
 
 
         return view
+    }
+
+    fun saveInfo(f: Fragment?){
+        savedFragment = f
+    }
+
+    override fun onBack() {
+        (fragment as Community).saveInfo(0,null)
+        var ft = (activity as HomeActivity).supportFragmentManager
+        ft.beginTransaction().remove(this).commit()
+        ft.popBackStack()
     }
 }

@@ -57,18 +57,31 @@ class Community_HorizontalAdapter(
             holder.rtagview.visibility = View.GONE
             holder.rpicview.setImageDrawable(drawable_tmp)
         }
+        else if(item.titleStr==""){
+            holder.rnameview.text=  "당장 가능한 요리가 없습니다..."
+            holder.rtagview.text = item.tagStr
+            holder.rpicview.visibility = View.GONE
+        }
         else {
             holder.rnameview.text = item.titleStr
             holder.rtagview.text = item.tagStr
             Picasso.get().load(item.iconurl).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
-            activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.iconurl,item.tagStr))
+            activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.tagStr))
         }
     }
 
 
     override fun getItemCount(): Int {
+        if(listViewItemList.size == 0){
+            addItem(Recipe())
+        }
+        else if(listViewItemList.size != 1){
+            listViewItemList = listViewItemList.filter{
+                it.titleStr != ""
+            } as ArrayList<Community_ListViewItem>
+        }
         return listViewItemList.size
     }
 
@@ -95,6 +108,10 @@ class Community_HorizontalAdapter(
             item.tagStr=null
             item.iconurl = null
             item.argRecipe = null
+        }
+        else if(recipe.cook_title == ""){
+            item.titleStr=""
+            item.tagStr="체크리스트 추가하러 가기!"
         }
         else {
             item.titleStr = recipe.cook_title

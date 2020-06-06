@@ -1,6 +1,7 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Enum.Like
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.R
@@ -94,41 +96,64 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
             0 -> {//Event Tab...!? 어떻게 채우지 ㄷㄷㄷㄷㄷ
                 for(i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(null)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             1->{
-                for (i in OpeningActivity.recipe_list){
+                val possible = OpeningActivity.recipe_list.filter{
+                    val require_ings = it.ings.map{
+                        it.first
+                    }.toSet()
+                    val ing_set = OpeningActivity.my_ing.map{
+                        it.item
+                    }.toSet()
+                    (require_ings - ing_set).isEmpty()
+                }
+                for (i in possible){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             2->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             3->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.QUICK.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             4-> {
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
                 for (i in OpeningActivity.recipe_list) {
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             5->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
             else->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
+                    if(listViewItemList.size >=5)
+                        break
                 }
             }
 
