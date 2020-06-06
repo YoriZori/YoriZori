@@ -17,7 +17,7 @@ import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 
 class Community: BackBtnPressListener,Fragment(){
-    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null)
+    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null,null)
     var goto = -1
 
     override fun onCreateView(

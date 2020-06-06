@@ -57,8 +57,8 @@ class Community_Search(context: Context, fragment : Fragment) : BackBtnPressList
             (activity as HomeActivity).changeFragment(SearchResult(this,text))
             true
         }
-
-
+        (fragment as Community).saveInfo(4,this)
+        (activity as HomeActivity).setOnBackBtnListener(this)
         return view
     }
 
@@ -67,7 +67,7 @@ class Community_Search(context: Context, fragment : Fragment) : BackBtnPressList
     }
 
     override fun onBack() {
-        (fragment as Community).saveInfo(0,null)
+        (fragment as Community).saveInfo(4,null)
         var ft = (activity as HomeActivity).supportFragmentManager
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()

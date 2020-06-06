@@ -40,7 +40,7 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
         val adapter = Community_SortedListViewAdapter(
             this.context!!,
             activity,
-            fragment,
+            this,
             position
         )
         val backBtn = view.findViewById(R.id.commu_backBtn) as ImageButton

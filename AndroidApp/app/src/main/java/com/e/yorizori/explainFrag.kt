@@ -16,7 +16,10 @@ import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.ScrapInfo
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
+import com.e.yorizori.Fragment.SearchResult
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.e.yorizori.MyPage.Scrap
+import com.e.yorizori.MyPage.Wrote
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -131,32 +134,6 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
             rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
         }
 
-/*
-        // 스크랩버튼 누를 때
-        view.scrapBtn.setOnClickListener(object : View.OnClickListener {
-            var isDefault = false
-            override fun onClick(v: View?) {
-                var scrapNumC = scrapCheck()
-                var scrapChecked = rootRef.child("scrap").child(userUID).key
-                scrapNumC.scrap_num = !scrapNumC.scrap_num
-                isDefault = !isDefault
-                if(scrapChecked==null)
-                    rootRef.child("scrap").child(userUID).push().setValue(Gson().toJson(isDefault))
-                if (isDefault&&scrapNumC.scrap_num) {
-                    scrapBtn.setSelected(true)
-                    recipe1.scrap_num += 1
-                    scrapNum.text = recipe1.scrap_num.toString()
-                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
-                } else {
-                    scrapBtn.setSelected(false)
-                    recipe1.scrap_num -= 1
-                    scrapNum.text = recipe1.scrap_num.toString()
-                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
-                }
-                rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
-            }
-        })
-*/
         // 가성비버튼 누를 때
         view.price_btn.setOnClickListener(object : View.OnClickListener {
             var isDefault = false
@@ -217,10 +194,24 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
 
         })
 
-        if(option == 0)
-            (parent as Community).saveInfo(2,this)
-        else
-            (parent as Community_SortedList).saveInfo(1,this)
+        when(option){
+            0 ->{
+                (parent as Community).saveInfo(2,this)
+            }
+            1->{
+                (parent as Community_SortedList).saveInfo(1,this)
+            }
+            2->{
+                (parent as Scrap).save_info(this)
+            }
+            3->{
+                (parent as Wrote).save_info(this)
+            }
+            else->{
+                (parent as SearchResult).saveInfo(this)
+            }
+        }
+
 
         (activity as HomeActivity).setOnBackBtnListener(this)
         return view
@@ -228,10 +219,23 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
     }
 
     override fun onBack() {
-        if(option == 0)
-            (parent as Community).saveInfo(2,null)
-        else
-            (parent as Community_SortedList).saveInfo(1,null)
+        when(option){
+            0 ->{
+                (parent as Community).saveInfo(2,null)
+            }
+            1->{
+                (parent as Community_SortedList).saveInfo(1,null)
+            }
+            2->{
+                (parent as Scrap).save_info(null)
+            }
+            3->{
+                (parent as Wrote).save_info(null)
+            }
+            else->{
+                (parent as SearchResult).saveInfo(null)
+            }
+        }
         var ft = (activity as HomeActivity).supportFragmentManager
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()

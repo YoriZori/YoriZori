@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +66,11 @@ class Community_HorizontalAdapter(
         else {
             holder.rnameview.text = item.titleStr
             holder.rtagview.text = item.tagStr
-            Picasso.get().load(item.iconurl).into(holder.rpicview)
+            val metrics = DisplayMetrics()
+            activity.windowManager.defaultDisplay.getMetrics(metrics)
+            val px = (130 * metrics.density).toInt()
+
+            Picasso.get().load(item.iconurl).resize(px,px).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
             activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.tagStr))
