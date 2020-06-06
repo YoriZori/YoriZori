@@ -5,16 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.ChecklistListAdapter
 import com.e.yorizori.Adapter.WRIngListViewAdapter
 import com.e.yorizori.Adapter.WRRecipeListViewAdapter
+import com.e.yorizori.CalendarSet
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
@@ -27,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_writing_recipe.view.*
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
+import com.e.yorizori.Activity.OpeningActivity.Companion.ing_list
+
 
 class Add_Recipe : Fragment() {
 
@@ -82,8 +82,6 @@ class Add_Recipe : Fragment() {
             val recipe = Recipe()
             recipe.cook_title = view.titleInput.text.toString()
             recipe.tag = arrayOf(view.tagInput.text.toString())
-//            recipe.ings = arrayOf(Pair(view.ingInput.text.toString(), view.ingNumInput.text.toString()))
-//            recipe.recipe = arrayOf(view.recipeInput.text.toString())
             recipe.ings = ings
             recipe.recipe = recipes
             recipe.writer_UID = userUID
@@ -152,9 +150,21 @@ class Add_Recipe : Fragment() {
             true
         }
 
+        /* search bar start */
+
+        // for real-time search
+        val searchAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.ingInput)
+        val searchAdapter = ArrayAdapter<String>(requireContext(),
+            android.R.layout.simple_list_item_1,
+            /*android.R.layout.simple_list_item_1,*/
+            ing_list)
+        searchAutoComplete.threshold = 0
+        searchAutoComplete.setAdapter(searchAdapter)
+
+        /* search bar end */
+
         return view
     }
-
 
 }
 

@@ -4,5 +4,6 @@
     <string name="register_succeed">회원 가입 완료!</string>
     <string name="register_failed">다시 확인해주세요.</string>
     <string name="login_succeed">로그인 완료!</string>
+    <string name="connection_err">네트워크를 확인해주세요</string>
     <string name="login_failed">다시 확인해주세요.</string>
 </resources>
