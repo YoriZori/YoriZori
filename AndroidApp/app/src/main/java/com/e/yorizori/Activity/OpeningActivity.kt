@@ -15,27 +15,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
-<<<<<<< HEAD
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
-=======
 import com.google.firebase.database.*
 import com.google.gson.Gson
->>>>>>> saintreal4
 
 class OpeningActivity : AppCompatActivity(){
 
     companion object {
-<<<<<<< HEAD
-        var ing_list = arrayListOf<String>()
-
-        fun add(str : String) {
-            ing_list.add(str)
-=======
-
         var recipe_list = arrayListOf<Recipe>()
         var server_ing = arrayListOf<String>()
         var my_ing = mutableListOf<RefrigItem>()
@@ -55,7 +44,6 @@ class OpeningActivity : AppCompatActivity(){
         fun add_item(ref : RefrigItem){
             my_ing.add(ref)
 
->>>>>>> saintreal4
         }
     }
 
@@ -86,20 +74,15 @@ class OpeningActivity : AppCompatActivity(){
             override fun onDataChange(shot: DataSnapshot) {
                 for (ing in shot.children) {
                     val child = ing.value.toString()
-<<<<<<< HEAD
-                    ing_list.add(child)
-=======
+
 
                     server_ing.add(child)
->>>>>>> saintreal4
                 }
             }
         }
         child.addListenerForSingleValueEvent(listener)
-<<<<<<< HEAD
         /* get ingredients from the server. DONE */
 
-=======
 
         val recipes = rootRef.child("recipe")
         val rlistener = object: ValueEventListener{
@@ -139,7 +122,6 @@ class OpeningActivity : AppCompatActivity(){
 
         /* get my own ingeredients. DONE */
 
->>>>>>> saintreal4
         windowManager.defaultDisplay.getMetrics(metrics)
         val length = (maxOf(metrics.widthPixels, metrics.heightPixels) * 0.1).toInt()
         params.width = length

@@ -35,19 +35,15 @@ class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
         (activity as HomeActivity).setOnBackBtnListener(this)
         listView.adapter = adapter
 
-<<<<<<< HEAD
-        if (ele_num == 0) {
-            emptyWrote?.visibility = View.VISIBLE
-        }
-        else if (ele_num != 0){
-            emptyWrote?.visibility = View.INVISIBLE
-        }
 
-=======
         if(listView.adapter.count == 0){
             view.no_written.visibility = View.VISIBLE
+            emptyWrote?.visibility = View.VISIBLE
         }
->>>>>>> saintreal4
+        else{
+            view.no_written.visibility = View.INVISIBLE
+            emptyWrote?.visibility = View.INVISIBLE
+        }
         return view
     }
 

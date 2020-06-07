@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Class.ScrapInfo
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community

@@ -207,20 +207,13 @@
             android:layout_marginTop="5pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-<<<<<<< HEAD
-            app:layout_constraintBottom_toTopOf="@id/text_ver"
-            />
-        <TextView
-            android:id = "@+id/text_ver"
-=======
             app:layout_constraintBottom_toTopOf="@id/acn_text_withdrawal"
             />
         <TextView
             android:id = "@+id/acn_text_withdrawal"
->>>>>>> saintreal4
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Version 0.9"
+            android:text="# 회원탈퇴"
             android:textSize="18dp"
             android:layout_marginLeft="5pt"
             android:layout_marginTop="5pt"
@@ -228,8 +221,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/acn_text_logout"
             />
-<<<<<<< HEAD
-=======
         <TextView
             android:id = "@+id/acn_text_app_info"
             android:layout_width="match_parent"
@@ -242,7 +233,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/acn_text_withdrawal"
             />
->>>>>>> saintreal4
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

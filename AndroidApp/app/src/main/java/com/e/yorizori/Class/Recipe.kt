@@ -2,23 +2,17 @@ package com.e.yorizori.Class
 
 import java.util.*
 
-<<<<<<< HEAD
-
 class Recipe(
     cook_title: String,
-    recipe: Array<String>,
-    tag: Array<String>,
-    pics: Array<String>,
+    recipe: ArrayList<String>,
+    tag: ArrayList<String>,
+    pics: ArrayList<String>,
     writer_UID: String,
-    ings: Array<Pair<String,String>>,
-    like_num: Array<Int>,
+    ings: ArrayList<Pair<String,String>>,
+    like_num: ArrayList<Int>,
     scrap_num: Int
 ){
-=======
-class Recipe(cook_title: String, recipe : ArrayList<String>, tag : ArrayList<String>, pics : ArrayList<String>, writer_UID : String, ings: ArrayList<Pair<String,String>>, like_num: ArrayList<Int> = arrayListOf(0,0,0), scrap_num : Int = 0){
->>>>>>> saintreal4
     /*구조를 만들어 주세요~!*/
-
     var cook_title : String = cook_title // 제목
         get() = field
         set(value) {
@@ -50,31 +44,27 @@ class Recipe(cook_title: String, recipe : ArrayList<String>, tag : ArrayList<Str
             field = value
         }
     var scrap_num :Int = scrap_num//스크랩 수
-<<<<<<< HEAD
-    var like_num : Array<Int> = like_num//추천수
-    var date : Date? = Date()//작성시간
-
-    constructor() : this("",arrayOf<String>(),arrayOf<String>(),arrayOf<String>(),"",arrayOf<Pair<String,String>>(),arrayOf<Int>(0,0,0),0)
-    constructor(cook_title:String,
-                recipe:Array<String>,
-                tag:Array<String>,
-                pics:Array<String>,
-                writer_UID:String,
-                ings: Array<Pair<String,String>>) :
-            this(cook_title,recipe,tag, pics, writer_UID, ings, arrayOf<Int>(0,0,0), 0)
-=======
         get() = field
         set(value) {
             field = value
         }
     var like_num : ArrayList<Int> = like_num//추천수
-        get() = field
+    get() = field
         set(value) {
             field = value
         }
 
+    var date : Date? = Date()//작성시간
+
     constructor() : this("",arrayListOf<String>(),arrayListOf<String>(),arrayListOf<String>(),"",arrayListOf<Pair<String,String>>(),arrayListOf<Int>(0,0,0),0)
+    constructor(cook_title:String,
+                recipe:ArrayList<String>,
+                tag:ArrayList<String>,
+                pics:ArrayList<String>,
+                writer_UID:String,
+                ings: ArrayList<Pair<String,String>>) :
+            this(cook_title,recipe,tag, pics, writer_UID, ings, arrayListOf<Int>(0,0,0), 0)
 
 
->>>>>>> saintreal4
+
 }

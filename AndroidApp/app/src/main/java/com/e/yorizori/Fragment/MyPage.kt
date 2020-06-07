@@ -74,7 +74,7 @@ class MyPage: BackBtnPressListener, Fragment(){
         // Account Setting 에서 진행 예정 (제거 가능)
         // set the text view
         val textView = view.findViewById<TextView>(R.id.my_page_title)
-        textView.text = user!!.displayName
+        textView.text = "마이페이지"
 
         // for logout
         textView.setOnClickListener(object : View.OnClickListener {

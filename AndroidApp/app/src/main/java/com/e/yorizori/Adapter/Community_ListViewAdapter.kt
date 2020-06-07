@@ -94,10 +94,14 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
     fun fillList(position:Int){
         when(position){
             0 -> {//Event Tab...!? 어떻게 채우지 ㄷㄷㄷㄷㄷ
+                var count = 0
                 for(i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(null)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             1->{
@@ -110,50 +114,74 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     }.toSet()
                     (require_ings - ing_set).isEmpty()
                 }
+                var count = 0
                 for (i in possible){
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             2->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
+                var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             3->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.QUICK.idx] })
+                var count=0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             4-> {
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
+                var count=0
                 for (i in OpeningActivity.recipe_list) {
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             5->{
                 OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
+                var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
             else->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.date })
+                var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
-                    if(listViewItemList.size >=5)
+                    count+=1
+                    if(count>=5) {
+                        Log.d("#######",listViewItemList.size.toString())
                         break
+                    }
                 }
             }
 
