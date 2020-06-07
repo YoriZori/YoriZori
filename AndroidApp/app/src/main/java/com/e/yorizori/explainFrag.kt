@@ -38,7 +38,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
     var scraped = false
     var priced = false
     var simpled = false
-    var delicisoused = false
+    var delicioused = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,8 +51,22 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
             Log.d("recipes#####","key: ${it.key}, title : ${it.title}, writer : ${it.writer}")
             it.has(recipeAll!!.cook_title,recipeAll!!.writer_UID)
         }
+        val finding1 = HomeActivity.price_info.filter{
+            Log.d("recipes#####","key: ${it.key}, title : ${it.title}, writer : ${it.writer}")
+            it.has(recipeAll!!.cook_title,recipeAll!!.writer_UID)
+        }
+        val finding2 = HomeActivity.simp_info.filter{
+            Log.d("recipes#####","key: ${it.key}, title : ${it.title}, writer : ${it.writer}")
+            it.has(recipeAll!!.cook_title,recipeAll!!.writer_UID)
+        }
+        val finding3 = HomeActivity.del_info.filter{
+            Log.d("recipes#####","key: ${it.key}, title : ${it.title}, writer : ${it.writer}")
+            it.has(recipeAll!!.cook_title,recipeAll!!.writer_UID)
+        }
         scraped = finding.isNotEmpty()
-
+        priced = finding1.isNotEmpty()
+        simpled = finding2.isNotEmpty()
+        delicioused = finding3.isNotEmpty()
 
         val view = inflater.inflate(R.layout.activity_explain, container, false)
         // Inflate the layout for this fragment
@@ -62,6 +76,9 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         }
 
         view!!.scrapBtn.isSelected = scraped
+        view!!.scrapBtn.isSelected = priced
+        view!!.scrapBtn.isSelected = simpled
+        view!!.scrapBtn.isSelected = delicioused
 
         // 레시피클래스 가져오기
         var recipe1 = recipeAll
@@ -139,113 +156,46 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
 
         // 가성비버튼 누를 때
         view.price_btn.setOnClickListener {
-            price_btn.isSelected = !scraped
-            scraped = !scraped
-            if(scraped) {
-                recipe1.scrap_num += 1
+            price_btn.isSelected = !priced
+            priced = !priced
+            if(priced) {
+                recipe1.like_num[2] += 1
             }
             else {
-                recipe1.scrap_num -= 1
+                recipe1.like_num[2] -= 1
             }
-            scrapNum.text = recipe1.scrap_num.toString()
+            price_num.text = recipe1.like_num[2].toString()
             rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
         }
-/*
-        // 스크랩버튼 누를 때
-        view.scrapBtn.setOnClickListener(object : View.OnClickListener {
-            var isDefault = false
-            override fun onClick(v: View?) {
-                var scrapNumC = scrapCheck()
-                var scrapChecked = rootRef.child("scrap").child(userUID).key
-                scrapNumC.scrap_num = !scrapNumC.scrap_num
-                isDefault = !isDefault
-                if(scrapChecked==null)
-                    rootRef.child("scrap").child(userUID).push().setValue(Gson().toJson(scrapNumC))
-                if (isDefault&&scrapNumC.scrap_num) {
-                    scrapBtn.setSelected(true)
-                    recipe1.scrap_num += 1
-                    scrapNum.text = recipe1.scrap_num.toString()
-                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
-                } else {
-                    scrapBtn.setSelected(false)
-                    recipe1.scrap_num -= 1
-                    scrapNum.text = recipe1.scrap_num.toString()
-                    rootRef.child("scrap").child(userUID).setValue(Gson().toJson(isDefault))
-                }
-                rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
-            }
-        })
-
- */
-
-        // 가성비버튼 누를 때
-        view.price_btn.setOnClickListener(object : View.OnClickListener {
-            var isDefault = false
-            var priceChecked = rootRef.child("like").child(userUID).key
-            override fun onClick(v: View?) {
-                //var priceNumC = likeCheck().like_num[2]
-                //var priceChecked = rootRef.child("like").child(userUID).key
-                isDefault = !isDefault
-                //if(priceChecked == null) {
-                    //priceNumC.like_num[2] = 1
-                    //rootRef.child("like").child(userUID).push().setValue(Gson().toJson(priceNumC))
-                //}
-                if(isDefault) {
-                    price_btn.setSelected(true)
-                    recipe1.like_num[2] += 1
-                    price_num.text = recipe1.like_num[2].toString()
-                    //rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
-                }
-                else {
-                    price_btn.setSelected(false)
-                    recipe1.like_num[2] -= 1
-                    price_num.text = recipe1.like_num[2].toString()
-                    //rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
-                }
-                //rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
-            }
-
-        })
 
         // 간단해요버튼 누를 때
-        view.simple_btn.setOnClickListener(object : View.OnClickListener {
-            var isDefault = false
-            override fun onClick(v: View?) {
-                isDefault = !isDefault
-                if(isDefault) {
-                    simple_btn.setSelected(true)
-                    recipe1.like_num[1] += 1
-                    simple_num.text = recipe1.like_num[1].toString()
-                }
-                else {
-                    simple_btn.setSelected(false)
-                    recipe1.like_num[1] -= 1
-                    simple_num.text = recipe1.like_num[1].toString()
-                }
-                rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+        view.simple_btn.setOnClickListener {
+            simple_btn.isSelected = !simpled
+            simpled = !simpled
+            if(simpled) {
+                recipe1.like_num[1] += 1
             }
-
-        })
+            else {
+                recipe1.like_num[1] -= 1
+            }
+            simple_num.text = recipe1.like_num[1].toString()
+            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+        }
 
         // 맛있어요버튼 누를 때
-        view.del_btn.setOnClickListener(object : View.OnClickListener {
-            var isDefault = false
-            override fun onClick(v: View?) {
-                isDefault = !isDefault
-                if(isDefault) {
-                    del_btn.setSelected(true)
-                    recipe1.like_num[0] += 1
-                    del_num.text = recipe1.like_num[0].toString()
-                }
-                else {
-                    del_btn.setSelected(false)
-                    recipe1.like_num[0] -= 1
-                    del_num.text = recipe1.like_num[0].toString()
-                }
-                rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+        view.del_btn.setOnClickListener {
+            del_btn.isSelected = !delicioused
+            delicioused = !delicioused
+            if(delicioused) {
+                recipe1.like_num[0] += 1
             }
+            else {
+                recipe1.like_num[0] -= 1
+            }
+            del_num.text = recipe1.like_num[0].toString()
+            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+        }
 
-        })
 
         if(option == 0)
             (parent as Community).saveInfo(2,this)
@@ -271,6 +221,26 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         super.onPause()
         Log.d("#######","onPause")
         var tmp = HomeActivity.scrap_info.filter{ it.has(recipeAll!!.cook_title,recipeAll.writer_UID)}
+        var tmp1 = HomeActivity.price_info.filter{ it.has(recipeAll!!.cook_title,recipeAll.writer_UID)}
+        var tmp2 = HomeActivity.simp_info.filter{ it.has(recipeAll!!.cook_title,recipeAll.writer_UID)}
+        var tmp3 = HomeActivity.del_info.filter{ it.has(recipeAll!!.cook_title,recipeAll.writer_UID)}
+
+        if(priced){
+            if(tmp1.isEmpty()){
+                rootRef.child("$userUID/price_checked").push().setValue("${recipeAll!!.cook_title},${recipeAll.writer_UID}")
+            }
+        }
+        if(simpled){
+            if(tmp2.isEmpty()){
+                rootRef.child("$userUID/simple_checked").push().setValue("${recipeAll!!.cook_title},${recipeAll.writer_UID}")
+            }
+        }
+
+        if(delicioused){
+            if(tmp3.isEmpty()){
+                rootRef.child("$userUID/delicious_checked").push().setValue("${recipeAll!!.cook_title},${recipeAll.writer_UID}")
+            }
+        }
         if(scraped){
             if(tmp.isEmpty()){
                 rootRef.child("$userUID/scrap").push().setValue("${recipeAll!!.cook_title},${recipeAll.writer_UID}")
@@ -279,6 +249,15 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         else{
             if(tmp.isNotEmpty()){
                 rootRef.child("$userUID/scrap/${tmp.last().key}").removeValue()
+            }
+            if(tmp1.isNotEmpty()){
+                rootRef.child("$userUID/price_checked/${tmp1.last().key}").removeValue()
+            }
+            if(tmp2.isNotEmpty()){
+                rootRef.child("$userUID/simple_checked/${tmp1.last().key}").removeValue()
+            }
+            if(tmp3.isNotEmpty()){
+                rootRef.child("$userUID/delicious_checked/${tmp1.last().key}").removeValue()
             }
         }
     }

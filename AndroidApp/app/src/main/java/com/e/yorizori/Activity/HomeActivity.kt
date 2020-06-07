@@ -17,6 +17,7 @@ import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.e.yorizori.MyPage.Scrap
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -35,6 +36,9 @@ class HomeActivity : AppCompatActivity(){
 
     companion object{
         var scrap_info: ArrayList<ScrapInfo> = arrayListOf()
+        var price_info: ArrayList<ScrapInfo> = arrayListOf()
+        var simp_info:  ArrayList<ScrapInfo> = arrayListOf()
+        var del_info:   ArrayList<ScrapInfo> = arrayListOf()
 
         fun add_scrap(key: String, title: String, writer:String){
             scrap_info.add(ScrapInfo(key,title,writer))
@@ -107,6 +111,9 @@ class HomeActivity : AppCompatActivity(){
         var rootRef = FirebaseDatabase.getInstance().reference
         var userUID = user!!.uid
         var scraped =  rootRef.child("$userUID/scrap")
+        var price = rootRef.child("$userUID/price_checked")
+        var simple = rootRef.child("$userUID/simple_checked")
+        var delicious = rootRef.child("$userUID/delicious_checked")
         var listener = object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
@@ -114,17 +121,31 @@ class HomeActivity : AppCompatActivity(){
 
             override fun onDataChange(p0: DataSnapshot) {
                 var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list1 : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list2 : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list3 : ArrayList<ScrapInfo> = arrayListOf()
                 for (child in p0.children){
                     var key = child.key
                     var list = child.getValue(String::class.java)
                     var tmp = list!!.split(",")
                     tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    tmp_list1.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    //tmp_list2.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    //tmp_list3.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+
                 }
                 scrap_info = tmp_list
+                price_info = tmp_list1
+                simp_info = tmp_list2
+                del_info = tmp_list3
+
             }
 
         }
         scraped.addValueEventListener(listener)
+        price.addValueEventListener(listener)
+        simple.addValueEventListener(listener)
+        delicious.addValueEventListener(listener)
     }
 
     override fun onResume(){
