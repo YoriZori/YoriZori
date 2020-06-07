@@ -133,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 else ->{
-                    selected = HateList()
+                    selected = MyPage()
                     true
                 }
             }
