@@ -34,18 +34,14 @@ class HomeActivity : AppCompatActivity(){
     var fragments : Array<Fragment?> = arrayOf(Community(), CheckList(), MyPage())
     var position = 0
 
-<<<<<<< HEAD
     companion object {
         var items = mutableListOf<RefrigItem>()
         var picsuc = 0
         var str : String = ""
-=======
-    companion object{
         var scrap_info: ArrayList<ScrapInfo> = arrayListOf()
         var price_info: ArrayList<ScrapInfo> = arrayListOf()
         var simp_info:  ArrayList<ScrapInfo> = arrayListOf()
         var del_info:   ArrayList<ScrapInfo> = arrayListOf()
->>>>>>> saintreal4
 
         fun add_scrap(key: String, title: String, writer:String){
             scrap_info.add(ScrapInfo(key,title,writer))
@@ -107,13 +103,10 @@ class HomeActivity : AppCompatActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-<<<<<<< HEAD
             val uri = data!!.data
             str = uri.toString()
             picsuc = 1
-=======
             recipeImage.setImageURI(data?.data)
->>>>>>> saintreal4
         }
     }
 
