@@ -14,6 +14,8 @@ import com.e.yorizori.Adapter.ingAdapter
 //import com.e.yorizori.Adapter.explainAdapter
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.ScrapInfo
+import com.e.yorizori.Class.likeCheck
+import com.e.yorizori.Class.scrapCheck
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Interface.BackBtnPressListener
@@ -34,6 +36,9 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
    // private lateinit var userUID : String
     private var rootRef = FirebaseDatabase.getInstance().reference
     var scraped = false
+    var priced = false
+    var simpled = false
+    var delicisoused = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -118,6 +123,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         setListViewHeightBasedOnItems(listview1)
         setListViewHeightBasedOnItems(listview2)
 
+        // 스크랩버튼 누를 때
         view.scrapBtn.setOnClickListener {
             scrapBtn.isSelected = !scraped
             scraped = !scraped
@@ -131,6 +137,19 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
             rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
         }
 
+        // 가성비버튼 누를 때
+        view.price_btn.setOnClickListener {
+            price_btn.isSelected = !scraped
+            scraped = !scraped
+            if(scraped) {
+                recipe1.scrap_num += 1
+            }
+            else {
+                recipe1.scrap_num -= 1
+            }
+            scrapNum.text = recipe1.scrap_num.toString()
+            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+        }
 /*
         // 스크랩버튼 누를 때
         view.scrapBtn.setOnClickListener(object : View.OnClickListener {
@@ -156,32 +175,34 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
                 rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
             }
         })
-*/
+
+ */
+
         // 가성비버튼 누를 때
         view.price_btn.setOnClickListener(object : View.OnClickListener {
             var isDefault = false
             var priceChecked = rootRef.child("like").child(userUID).key
             override fun onClick(v: View?) {
-                var priceNumC = likeCheck().like_num[2]
+                //var priceNumC = likeCheck().like_num[2]
                 //var priceChecked = rootRef.child("like").child(userUID).key
                 isDefault = !isDefault
-                if(priceChecked == null) {
+                //if(priceChecked == null) {
                     //priceNumC.like_num[2] = 1
-                    rootRef.child("like").child(userUID).push().setValue(Gson().toJson(priceNumC))
-                }
+                    //rootRef.child("like").child(userUID).push().setValue(Gson().toJson(priceNumC))
+                //}
                 if(isDefault) {
                     price_btn.setSelected(true)
                     recipe1.like_num[2] += 1
                     price_num.text = recipe1.like_num[2].toString()
-                    rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
+                    //rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
                 }
                 else {
                     price_btn.setSelected(false)
                     recipe1.like_num[2] -= 1
                     price_num.text = recipe1.like_num[2].toString()
-                    rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
+                    //rootRef.child("like").child(userUID).setValue(Gson().toJson(priceNumC))
                 }
-                rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+                //rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
             }
 
         })
