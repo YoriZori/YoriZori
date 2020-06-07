@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +19,6 @@ import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
-import com.e.yorizori.MyPage.Scrap
-import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -42,8 +39,6 @@ class HomeActivity : AppCompatActivity(){
         var hate_edit : SharedPreferences.Editor? = null
         var hate_prefs : SharedPreferences? = null
         var hate_items = mutableListOf<RefrigItem>()
-//        var checklist_prefs : SharedPreferences? = null
-//        var checklist_edit : SharedPreferences.Editor? = null
 
         var picsuc = 0
         var str : String = ""
@@ -52,11 +47,8 @@ class HomeActivity : AppCompatActivity(){
         var simp_info:  ArrayList<ScrapInfo> = arrayListOf()
         var del_info:   ArrayList<ScrapInfo> = arrayListOf()
 
-<<<<<<< HEAD
         fun set_prefs(_context : Context) {
-            //   checklist_prefs = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE)
             hate_prefs = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE)
-            //   checklist_edit = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE).edit()
             hate_edit = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE).edit()
         }
 
@@ -93,11 +85,9 @@ class HomeActivity : AppCompatActivity(){
         // Permission Code
         val PERMISSION_CODE = 1001
 
-=======
         fun add_scrap(key: String, title: String, writer:String){
             scrap_info.add(ScrapInfo(key,title,writer))
         }
->>>>>>> 9868dfce947e6ab4c88301bbda362c4df75543b6
     }
     // Image Pick Code
     val IMAGE_PICK_CODE = 1000
@@ -190,51 +180,19 @@ class HomeActivity : AppCompatActivity(){
                     tmp_list1.add(ScrapInfo(key!!,tmp[0],tmp[1]))
                     //tmp_list2.add(ScrapInfo(key!!,tmp[0],tmp[1]))
                     //tmp_list3.add(ScrapInfo(key!!,tmp[0],tmp[1]))
-
-<<<<<<< HEAD
-        set_prefs(applicationContext)
-        load_hate()
-
-        items.add(RefrigItem("소세지", "2018-12-25"))
-        items.add(RefrigItem("돼지고기"))
-        items.add(RefrigItem("우유", "2020-05-20"))
-        items.add(RefrigItem("양파", "2020-05-28"))
-        items.add(RefrigItem("카레가루"))
-        items.add(RefrigItem("마늘", "2020-05-29"))
-        items.add(RefrigItem("고추장"))
-        items.add(RefrigItem("떡", "2020-05-30"))
-        items.add(RefrigItem("간장", "2020-05-27"))
-        items.add(RefrigItem("으악", "2020-05-26"))
-        items.add(RefrigItem("으악", "2020-05-25"))
-        items.add(RefrigItem("으악", "2020-05-24"))
-        items.add(RefrigItem("으악", "2020-05-23"))
-        items.add(RefrigItem("으악", "2020-05-22"))
-        items.add(RefrigItem("으악", "2020-05-21"))
-        items.add(RefrigItem("으악", "2020-05-20"))
-        items.add(RefrigItem("으악", "2020-05-19"))
-        items.add(RefrigItem("으악", "2020-05-18"))
-        items.add(RefrigItem("으악", "2020-05-17"))
-        items.add(
-            RefrigItem(
-                "나랏말싸미뒹귁에달아문자와로서로사맛디아니할세이런젼차로어린백성이니르고져홀빼이셔도마참내제뜻을",
-                "2019-05-10"
-            )
-        )
-=======
                 }
                 scrap_info = tmp_list
                 price_info = tmp_list1
                 simp_info = tmp_list2
                 del_info = tmp_list3
-
             }
-
         }
+        set_prefs(applicationContext)
+        load_hate()
         scraped.addValueEventListener(listener)
         price.addValueEventListener(listener)
         simple.addValueEventListener(listener)
         delicious.addValueEventListener(listener)
->>>>>>> 9868dfce947e6ab4c88301bbda362c4df75543b6
     }
 
     override fun onResume(){
