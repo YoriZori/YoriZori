@@ -2,7 +2,6 @@ package com.e.yorizori.Adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -14,6 +13,7 @@ import com.e.yorizori.R
 import androidx.core.view.isVisible
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.LayoutInflater as LayoutInflater1
 
 class ChecklistListAdapter (val context: Context, val _items: MutableList<RefrigItem>): BaseAdapter() {
 
@@ -26,7 +26,7 @@ class ChecklistListAdapter (val context: Context, val _items: MutableList<Refrig
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.checklist_item, parent, false)
+        val view: View = LayoutInflater1.from(context).inflate(R.layout.checklist_item, parent, false)
 
 
         val item_name = view.findViewById<TextView>(R.id.item_name)

@@ -15,12 +15,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Class.ScrapInfo
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.e.yorizori.MyPage.Scrap
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 
 
@@ -40,7 +47,12 @@ class HomeActivity : AppCompatActivity(){
 
         var picsuc = 0
         var str : String = ""
+        var scrap_info: ArrayList<ScrapInfo> = arrayListOf()
+        var price_info: ArrayList<ScrapInfo> = arrayListOf()
+        var simp_info:  ArrayList<ScrapInfo> = arrayListOf()
+        var del_info:   ArrayList<ScrapInfo> = arrayListOf()
 
+<<<<<<< HEAD
         fun set_prefs(_context : Context) {
             //   checklist_prefs = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE)
             hate_prefs = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE)
@@ -81,7 +93,16 @@ class HomeActivity : AppCompatActivity(){
         // Permission Code
         val PERMISSION_CODE = 1001
 
+=======
+        fun add_scrap(key: String, title: String, writer:String){
+            scrap_info.add(ScrapInfo(key,title,writer))
+        }
+>>>>>>> 9868dfce947e6ab4c88301bbda362c4df75543b6
     }
+    // Image Pick Code
+    val IMAGE_PICK_CODE = 1000
+    // Permission Code
+    val PERMISSION_CODE = 1001
 
     fun setOnBackBtnListener(listener:BackBtnPressListener?){
         backBtnListener = listener
@@ -109,7 +130,6 @@ class HomeActivity : AppCompatActivity(){
         else {
             pickImageFromGallery()
         }
-
     }
 
     fun pickImageFromGallery() {
@@ -138,13 +158,40 @@ class HomeActivity : AppCompatActivity(){
             val uri = data!!.data
             str = uri.toString()
             picsuc = 1
+            recipeImage.setImageURI(data?.data)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        var user = FirebaseAuth.getInstance().currentUser
+        var rootRef = FirebaseDatabase.getInstance().reference
+        var userUID = user!!.uid
+        var scraped =  rootRef.child("$userUID/scrap")
+        var price = rootRef.child("$userUID/price_checked")
+        var simple = rootRef.child("$userUID/simple_checked")
+        var delicious = rootRef.child("$userUID/delicious_checked")
+        var listener = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list1 : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list2 : ArrayList<ScrapInfo> = arrayListOf()
+                var tmp_list3 : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    tmp_list1.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    //tmp_list2.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                    //tmp_list3.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+
+<<<<<<< HEAD
         set_prefs(applicationContext)
         load_hate()
 
@@ -173,6 +220,21 @@ class HomeActivity : AppCompatActivity(){
                 "2019-05-10"
             )
         )
+=======
+                }
+                scrap_info = tmp_list
+                price_info = tmp_list1
+                simp_info = tmp_list2
+                del_info = tmp_list3
+
+            }
+
+        }
+        scraped.addValueEventListener(listener)
+        price.addValueEventListener(listener)
+        simple.addValueEventListener(listener)
+        delicious.addValueEventListener(listener)
+>>>>>>> 9868dfce947e6ab4c88301bbda362c4df75543b6
     }
 
     override fun onResume(){
@@ -190,15 +252,23 @@ class HomeActivity : AppCompatActivity(){
             var selected:Fragment
             when(it.itemId){
                 R.id.tab_community -> {
-                    selected = fragments[0]!!
+                    if(position == 0){
+                        selected = Community()
+                    }
+                    else selected = fragments[0]!!
                 }
                 R.id.tab_check ->{
-                    selected = fragments[1]!!
+                    if(position == 1){
+                        selected = CheckList()
+                    }
+                    else selected = fragments[1]!!
                 }
                 else ->{
-                    selected = fragments[2]!!
+                    if(position == 2) {
+                        selected = MyPage()
+                    }
+                    else selected = fragments[2]!!
                 }
-
             }
             changeFragment(selected)
             true
@@ -216,7 +286,6 @@ class HomeActivity : AppCompatActivity(){
         }
     }
 
-    
     fun saveFragment(p : Int,f: Fragment){
         fragments[p] = f
         position = p

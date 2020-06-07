@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/acn_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -42,10 +42,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/info_title"
+        android:id="@+id/acn_info_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID 정보"
+        android:text="회원 정보"
         android:textSize="22dp"
         android:layout_marginLeft="12pt"
         android:layout_marginTop="2pt"
@@ -59,47 +59,92 @@
         android:background="@drawable/round_border"
         android:layout_margin="16dp"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/info_title">
+        app:layout_constraintTop_toBottomOf="@+id/acn_info_text">
 
         <TextView
-            android:id = "@+id/text_id"
-            android:layout_width="match_parent"
+            android:id = "@+id/acn_text_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[ID]   YoriZori"
+            android:text="[닉네임]"
             android:textSize="16dp"
-            android:layout_marginLeft="5pt"
             android:layout_marginTop="5pt"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_point"
+            app:layout_constraintLeft_toLeftOf="@id/acn_text_email"
+            app:layout_constraintRight_toLeftOf="@id/acn_name"
+            app:layout_constraintBottom_toTopOf="@id/acn_text_exp"
+            app:layout_constraintTop_toBottomOf="@id/acn_text_email"
             />
+
         <TextView
-            android:id = "@+id/text_point"
-            android:layout_width="match_parent"
+            android:id = "@+id/acn_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" [P]   1000 "
+            android:text="name"
             android:textSize="16dp"
             android:layout_marginLeft="5pt"
-            android:layout_marginTop="5pt"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_id"
+            app:layout_constraintLeft_toRightOf="@id/acn_text_name"
+            app:layout_constraintTop_toTopOf="@id/acn_text_name"
+            app:layout_constraintBottom_toBottomOf="@id/acn_text_name"
             />
+
+        <TextView
+            android:id = "@+id/acn_text_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5pt"
+            android:text="[이메일]"
+            android:textSize="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id = "@+id/acn_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:textSize="16dp"
+            android:layout_marginLeft="5pt"
+            app:layout_constraintLeft_toRightOf="@id/acn_text_email"
+            app:layout_constraintTop_toTopOf="@id/acn_text_email"
+            app:layout_constraintBottom_toBottomOf="@id/acn_text_email"
+            />
+
+        <TextView
+            android:id="@+id/acn_text_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:text="[EXP]"
+            android:textSize="16dp"
+            app:layout_constraintLeft_toLeftOf="@id/acn_text_email"
+            app:layout_constraintTop_toBottomOf="@id/acn_text_name"/>
+
+        <TextView
+            android:id="@+id/acn_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3500"
+            android:textSize="16dp"
+            android:layout_marginLeft="5pt"
+            app:layout_constraintLeft_toRightOf="@id/acn_text_name"
+            app:layout_constraintTop_toTopOf="@id/acn_text_exp"
+            app:layout_constraintBottom_toBottomOf="@id/acn_text_exp"/>
+
         <Button
             android:id="@+id/acn_btn"
-            android:text="아이디 / 비밀번호 변경"
+            android:text="닉네임 변경"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="5pt"
             android:layout_marginLeft="5pt"
             android:layout_marginRight="5pt"
-            android:background="#ff7d5a"
-            app:layout_constraintTop_toBottomOf="@id/text_point"
+            android:background="@color/colorPink"
+            app:layout_constraintTop_toBottomOf="@id/acn_text_exp"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/notify_title"
+        android:id="@+id/acn_notify_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="알림"
@@ -116,7 +161,7 @@
         android:background="@drawable/round_border"
         android:layout_margin="16dp"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/notify_title">
+        app:layout_constraintTop_toBottomOf="@+id/acn_notify_title">
 
         <TextView
             android:id = "@+id/text_notes_setting"
@@ -125,14 +170,15 @@
             android:text="# 알림설정"
             android:textSize="18dp"
             android:layout_marginLeft="5pt"
-            android:layout_marginTop="5pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/general_title"
+        android:id="@+id/acn_general_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="일반"
@@ -149,10 +195,10 @@
         android:background="@drawable/round_border"
         android:layout_margin="16dp"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/general_title">
+        app:layout_constraintTop_toBottomOf="@+id/acn_general_title">
 
         <TextView
-            android:id = "@+id/text_logout"
+            android:id = "@+id/acn_text_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="# 로그아웃"
@@ -161,19 +207,31 @@
             android:layout_marginTop="5pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_ver"
+            app:layout_constraintBottom_toTopOf="@id/acn_text_withdrawal"
             />
         <TextView
-            android:id = "@+id/text_ver"
+            android:id = "@+id/acn_text_withdrawal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Version 0.9"
+            android:text="# 회원탈퇴"
             android:textSize="18dp"
             android:layout_marginLeft="5pt"
             android:layout_marginTop="5pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_logout"
+            app:layout_constraintTop_toBottomOf="@id/acn_text_logout"
+            />
+        <TextView
+            android:id = "@+id/acn_text_app_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="# 어플정보"
+            android:textSize="18dp"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/acn_text_withdrawal"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

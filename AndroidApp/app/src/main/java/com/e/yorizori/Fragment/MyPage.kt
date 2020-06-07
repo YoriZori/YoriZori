@@ -1,5 +1,6 @@
 package com.e.yorizori.Fragment
 
+import android.R.attr.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.LoginActivity
 import com.e.yorizori.R
@@ -19,7 +21,10 @@ import com.e.yorizori.MyPage.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_account_setting.*
 import kotlinx.android.synthetic.main.activity_my.view.*
+
+
 
 class MyPage: BackBtnPressListener, Fragment(){
     lateinit var database : DatabaseReference
@@ -71,7 +76,7 @@ class MyPage: BackBtnPressListener, Fragment(){
         // Account Setting 에서 진행 예정 (제거 가능)
         // set the text view
         val textView = view.findViewById<TextView>(R.id.my_page_title)
-        textView.text = user!!.displayName
+        textView.text = "마이페이지"
 
         // for logout
         textView.setOnClickListener(object : View.OnClickListener {
@@ -84,11 +89,15 @@ class MyPage: BackBtnPressListener, Fragment(){
             }
         })
 
+        (activity as HomeActivity).saveFragment(2,this)
+
         return view
     }
     override fun onResume(){
         super.onResume()
     }
+
+
     fun saveInfo(idx: Int, fragment : Fragment?){
         savedFragment[idx] = fragment
         if(fragment == null)
@@ -105,7 +114,9 @@ class MyPage: BackBtnPressListener, Fragment(){
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
         builder.setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-            activity!!.finish()
+            finishAffinity(requireActivity());
+            System.runFinalization();
+            System.exit(0);
         })
         builder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()
