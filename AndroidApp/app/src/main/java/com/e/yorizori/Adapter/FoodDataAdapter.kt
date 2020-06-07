@@ -11,11 +11,12 @@ import com.e.yorizori.R
 import kotlinx.android.synthetic.main.item_food.view.*
 
 
-class FoodDataAdapter(val list:List<FoodModel>):RecyclerView.Adapter<FoodDataViewHolder>() {
+class FoodDataAdapter(val list : List<FoodModel>):RecyclerView.Adapter<FoodDataViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodDataViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_food,parent,false)
         return FoodDataViewHolder(view)
     }
+    //list : List<FoodModel>
 
     override fun getItemCount(): Int {
         return list.count()
@@ -27,20 +28,3 @@ class FoodDataAdapter(val list:List<FoodModel>):RecyclerView.Adapter<FoodDataVie
         holder.containerView.checkBox
     }
 }
-/*
-class FoodDataAdapter(val list:ArrayList<Recipe>):RecyclerView.Adapter<FoodDataViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodDataViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_food,parent,false)
-        return FoodDataViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return list.count()
-    }
-
-    override fun onBindViewHolder(holder: FoodDataViewHolder, position: Int) {
-        holder.containerView.nameText.text = list[position].
-        holder.containerView.checkBox
-    }
-}
-*/

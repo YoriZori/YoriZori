@@ -7,115 +7,24 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Enum.Like
 import com.e.yorizori.R
+import com.e.yorizori.explainFrag
+import com.squareup.picasso.Picasso
 
-class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter(){
-    private var recipeList = ArrayList<Recipe>()
+class Community_SortedListViewAdapter(context : Context, activity : FragmentActivity, fragment : Fragment, p : Int): BaseAdapter(){
     private var listViewItemList = ArrayList<Community_ListViewItem>()
-    private var context0 = context
+    private var context = context
+    private var activity = activity
+    private var fragment = fragment
     private var parent_position = p
     init{
-        recipeList.add(
-            Recipe(
-                "계란볶음밥",
-                arrayOf(
-                    "1. 기름을 두른다",
-                    "2. 계란을 깨서 넣고 마구 젓는다",
-                    "3. 밥을 넣어 잘 풀어준다",
-                    "4. 밥이 모두 풀어지면 소금간을 한다",
-                    "5. 완성!"
-                ),
-                arrayOf("5분 완성", "밥과 계란", "응용 가능"),
-                arrayOf("대충 사진"),
-                "내가 쓴거 아님",
-                arrayOf(Pair("밥", "1공"), Pair("계란", "1"), Pair("식용유", "10스푼")),
-                arrayOf(3, 19, 20),
-                43
-            )
-        )
-        recipeList.add(
-            Recipe(
-                "제육볶음",
-                arrayOf(
-                    "1. 고기에 핏기가 안보일때 까지 볶는다",
-                    "2. 고추장, 설탕, 간장, 고춧가루를 넣고 잘 섞어준다",
-                    "3. 적당히 잘 볶아준다",
-                    "4. 완성!"
-                ),
-                arrayOf("고기", "고기고기", "고기고기고기"),
-                arrayOf("대충 고기"),
-                "고기반찬",
-                arrayOf(
-                    Pair("돼지고기", "200g"),
-                    Pair("고추장", "1스푼"),
-                    Pair("고춧가루", "1스푼"),
-                    Pair("간장", "1스푼"),
-                    Pair("설탕", "1스푼")
-                ),
-                arrayOf(25, 3, 10),
-                87
-            )
-        )
-        recipeList.add(
-            Recipe(
-                "소시지볶음",
-                arrayOf(
-                    "1. 소시지를 기름에 볶는다",
-                    "2. 케찹을 넣고 마구 젓는다",
-                    "3. 먹고싶은 야채를 대충 때려 박는다",
-                    "4. 적당히 익으면 완성!"
-                ),
-                arrayOf("소시지 강추", "야채 아무거나", "국민반찬"),
-                arrayOf("대충 소시지 윤기 좔좔"),
-                "소시지가짱이야",
-                arrayOf(Pair("소시지", "10개"), Pair("케찹", "3스푼")),
-                arrayOf(13, 15, 23),
-                54
-            )
-        )
-        recipeList.add(
-            Recipe(
-                "티라미수",
-                arrayOf(
-                    "1. 계란의 흰자와 노른자를 분리한다",
-                    "2. 계란 흰자를 열심히 저어서 거품을 낸다",
-                    "3. 노른자에도 설탕을 넣으며 밝은 노란색이 될때까지 열심히 젓는다",
-                    "4. 노른자에 크림치즈를 넣는다",
-                    "5. 노른자 + 크림치즈에 흰자를 넣는다",
-                    "6. 빵에 커피를 바른다",
-                    "7. 커피를 바른 빵 과 흰자 + 노른자 + 크림치즈를 순서대로 쌓는다",
-                    "8. 코코아파우더를 뿌려 완성한다"
-                ),
-                arrayOf("달콤쌉쌀", "케이크", "홈카페"),
-                arrayOf("맛잇어보이는케이크"),
-                "홈카페 장인",
-                arrayOf(
-                    Pair("계란", "3개"),
-                    Pair("크림치즈", "1통"),
-                    Pair("식빵", "2개"),
-                    Pair("카카오파우더", "1스푼"),
-                    Pair("설탕", "6개")
-                ),
-                arrayOf(65, 0, 23),
-                105
-            )
-        )
-        recipeList.add(
-            Recipe(
-                "계란후라이",
-                arrayOf("1. 기름을 둘러 데운다", "2. 계란을 깨서 넣는다", "3. 원하는 만큼 익힌다", "4. 완성!"),
-                arrayOf("다들 하는법 알잖아", "이걸 왜봐"),
-                arrayOf("대충 후라이"),
-                "포인트꺼억",
-                arrayOf(Pair("계란", "1개")),
-                arrayOf(12, 74, 36),
-                1
-            )
-        )
         when(parent_position){
             0 -> {
                 // Error! It's event tab
@@ -124,23 +33,23 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
                 // Nothing to do ( Don't need sort )
             }
             2->{
-                recipeList.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
             }
             3->{
-                recipeList.sortWith(compareByDescending{ it.like_num[Like.QUICK.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending{ it.like_num[Like.QUICK.idx] })
             }
             4->{
-                recipeList.sortWith(compareByDescending{ it.like_num[Like.CHEAP.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending{ it.like_num[Like.CHEAP.idx] })
             }
             5->{
-                recipeList.sortWith(compareByDescending { it.scrap_num })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
             }
             else->{
                 // Nothing to do ( Don't need sort )
             }
         }
-        for(i in 0 until recipeList.size) {
-            addItem(recipeList[i])
+        for(i in 0 until OpeningActivity.recipe_list.size) {
+            addItem(OpeningActivity.recipe_list[i])
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -157,7 +66,11 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
 
         titleView.text = listViewItemList[position].titleStr
         tagView.text = listViewItemList[position].tagStr
-        imageView.setImageDrawable(listViewItemList[position].iconDrawable)
+        Picasso.get().load(listViewItemList[position].iconurl).into(imageView)
+
+        view.setOnClickListener {
+            (activity as HomeActivity).changeFragment(explainFrag(fragment,1,listViewItemList[position].argRecipe, listViewItemList[position].tagStr))
+        }
 
         return view
     }
@@ -176,11 +89,10 @@ class Community_SortedListViewAdapter(context : Context, p : Int): BaseAdapter()
 
     fun addItem(recipe: Recipe){
         val item = Community_ListViewItem()
-        item.iconDrawable = ContextCompat.getDrawable(context0,
-            R.drawable.turkey_looking_left
-        )
+        item.iconurl = recipe.pics[0]
         item.titleStr = recipe.cook_title
         item.tagStr = mktag(recipe)
+        item.argRecipe = recipe
 
         listViewItemList.add(item)
     }

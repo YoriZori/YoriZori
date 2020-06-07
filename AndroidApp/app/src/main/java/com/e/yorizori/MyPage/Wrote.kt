@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Adapter.WroteAdapter
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
@@ -27,9 +29,13 @@ class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
         view.wrt_backBtn.setOnClickListener {
            onBack()
         }
+        val button = view.findViewById(R.id.wrt_deleteBtn) as ImageButton
+        val adapter = WroteAdapter(parent,activity!!)
         (parent as MyPage).saveInfo(1,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
+        listView.adapter = adapter
 
+<<<<<<< HEAD
         if (ele_num == 0) {
             emptyWrote?.visibility = View.VISIBLE
         }
@@ -37,6 +43,11 @@ class Wrote(parent : Fragment) : BackBtnPressListener,Fragment() {
             emptyWrote?.visibility = View.INVISIBLE
         }
 
+=======
+        if(listView.adapter.count == 0){
+            view.no_written.visibility = View.VISIBLE
+        }
+>>>>>>> saintreal4
         return view
     }
 

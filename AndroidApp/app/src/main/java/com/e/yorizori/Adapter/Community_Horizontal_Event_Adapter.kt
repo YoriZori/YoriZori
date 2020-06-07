@@ -63,7 +63,6 @@ class Community_Horizontal_Event_Adapter(
             holder.rpicview.setImageDrawable(item.EventDrawable)
         holder.itemView.setOnClickListener{
             /* TODO: Event 사진 크게 보기? 자세히 보기? 하는 view*/
-
         }
     }
     fun fill(){
