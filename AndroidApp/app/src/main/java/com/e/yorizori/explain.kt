@@ -6,9 +6,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import com.e.yorizori.Class.Recipe
+import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_explain.*
 
 class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
+    private lateinit var database: DatabaseReference
 // 이부분을 fragment로 바꾸시면 밑에 TODO를 눌러서 적어놓은 걸로 바꿔주세요!
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
@@ -17,11 +19,6 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var actionBar : ActionBar?
-
-        actionBar = supportActionBar;
-        actionBar?.hide()
 
         val intent = getIntent()
         var recipe1 = Recipe(
@@ -49,12 +46,12 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1,LIST_MENU1)
         val listview1 = findViewById(R.id.recipe_listview) as ListView
         listview1.setAdapter(adapter1)
-
+/*
         val LIST_MENU2 = recipe1.ings
         val adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1,LIST_MENU2)
         val listview2 = findViewById(R.id.ing_listview) as ListView
         listview2.setAdapter(adapter2)
-
+*/
         scrapBtn.setOnClickListener(object : View.OnClickListener
         {
             var isDefault = false
@@ -62,10 +59,16 @@ class explain : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
                 isDefault = !isDefault
                 if(isDefault)
                 {
-                    //scrapBtn.background     // button의 background 모양 변경
-                    num +=1   // scrap_num 증가 ( 두번누를때마다 증가하는거 수정 필요)
+                    scrapBtn.setSelected(true)
+                    num +=1
                     scrapNum.text = num.toString()
 
+                }
+                else
+                {
+                    scrapBtn.setSelected(false)
+                    num -=1
+                    scrapNum.text = num.toString()
                 }
             }
         }

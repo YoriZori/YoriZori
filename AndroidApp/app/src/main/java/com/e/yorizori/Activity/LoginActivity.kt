@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
@@ -21,7 +22,16 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
+
         setContentView(R.layout.activity_login)
+
+        val cur_user = auth.currentUser
+        if (cur_user != null) {
+            // User is signed in
+            val i = Intent(this@LoginActivity, HomeActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
+        }
 
         login_button.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
@@ -67,6 +77,14 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(applicationContext, RegisterActivity::class.java))
             }
         })
+
+        login_find.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                Toast.makeText(applicationContext, "로그인 안 한 채로 들어옴", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, HomeActivity::class.java))
+                finish()
+            }
+        })
     }
 
     private fun logIn(email: String, password: String) {
@@ -74,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
                     Toast.makeText(applicationContext, R.string.login_succeed, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     finish()

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Add_Recipe">
+
 
     <!--  header  -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,12 +74,15 @@
                 android:id="@+id/recipeImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="16dp"
+                android:maxHeight="150dp"
+                android:maxWidth="150dp"
+                android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:srcCompat="@tools:sample/avatars[12]" />
+                android:src="@drawable/ic_photo_black_60dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/titleInputLayout"
@@ -88,7 +93,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tagInputLayout">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/titleInput"
                     android:layout_width="match_parent"
