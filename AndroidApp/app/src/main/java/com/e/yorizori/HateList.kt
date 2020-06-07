@@ -22,7 +22,6 @@ class HateList: Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.activity_hatelist, container, false)
 
         val listView  = view.findViewById<ListView>(R.id.list_hatelist)

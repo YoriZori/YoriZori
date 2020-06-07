@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckList">
+    tools:context=".Fragment.CheckList">
 
     <TextView
         android:id = "@+id/text_checklist"
@@ -36,6 +36,16 @@
         app:layout_constraintBottom_toTopOf="@id/search_checklist"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/emptyChk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="빈 리스트"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/list_checklist" />
 
     <LinearLayout
         android:id="@+id/search_checklist"

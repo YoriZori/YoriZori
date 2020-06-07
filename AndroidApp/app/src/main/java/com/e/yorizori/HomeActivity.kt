@@ -18,16 +18,12 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         var items = mutableListOf<RefrigItem>()
-        var hate_items = mutableListOf<RefrigItem>()
         var checklist_prefs : SharedPreferences? = null
-        var hate_prefs : SharedPreferences? = null
         var checklist_edit : SharedPreferences.Editor? = null
-        var hate_edit : SharedPreferences.Editor? = null
-
         fun set_prefs(_context : Context) {
-            checklist_prefs = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE)
+         //   checklist_prefs = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE)
             hate_prefs = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE)
-            checklist_edit = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE).edit()
+         //   checklist_edit = _context.getSharedPreferences("checklist_data", Context.MODE_PRIVATE).edit()
             hate_edit = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE).edit()
         }
 
@@ -59,22 +55,14 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        fun load_hate() {
-            var tmp = hate_prefs?.all
-            for(name in tmp!!.keys){
-                hate_items.add(RefrigItem(name))
-            }
-        }
+
 
         fun delete_checklist(refrigItem: RefrigItem) {
             checklist_edit?.remove(refrigItem.item)
             checklist_edit?.commit()
         }
 
-        fun delete_hate(refrigItem: RefrigItem) {
-            hate_edit?.remove(refrigItem.item)
-            hate_edit?.commit()
-        }
+
     }
 
     fun changeFragment(f: Fragment, cleanStack:Boolean=false){
