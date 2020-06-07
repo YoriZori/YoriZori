@@ -2,38 +2,107 @@ package com.e.yorizori.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.e.yorizori.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        database = FirebaseDatabase.getInstance().reference
+        auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_login)
 
-        login_button.setOnClickListener(object : View.OnClickListener
-        {
+        login_button.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
-                database = FirebaseDatabase.getInstance().reference
-                database.child("test").child("string").setValue("Hello, World!")
-                    .addOnSuccessListener {
-                        val toast = Toast.makeText(applicationContext, "suceed!", Toast.LENGTH_SHORT)
-                        toast.show()
-                    }
-                    .addOnFailureListener {
-                        val toast = Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT)
-                        toast.show()
-                    }
 
-                startActivity(Intent(applicationContext, HomeActivity::class.java))
-                finish()
+                val email = login_email.text.toString()
+                val pw = login_pw.text.toString()
+
+                if (validateForm()) {
+                    logIn(email, pw)
+                }
             }
         })
+
+        //email 입력 칸에서 enter
+        login_email.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
+                val email = login_email.text.toString()
+                val pw = login_pw.text.toString()
+
+                if (validateForm()) {
+                    logIn(email, pw)
+                }
+            }
+            true
+        }
+
+        //pw 입력 칸에서 enter
+        login_pw.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
+                val email = login_email.text.toString()
+                val pw = login_pw.text.toString()
+
+                if (validateForm()) {
+                    logIn(email, pw)
+                }
+            }
+            true
+        }
+
+
+        login_register.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                startActivity(Intent(applicationContext, RegisterActivity::class.java))
+            }
+        })
+    }
+
+    private fun logIn(email: String, password: String) {
+        // [START sign_in_with_email]
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(applicationContext, R.string.login_succeed, Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(applicationContext, HomeActivity::class.java))
+                    finish()
+                }
+            }
+            .addOnFailureListener(this) {
+                Toast.makeText(applicationContext, R.string.login_failed, Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun validateForm(): Boolean {
+        var valid = true
+
+        val email = login_email.text.toString()
+        if (TextUtils.isEmpty(email)) {
+            login_email.error = "이메일을 입력해주세요!"
+            valid = false
+        } else {
+            login_email.error = null
+        }
+
+        val password = login_pw.text.toString()
+        if (TextUtils.isEmpty(password)) {
+            login_pw.error = "비밀번호를 입력해주세요!"
+            valid = false
+        }
+        else {
+            login_pw.error = null
+        }
+        return valid
     }
 }

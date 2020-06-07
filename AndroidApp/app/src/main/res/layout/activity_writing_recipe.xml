@@ -130,50 +130,72 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="14dp"
+                android:layout_marginBottom="10dp"
                 android:text="재료"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/ingredientList"/>
 
-            <TextView
-                android:id="@+id/ingredientText"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="소시지"
+            <ListView
+                android:id="@+id/ingredientList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientTitle" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientTitle"
+                app:layout_constraintBottom_toTopOf="@+id/ingInputLayout"/>
 
-            <TextView
-                android:id="@+id/ingredientNumText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="10개"
-                app:layout_constraintStart_toEndOf="@+id/ingredientText"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientTitle" />
-
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:id="@+id/ingInputLayout"
                 android:layout_width="180dp"
                 android:layout_height="56dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientText" >
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientList">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingInput"
+                <LinearLayout
+                    android:id="@+id/result_search_ingList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <AutoCompleteTextView
+                    android:id = "@+id/ingInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="재료 추가" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="재료 추가"/>
+            </LinearLayout>
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/ingInputLayout"-->
+<!--                android:layout_width="180dp"-->
+<!--                android:layout_height="56dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/ingredientList" >-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/ingInput"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="재료 추가" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ingNumInputLayout"
                 android:layout_width="140dp"
                 android:layout_height="56dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/ingInputLayout"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientText" >
+                app:layout_constraintTop_toBottomOf="@+id/ingredientList" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingNumInput"
@@ -199,59 +221,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="14dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="20sp"
                 android:text="조리법"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/recipeList"/>
 
-            <TextView
-                android:id="@+id/recipeNumText"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textStyle="bold"
+            <ListView
+                android:id="@+id/recipeList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeTitle" />
-
-            <TextView
-                android:id="@+id/recipeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="10개"
-                app:layout_constraintStart_toEndOf="@+id/recipeNumText"
-                app:layout_constraintTop_toBottomOf="@+id/recipeTitle" />
-
-<!--            <TextView-->
-<!--                android:id="@+id/recipeNumInput"-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="1"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/recipeNumText" />-->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/recipeNumInput"
-                android:layout_width="20dp"
-                android:layout_height="56dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeNumText" >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="2" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipeTitle"
+                app:layout_constraintBottom_toTopOf="@+id/recipeInputLayout"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/recipeInputLayout"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintStart_toEndOf="@+id/recipeNumInput"
-                app:layout_constraintTop_toBottomOf="@+id/recipeNumText" >
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipeList" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/recipeInput"
@@ -263,8 +257,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
