@@ -33,10 +33,6 @@ import kotlinx.android.synthetic.main.checklist_date_picker.view.*
 
 class CheckList: BackBtnPressListener,Fragment(){
 
-    lateinit var database: DatabaseReference
-    lateinit var firebaseAuth: FirebaseAuth
-    val ele_num : Int = 1 // Number of elements in list
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,9 +40,6 @@ class CheckList: BackBtnPressListener,Fragment(){
     ): View? {
         (activity as HomeActivity).saveFragment(1, this)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        val user = firebaseAuth.currentUser
-        val userUID = user!!.uid
 
         val view = inflater.inflate(R.layout.activity_checklist, container, false)
 
@@ -103,13 +96,6 @@ class CheckList: BackBtnPressListener,Fragment(){
 
         /* search bar: done. */
 
-        if (ele_num == 0) {
-            emptyChk?.visibility = View.VISIBLE
-        }
-        else if (ele_num != 0){
-            emptyChk?.visibility = View.INVISIBLE
-        }
-
         return view
     }
 
@@ -142,68 +128,6 @@ class CheckList: BackBtnPressListener,Fragment(){
         alertDialog.setView(view)
         alertDialog.show()
    }
-
-    fun changeVisibility(button: Button){
-        if (ChecklistListAdapter.selected.size == 0){
-            button.visibility = View.INVISIBLE
-        }
-        else if (ChecklistListAdapter.selected.size > 0){
-            button.visibility = View.VISIBLE
-        }
-    }
-
-
-    private fun setList(list : ArrayList<String>) {
-        list.add("a")
-        list.add("b")
-        list.add("c")
-        list.add("d")
-        list.add("e")
-        list.add("f")
-        list.add("g")
-        list.add("h")
-        list.add("i")
-        list.add("j")
-        list.add("k")
-        list.add("l")
-        list.add("m")
-        list.add("n")
-        list.add("o")
-        list.add("p")
-        list.add("q")
-        list.add("r")
-        list.add("s")
-        list.add("t")
-        list.add("u")
-        list.add("v")
-        list.add("w")
-        list.add("x")
-        list.add("y")
-        list.add("z")
-        list.add("양파")
-        list.add("양서류(?)")
-        list.add("양고기")
-        list.add("양상추")
-        list.add("양배추")
-        list.add("소세지")
-        list.add("소고기")
-        list.add("소라게(?)")
-        list.add("소수림왕")
-        list.add("소고기무국")
-        list.add("탕수육")
-        list.add("팔보채")
-        list.add("양장피")
-        list.add("맛있다")
-    }
-    override fun onResume(){
-        super.onResume()
-        if (ele_num == 0) {
-            emptyChk?.visibility = View.VISIBLE
-        }
-        else if (ele_num != 0){
-            emptyChk?.visibility = View.INVISIBLE
-        }
-    }
 
     override fun onBack() {
         dialog()

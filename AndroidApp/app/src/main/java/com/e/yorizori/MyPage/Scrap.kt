@@ -35,7 +35,7 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         (parent as MyPage).saveInfo(0,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
 
-        if (listView.count == 0) {
+        if (adapter.getCount() == 0) {
             emptyScrap?.visibility = View.VISIBLE
         }
         else{
