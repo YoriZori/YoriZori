@@ -2,6 +2,7 @@ package com.e.yorizori.Adapter
 
 import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,9 +41,13 @@ class WroteAdapter(fragment : Fragment, activity : FragmentActivity) : BaseAdapt
         val tagView  = view.findViewById(R.id.list_tag1) as TextView
         val imageView = view.findViewById(R.id.list_imageView1) as ImageView
 
+        val metrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(metrics)
+        val px = (130 * metrics.density).toInt()
+
         titleView.text = Wrote_Recipe[position].cook_title
         tagView.text = mktag(Wrote_Recipe[position])
-        Picasso.get().load(Wrote_Recipe[position].pics[0]).into(imageView)
+        Picasso.get().load(Wrote_Recipe[position].pics[0]).resize(px,px).into(imageView)
 
         view.setOnClickListener {
             (activity as HomeActivity).changeFragment(explainFrag(this.parent,3, Wrote_Recipe[position],mktag(Wrote_Recipe[position])))

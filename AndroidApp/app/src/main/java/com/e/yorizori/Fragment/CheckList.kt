@@ -61,12 +61,6 @@ class CheckList: BackBtnPressListener,Fragment(){
 
         // for added ingredients
         val listViewAdapter = ChecklistListAdapter(this.requireContext(), my_ing)
-        listViewAdapter.registerDataSetObserver(object : DataSetObserver() {
-            override fun onChanged() {
-                Log.d("###", "NOTIFY")
-                super.onChanged()
-            }
-        })
         val button = view.findViewById<Button>(R.id.delete_button)
 
         listView.setAdapter(listViewAdapter)
@@ -105,23 +99,6 @@ class CheckList: BackBtnPressListener,Fragment(){
             CheckListPicker(clicked).show(fragmentManager!!, "HI")
         }
 
-        //input new ingredients
-        /*
-        view.auto_search_checklist.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
-                val refrigItem = RefrigItem(auto_search_checklist.text.toString())
-                database = FirebaseDatabase.getInstance().reference
-                database.child("refrigItem").child(userUID).push().setValue(Gson().toJson(refrigItem))
-                view.auto_search_checklist.setText("")
-
-                //hide keyboard
-                val inputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-
-            }
-            true
-        }
-        */
         (activity as HomeActivity).setOnBackBtnListener(this)
 
         /* search bar: done. */

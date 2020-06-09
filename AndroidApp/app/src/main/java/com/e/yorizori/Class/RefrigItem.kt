@@ -1,8 +1,7 @@
 package com.e.yorizori.Class
 
-import android.util.Log
-import com.e.yorizori.DateUtils.Companion.simpleDate
-import java.text.SimpleDateFormat
+import com.e.yorizori.Class.DateFormatter.Companion.simpleDate
+
 
 class RefrigItem(){
     /*구조를 만들어 주세요~!*/

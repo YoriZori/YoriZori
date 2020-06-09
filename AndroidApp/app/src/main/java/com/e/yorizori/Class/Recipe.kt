@@ -65,6 +65,16 @@ class Recipe(
                 ings: ArrayList<Pair<String,String>>) :
             this(cook_title,recipe,tag, pics, writer_UID, ings, arrayListOf<Int>(0,0,0), 0)
 
-
+    fun isValid(): Int{
+        if(cook_title == "")
+            return 1
+        if(recipe.isEmpty())
+            return 2
+        if(pics.isEmpty())
+            return 3
+        if(ings.isEmpty())
+            return 4
+        return 0
+    }
 
 }

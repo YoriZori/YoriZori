@@ -19,6 +19,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -45,6 +46,9 @@ dependencies {
 
     // real-time database!
     implementation 'com.google.firebase:firebase-database:19.1.0'
+
+    // firebase storage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
 
     // for user login
     implementation 'com.google.firebase:firebase-auth:19.1.0'

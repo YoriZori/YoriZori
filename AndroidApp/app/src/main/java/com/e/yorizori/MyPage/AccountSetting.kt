@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.LoginActivity
-import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
@@ -19,8 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_account_setting.view.*
-import kotlinx.android.synthetic.main.activity_wrote.view.*
-import org.w3c.dom.Text
 
 class AccountSetting(parent: Fragment) : BackBtnPressListener, Fragment() {
     val parent = parent

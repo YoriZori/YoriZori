@@ -99,7 +99,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(null)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -119,7 +118,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -131,7 +129,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -143,7 +140,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -155,7 +151,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -167,7 +162,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }
@@ -179,7 +173,6 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                     listViewItemList[position].addItem(i)
                     count+=1
                     if(count>=5) {
-                        Log.d("#######",listViewItemList.size.toString())
                         break
                     }
                 }

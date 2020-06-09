@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 //import com.e.yorizori.Activity.HomeActivity.Companion.hate_items
 import com.e.yorizori.Adapter.AllergyListAdapter
 import com.e.yorizori.Fragment.MyPage
@@ -40,11 +42,9 @@ class Allergy(parent:  Fragment) : BackBtnPressListener, Fragment() {
 
         listView.setAdapter(listViewAdapter)
 
-        button.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
+        button.setOnClickListener {
                 showSettingPopup(listView, listViewAdapter, button)
-            }
-        })
+        }
 
         (parent as MyPage).saveInfo(2,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
@@ -57,30 +57,39 @@ class Allergy(parent:  Fragment) : BackBtnPressListener, Fragment() {
         }
 
         // set the list
-        var ing_list : ArrayList<String> = arrayListOf()
-        setList(ing_list)
 
         // for real-time search
         val searchAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.auto_search_hatelist)
         val searchAdapter = ArrayAdapter<String>(requireContext(),
             android.R.layout.simple_list_item_1,
-            /*android.R.layout.simple_list_item_1,*/
-            ing_list)
+            OpeningActivity.server_ing)
         searchAutoComplete.threshold = 0
         searchAutoComplete.setAdapter(searchAdapter)
 
         // for click event
-        searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
-                parent, view, position, id ->
+        searchAutoComplete.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val clicked = parent.getItemAtPosition(position).toString()
-            HomeActivity.add_hate(clicked)
-//            Toast.makeText(requireContext(), "Clicked: $clicked", Toast.LENGTH_SHORT).show()
-//
-//            val intent = Intent(activity, CalendarSet::class.java)
-//            intent.putExtra("ing_name", clicked)
-//            startActivity(intent)
-//            activity?.finish()
+            if (!HomeActivity.hate_items.contains(clicked)) {
+                HomeActivity.add_hate(clicked)
+                (activity as HomeActivity).changeFragment(Allergy(this.parent))
+            }
+            else{
+                Toast.makeText(context,"이미 추가하신 재료입니다.",Toast.LENGTH_SHORT).show()
+            }
         }
+        // for enter and click
+        searchAutoComplete.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                val selected = v!!.text.toString()
+                if(HomeActivity.hate_items.contains(selected)){
+                    Toast.makeText(context,"이미 추가하신 재료입니다.",Toast.LENGTH_SHORT).show()
+                    return false
+                }
+                HomeActivity.add_hate(selected)
+                (activity as HomeActivity).changeFragment(Allergy(parent))
+                return true
+            }
+        })
 
 
         return view
@@ -128,46 +137,4 @@ class Allergy(parent:  Fragment) : BackBtnPressListener, Fragment() {
         }
     }
 
-    private fun setList(list : ArrayList<String>) {
-        list.add("a")
-        list.add("b")
-        list.add("c")
-        list.add("d")
-        list.add("e")
-        list.add("f")
-        list.add("g")
-        list.add("h")
-        list.add("i")
-        list.add("j")
-        list.add("k")
-        list.add("l")
-        list.add("m")
-        list.add("n")
-        list.add("o")
-        list.add("p")
-        list.add("q")
-        list.add("r")
-        list.add("s")
-        list.add("t")
-        list.add("u")
-        list.add("v")
-        list.add("w")
-        list.add("x")
-        list.add("y")
-        list.add("z")
-        list.add("양파")
-        list.add("양서류(?)")
-        list.add("양고기")
-        list.add("양상추")
-        list.add("양배추")
-        list.add("소세지")
-        list.add("소고기")
-        list.add("소라게(?)")
-        list.add("소수림왕")
-        list.add("소고기무국")
-        list.add("탕수육")
-        list.add("팔보채")
-        list.add("양장피")
-        list.add("맛있다")
-    }
 }

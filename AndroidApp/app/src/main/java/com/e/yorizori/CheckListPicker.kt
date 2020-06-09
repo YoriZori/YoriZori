@@ -42,9 +42,7 @@ class CheckListPicker(input : String) : DialogFragment() {
                 val put_me = json.toJson(RefrigItem(name,"$year-$month-$day"))
 
                 // put into the shared preference.
-                Log.d("@@@@@", "before put $put_me")
                 editor.putString(name, put_me).commit()
-                Log.d("@@@@@@", "DONE put $put_me")
 
                 (requireActivity() as HomeActivity).changeFragment(CheckList())
                 dismiss()
@@ -61,9 +59,7 @@ class CheckListPicker(input : String) : DialogFragment() {
                 val put_me = json.toJson(RefrigItem(name))
 
                 // put into the shared preference.
-                Log.d("@@@@@", "before put $put_me")
                 editor.putString(name, put_me).commit()
-                Log.d("@@@@@@", "DONE put $put_me")
 
                 (requireActivity() as HomeActivity).changeFragment(CheckList())
                 dismiss()

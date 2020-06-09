@@ -29,9 +29,6 @@ class OpeningActivity : AppCompatActivity(){
         var server_ing = arrayListOf<String>()
         var my_ing = mutableListOf<RefrigItem>()
 
-        fun add_recipe(recipe: Recipe) {
-            recipe_list.add(recipe)
-        }
         fun add(str : String) {
             server_ing.add(str)
         }
@@ -72,12 +69,12 @@ class OpeningActivity : AppCompatActivity(){
             }
 
             override fun onDataChange(shot: DataSnapshot) {
+                var tmp_list: ArrayList<String> = arrayListOf()
                 for (ing in shot.children) {
                     val child = ing.value.toString()
-
-
-                    server_ing.add(child)
+                    tmp_list.add(child)
                 }
+                server_ing = tmp_list
             }
         }
         child.addListenerForSingleValueEvent(listener)
@@ -91,14 +88,15 @@ class OpeningActivity : AppCompatActivity(){
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                Log.d("ok?","바로된다고!?")
                 var tmp_recipe : ArrayList<Recipe> = arrayListOf()
-                for(recipe in p0.children){
-                    val recipe_str= recipe.getValue(String::class.java)
-                    val trimmed = recipe_str!!.trim()
-                    val gson = Gson()
-                    val recipe = gson.fromJson(trimmed,Recipe::class.java)
-                    tmp_recipe.add(recipe)
+                for(recipe_title_cat in p0.children){
+                    for(recipe in recipe_title_cat.children) {
+                        val recipe_str = recipe.getValue(String::class.java)
+                        val trimmed = recipe_str!!.trim()
+                        val gson = Gson()
+                        val recipe = gson.fromJson(trimmed, Recipe::class.java)
+                        tmp_recipe.add(recipe)
+                    }
                 }
                 recipe_list = tmp_recipe
             }

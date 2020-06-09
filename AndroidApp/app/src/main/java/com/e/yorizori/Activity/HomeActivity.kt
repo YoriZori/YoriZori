@@ -19,6 +19,7 @@ import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
+import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -35,35 +36,23 @@ class HomeActivity : AppCompatActivity(){
     var position = 0
 
     companion object {
-        var items = mutableListOf<RefrigItem>()
         var hate_edit : SharedPreferences.Editor? = null
         var hate_prefs : SharedPreferences? = null
-        var hate_items = mutableListOf<RefrigItem>()
+        var hate_items = arrayListOf<String>()
 
         var picsuc = 0
         var str : String = ""
-        var scrap_info: ArrayList<ScrapInfo> = arrayListOf()
-        var price_info: ArrayList<ScrapInfo> = arrayListOf()
-        var simp_info:  ArrayList<ScrapInfo> = arrayListOf()
-        var del_info:   ArrayList<ScrapInfo> = arrayListOf()
+        var recommend_info : ArrayList<ArrayList<ScrapInfo>> = arrayListOf(arrayListOf(),arrayListOf(),arrayListOf(),arrayListOf())
+
 
         fun set_prefs(_context : Context) {
             hate_prefs = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE)
             hate_edit = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE).edit()
         }
 
-        fun add_item(name: String, date: String) {
-            items.add(RefrigItem(name, date))
-        }
-
-        fun add_item(name: String) {
-            items.add(RefrigItem(name))
-        }
-
         fun add_hate(name: String) {
-            val tmp : RefrigItem = RefrigItem(name)
-            hate_items.add(tmp)
-            hate_edit?.putString(name, tmp.print_due())
+            hate_items.add(name)
+            hate_edit?.putString(name,name)
             hate_edit?.commit()
         }
 
@@ -71,12 +60,12 @@ class HomeActivity : AppCompatActivity(){
         fun load_hate() {
             var tmp = hate_prefs?.all
             for(name in tmp!!.keys){
-                hate_items.add(RefrigItem(name))
+                hate_items.add(name)
             }
         }
 
-        fun delete_hate(refrigItem: RefrigItem) {
-            hate_edit?.remove(refrigItem.item)
+        fun delete_hate(item : String) {
+            hate_edit?.remove(item)
             hate_edit?.commit()
         }
 
@@ -85,9 +74,6 @@ class HomeActivity : AppCompatActivity(){
         // Permission Code
         val PERMISSION_CODE = 1001
 
-        fun add_scrap(key: String, title: String, writer:String){
-            scrap_info.add(ScrapInfo(key,title,writer))
-        }
     }
     // Image Pick Code
     val IMAGE_PICK_CODE = 1000
@@ -158,41 +144,81 @@ class HomeActivity : AppCompatActivity(){
         var user = FirebaseAuth.getInstance().currentUser
         var rootRef = FirebaseDatabase.getInstance().reference
         var userUID = user!!.uid
-        var scraped =  rootRef.child("$userUID/scrap")
-        var price = rootRef.child("$userUID/price_checked")
-        var simple = rootRef.child("$userUID/simple_checked")
-        var delicious = rootRef.child("$userUID/delicious_checked")
-        var listener = object: ValueEventListener{
+        var scraped =  rootRef.child("users/$userUID/scrap")
+        var price = rootRef.child("users/$userUID/cheap")
+        var simple = rootRef.child("users/$userUID/simple")
+        var delicious = rootRef.child("users/$userUID/delicious")
+
+        var listener1 = object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
-                var tmp_list1 : ArrayList<ScrapInfo> = arrayListOf()
-                var tmp_list2 : ArrayList<ScrapInfo> = arrayListOf()
-                var tmp_list3 : ArrayList<ScrapInfo> = arrayListOf()
                 for (child in p0.children){
                     var key = child.key
                     var list = child.getValue(String::class.java)
                     var tmp = list!!.split(",")
                     tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
-                    tmp_list1.add(ScrapInfo(key!!,tmp[0],tmp[1]))
-                    //tmp_list2.add(ScrapInfo(key!!,tmp[0],tmp[1]))
-                    //tmp_list3.add(ScrapInfo(key!!,tmp[0],tmp[1]))
                 }
-                scrap_info = tmp_list
-                price_info = tmp_list1
-                simp_info = tmp_list2
-                del_info = tmp_list3
+                recommend_info[0] = tmp_list
+            }
+        }
+        var listener2 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[1] = tmp_list
+            }
+        }
+        var listener3 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[2] = tmp_list
+            }
+        }
+        var listener4 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[3] = tmp_list
             }
         }
         set_prefs(applicationContext)
         load_hate()
-        scraped.addValueEventListener(listener)
-        price.addValueEventListener(listener)
-        simple.addValueEventListener(listener)
-        delicious.addValueEventListener(listener)
+        scraped.addValueEventListener(listener1)
+        simple.addValueEventListener(listener3)
+        delicious.addValueEventListener(listener2)
+        price.addValueEventListener(listener4)
     }
 
     override fun onResume(){

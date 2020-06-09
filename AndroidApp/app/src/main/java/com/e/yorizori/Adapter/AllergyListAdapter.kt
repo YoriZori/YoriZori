@@ -11,13 +11,13 @@ import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.R
 import java.text.SimpleDateFormat
 
-class AllergyListAdapter (val context: Context, val _items: MutableList<RefrigItem>): BaseAdapter() {
+class AllergyListAdapter (val context: Context, val _items: ArrayList<String>): BaseAdapter() {
 
     val mContext: Context = context
     val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-    val items : MutableList<RefrigItem> = _items
+    val items = _items
     companion object{
-        val selected : MutableList<RefrigItem> = mutableListOf()
+        val selected : ArrayList<String> = arrayListOf()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -26,10 +26,9 @@ class AllergyListAdapter (val context: Context, val _items: MutableList<RefrigIt
 
         val item_name = view.findViewById<TextView>(R.id.item_name)
 
-        RefrigItem.sort(items)
 
         val item = items[position]
-        item_name.text = item.item
+        item_name.text = item
 
         val checkBox = view.findViewById<CheckBox>(R.id.item_check)
 

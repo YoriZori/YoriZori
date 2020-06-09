@@ -1,6 +1,8 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,31 +27,41 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
     private var fragment = fragment
     private var parent_position = p
     init{
+        var tmp_recipes: List<Recipe> = listOf()
         when(parent_position){
             0 -> {
                 // Error! It's event tab
             }
             1-> {
-                // Nothing to do ( Don't need sort )
+                val my_tmp_set = OpeningActivity.my_ing.map{it.item}
+                tmp_recipes = OpeningActivity.recipe_list.filter{
+                    val tmp_set = it.ings.map{ it.first}
+                    my_tmp_set.containsAll(tmp_set)
+                }
             }
             2->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending {
+                    it.like_num[Like.DELICIOUS.idx]
+                }
             }
             3->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending{ it.like_num[Like.QUICK.idx] })
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{it.like_num[Like.QUICK.idx] }
             }
             4->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending{ it.like_num[Like.CHEAP.idx] })
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.like_num[Like.CHEAP.idx] }
             }
             5->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.scrap_num }
             }
             else->{
                 // Nothing to do ( Don't need sort )
             }
         }
-        for(i in 0 until OpeningActivity.recipe_list.size) {
-            addItem(OpeningActivity.recipe_list[i])
+        tmp_recipes = tmp_recipes.filter{
+            it.cook_title != ""
+        }
+        for(i in tmp_recipes) {
+            addItem(i)
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -64,9 +76,13 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
         val tagView  = view.findViewById(R.id.list_tag1) as TextView
         val imageView = view.findViewById(R.id.list_imageView1) as ImageView
 
+        val metrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(metrics)
+        val px = (130 * metrics.density).toInt()
+
         titleView.text = listViewItemList[position].titleStr
         tagView.text = listViewItemList[position].tagStr
-        Picasso.get().load(listViewItemList[position].iconurl).into(imageView)
+        Picasso.get().load(listViewItemList[position].iconurl).resize(px,px).into(imageView)
 
         view.setOnClickListener {
             (activity as HomeActivity).changeFragment(explainFrag(fragment,1,listViewItemList[position].argRecipe, listViewItemList[position].tagStr))

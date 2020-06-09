@@ -4,15 +4,15 @@ import com.e.yorizori.R
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.view.LayoutInflater as LayoutInflater1
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.e.yorizori.Fragment.Add_Recipe
 
 
-class WRRecipeListViewAdapter(context: Context?, data: Array<String>) : BaseAdapter() {
+class WRRecipeListViewAdapter(context: Context?, fragment : Fragment) : BaseAdapter() {
     var mContext = context
-    var sample = data
+    var sample: ArrayList<String> = arrayListOf("")
+    var fragment = fragment
     override fun getCount(): Int {
         return sample.size
     }
@@ -26,13 +26,31 @@ class WRRecipeListViewAdapter(context: Context?, data: Array<String>) : BaseAdap
     }
 
 
-    override fun getView(position: Int, converView: View?, parent: ViewGroup?): View {
-        val view: View = LayoutInflater1.from(mContext).inflate(R.layout.recipelist_item, parent, false)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        var view = convertView
+        val context = parent.context
 
-        val recipeNumText = view.findViewById(R.id.recipeNumText) as TextView
-        val recipeText = view.findViewById(R.id.recipeText) as TextView
+        if (view == null){
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater
+            view = inflater.inflate(R.layout.recipelist_item,parent,false)
+        }
+        val recipeNumText = view!!.findViewById(R.id.recipeNumText) as TextView
         recipeNumText.setText((position + 1).toString())
-        recipeText.setText(sample[position])
+        val del_button = view.findViewById(R.id.recipe_del_button) as ImageButton
+        del_button.setOnClickListener {
+            if (sample.size > 1) {
+                sample.removeAt(position)
+                this.notifyDataSetChanged()
+                (fragment as Add_Recipe).resizeListView(1)
+            }
+            else{
+                Toast.makeText(mContext!!,"재료는 1가지 이상이 필요합니다",Toast.LENGTH_SHORT).show()
+            }
+        }
         return view
+    }
+
+    fun addItem(){
+        sample.add("")
     }
 }

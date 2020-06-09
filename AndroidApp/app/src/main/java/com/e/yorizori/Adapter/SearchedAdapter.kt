@@ -1,6 +1,7 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.squareup.picasso.Picasso
 
 class SearchedAdapter(keyword : String, activity : FragmentActivity, fragment: Fragment) : BaseAdapter() {
     private var SearchedRecipe : ArrayList<Recipe> = arrayListOf()
-    private val keyword = keyword
     private val activity = activity
     private val parent = fragment
 
@@ -39,9 +39,13 @@ class SearchedAdapter(keyword : String, activity : FragmentActivity, fragment: F
         val tagView  = view.findViewById(R.id.list_tag1) as TextView
         val imageView = view.findViewById(R.id.list_imageView1) as ImageView
 
+        val metrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(metrics)
+        val px = (130 * metrics.density).toInt()
+
         titleView.text = SearchedRecipe[position].cook_title
         tagView.text = mktag(SearchedRecipe[position])
-        Picasso.get().load(SearchedRecipe[position].pics[0]).into(imageView)
+        Picasso.get().load(SearchedRecipe[position].pics[0]).resize(px,px).into(imageView)
 
         view.setOnClickListener {
             (activity as HomeActivity).changeFragment(explainFrag(this.parent,4, SearchedRecipe[position],mktag(SearchedRecipe[position])))

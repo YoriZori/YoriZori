@@ -1,29 +1,21 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toIcon
-import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.R
-import com.e.yorizori.explain
 import com.e.yorizori.explainFrag
 import com.squareup.picasso.Picasso
-import java.io.BufferedInputStream
-import java.net.URL
 
 
 class Community_HorizontalAdapter(
@@ -65,7 +57,11 @@ class Community_HorizontalAdapter(
         else {
             holder.rnameview.text = item.titleStr
             holder.rtagview.text = item.tagStr
-            Picasso.get().load(item.iconurl).into(holder.rpicview)
+            val metrics = DisplayMetrics()
+            activity.windowManager.defaultDisplay.getMetrics(metrics)
+            val px = (130 * metrics.density).toInt()
+
+            Picasso.get().load(item.iconurl).resize(px,px).into(holder.rpicview)
         }
         holder.itemView.setOnClickListener{
             activity.changeFragment(explainFrag(fragment,0,item.argRecipe,item.tagStr))

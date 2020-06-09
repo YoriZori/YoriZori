@@ -12,12 +12,15 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Adapter.Community_ListViewAdapter
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
+import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
 
 class Community: BackBtnPressListener,Fragment(){
-    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null)
+    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null,null)
     var goto = -1
 
     override fun onCreateView(

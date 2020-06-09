@@ -16,12 +16,15 @@ import kotlinx.android.synthetic.main.activity_scrap.view.*
 
 class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
     val parent = parent
-    private var ele_num : Int = 0 // Connect to element number of list
+    var saved_Fragment : Fragment? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if(saved_Fragment!= null){
+            (activity as HomeActivity).changeFragment(saved_Fragment!!)
+        }
         val view = inflater.inflate(R.layout.activity_scrap, container, false)
         val listView  = view.findViewById<ListView>(R.id.scr_checklist)
         view.scr_backBtn.setOnClickListener {
@@ -32,10 +35,10 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         (parent as MyPage).saveInfo(0,this)
         (activity as HomeActivity).setOnBackBtnListener(this)
 
-        if (ele_num == 0) {
+        if (listView.count == 0) {
             emptyScrap?.visibility = View.VISIBLE
         }
-        else if (ele_num != 0){
+        else{
             emptyScrap?.visibility = View.INVISIBLE
         }
 
@@ -49,14 +52,7 @@ class Scrap(parent : Fragment) : BackBtnPressListener,Fragment() {
         ft.popBackStack()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (ele_num == 0) {
-            emptyScrap?.visibility = View.VISIBLE
-        }
-        else if (ele_num != 0) {
-            emptyScrap?.visibility = View.INVISIBLE
-        }
+    fun save_info(f:Fragment?){
+        saved_Fragment = f
     }
-
 }

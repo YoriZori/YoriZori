@@ -2,14 +2,11 @@ package com.e.yorizori.Fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
@@ -57,8 +54,8 @@ class Community_Search(context: Context, fragment : Fragment) : BackBtnPressList
             (activity as HomeActivity).changeFragment(SearchResult(this,text))
             true
         }
-
-
+        (fragment as Community).saveInfo(4,this)
+        (activity as HomeActivity).setOnBackBtnListener(this)
         return view
     }
 
@@ -67,7 +64,7 @@ class Community_Search(context: Context, fragment : Fragment) : BackBtnPressList
     }
 
     override fun onBack() {
-        (fragment as Community).saveInfo(0,null)
+        (fragment as Community).saveInfo(4,null)
         var ft = (activity as HomeActivity).supportFragmentManager
         ft.beginTransaction().remove(this).commit()
         ft.popBackStack()

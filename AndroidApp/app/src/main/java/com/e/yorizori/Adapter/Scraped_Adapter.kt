@@ -1,6 +1,8 @@
 package com.e.yorizori.Adapter
 
 import android.content.Context
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +26,7 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
     private val fragment = fragment as Scrap
 
     init{
-        val tmp_test = HomeActivity.scrap_info.map{
+        val tmp_test = HomeActivity.recommend_info[0].map{
             Pair(it.title, it.writer)
         } as ArrayList<Pair<String,String>>
         scrapedRecipe = OpeningActivity.recipe_list.filter{
@@ -44,9 +46,12 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
         val tagView  = view.findViewById(R.id.list_tag1) as TextView
         val imageView = view.findViewById(R.id.list_imageView1) as ImageView
 
+        val metrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(metrics)
+        val px = 130 * metrics.density
         titleView.text = scrapedRecipe[position].cook_title
         tagView.text = mktag(scrapedRecipe[position])
-        Picasso.get().load(scrapedRecipe[position].pics[0]).into(imageView)
+        Picasso.get().load(scrapedRecipe[position].pics[0]).resize(px.toInt(),px.toInt()).into(imageView)
 
         view.setOnClickListener {
             (activity as HomeActivity).changeFragment(explainFrag(fragment,2, scrapedRecipe[position], mktag(scrapedRecipe[position])))
