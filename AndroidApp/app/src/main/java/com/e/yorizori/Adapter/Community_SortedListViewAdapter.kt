@@ -15,6 +15,7 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.Enum.Like
 import com.e.yorizori.R
 import com.e.yorizori.explainFrag
@@ -27,7 +28,7 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
     private var fragment = fragment
     private var parent_position = p
     init{
-        var tmp_recipes: List<Recipe> = listOf()
+        var tmp_recipes: List<Server_recipe> = listOf()
         when(parent_position){
             0 -> {
                 // Error! It's event tab
@@ -35,30 +36,30 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
             1-> {
                 val my_tmp_set = OpeningActivity.my_ing.map{it.item}
                 tmp_recipes = OpeningActivity.recipe_list.filter{
-                    val tmp_set = it.ings.map{ it.first}
+                    val tmp_set = it.recipe.ings.map{ it.first}
                     my_tmp_set.containsAll(tmp_set)
                 }
             }
             2->{
                 tmp_recipes = OpeningActivity.recipe_list.sortedByDescending {
-                    it.like_num[Like.DELICIOUS.idx]
+                    it.recipe.like_num[Like.DELICIOUS.idx]
                 }
             }
             3->{
-                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{it.like_num[Like.QUICK.idx] }
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{it.recipe.like_num[Like.QUICK.idx] }
             }
             4->{
-                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.like_num[Like.CHEAP.idx] }
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.recipe.like_num[Like.CHEAP.idx] }
             }
             5->{
-                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.scrap_num }
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending{ it.recipe.scrap_num }
             }
             else->{
-                // Nothing to do ( Don't need sort )
+                tmp_recipes = OpeningActivity.recipe_list.sortedByDescending { it.recipe.date }
             }
         }
         tmp_recipes = tmp_recipes.filter{
-            it.cook_title != ""
+            it.recipe.cook_title != ""
         }
         for(i in tmp_recipes) {
             addItem(i)
@@ -103,12 +104,12 @@ class Community_SortedListViewAdapter(context : Context, activity : FragmentActi
         return listViewItemList.size
     }
 
-    fun addItem(recipe: Recipe){
+    fun addItem(srecipe: Server_recipe){
         val item = Community_ListViewItem()
-        item.iconurl = recipe.pics[0]
-        item.titleStr = recipe.cook_title
-        item.tagStr = mktag(recipe)
-        item.argRecipe = recipe
+        item.iconurl = srecipe.recipe.pics[0]
+        item.titleStr = srecipe.recipe.cook_title
+        item.tagStr = mktag(srecipe.recipe)
+        item.argRecipe = srecipe
 
         listViewItemList.add(item)
     }

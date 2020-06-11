@@ -12,6 +12,7 @@ import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Adapter.ingAdapter
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.ScrapInfo
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.Community_SortedList
 import com.e.yorizori.Interface.BackBtnPressListener
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_explain.*
 import kotlinx.android.synthetic.main.activity_explain.view.*
 
-class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?) : BackBtnPressListener,Fragment() {
+class explainFrag(parent : Fragment, option : Int, item : Server_recipe?, tag : String?) : BackBtnPressListener,Fragment() {
     private val parent = parent
     private val option = option
     private val recipeAll = item
@@ -43,7 +44,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
     ): View? {
         finding = HomeActivity.recommend_info.map {
             it.filter {
-                it.has(recipeAll!!.cook_title, recipeAll!!.writer_UID)
+                it.has(recipeAll!!.recipe.cook_title, recipeAll!!.recipe.writer_UID)
             }
         } as ArrayList<ArrayList<ScrapInfo>>
 
@@ -65,7 +66,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         view.price_btn.isSelected = recommend[3]
 
         // 레시피클래스 가져오기
-        var recipe1 = recipeAll
+        var recipe1 = recipeAll!!.recipe
 
         //초기값 설정
         view.foodName.text = recipe1?.cook_title
@@ -132,7 +133,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
                 recipe1.scrap_num -= 1
             }
             scrapNum.text = recipe1.scrap_num.toString()
-            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+            rootRef.child("recipe/${recipe1.cook_title}/${recipeAll.key}").setValue(Gson().toJson(recipe1))
         }
         // delicious
         view.del_btn.setOnClickListener {
@@ -144,7 +145,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
                 recipe1.like_num[0] -= 1
             }
             del_num.text = recipe1.like_num[0].toString()
-            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+            rootRef.child("recipe/${recipe1.cook_title}/${recipeAll.key}").setValue(Gson().toJson(recipe1))
         }
         view.simple_btn.setOnClickListener {
             simple_btn.isSelected = !recommend[2]
@@ -155,7 +156,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
                 recipe1.like_num[1] -= 1
             }
             simple_num.text = recipe1.like_num[1].toString()
-            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+            rootRef.child("recipe/${recipe1.cook_title}/${recipeAll.key}").setValue(Gson().toJson(recipe1))
         }
         // 가성비버튼 누를 때
         view.price_btn.setOnClickListener {
@@ -167,7 +168,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
                 recipe1.like_num[2] -= 1
             }
             price_num.text = recipe1.like_num[2].toString()
-            rootRef.child("recipe/${recipe1.cook_title}").setValue(Gson().toJson(recipe1))
+            rootRef.child("recipe/${recipe1.cook_title}/${recipeAll.key}").setValue(Gson().toJson(recipe1))
         }
 
         when (option) {
@@ -221,7 +222,7 @@ class explainFrag(parent : Fragment, option : Int, item : Recipe?, tag : String?
         for(i in 0 .. finding.size - 1){
             if(recommend[i]){
                 if(finding[i].isEmpty()){
-                    rootRef.child("users/$userUID/${path[i]}").push().setValue("${recipeAll!!.cook_title},${recipeAll.writer_UID}")
+                    rootRef.child("users/$userUID/${path[i]}").push().setValue("${recipeAll!!.recipe.cook_title},${recipeAll.recipe.writer_UID}")
                 }
             }
             else{

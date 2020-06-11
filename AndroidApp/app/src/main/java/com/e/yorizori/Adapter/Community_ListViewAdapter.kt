@@ -105,7 +105,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
             }
             1->{
                 val possible = OpeningActivity.recipe_list.filter{
-                    val require_ings = it.ings.map{
+                    val require_ings = it.recipe.ings.map{
                         it.first
                     }.toSet()
                     val ing_set = OpeningActivity.my_ing.map{
@@ -123,7 +123,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             2->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.DELICIOUS.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.recipe.like_num[Like.DELICIOUS.idx] })
                 var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
@@ -134,7 +134,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             3->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.QUICK.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.recipe.like_num[Like.QUICK.idx] })
                 var count=0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
@@ -145,7 +145,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             4-> {
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.like_num[Like.CHEAP.idx] })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.recipe.like_num[Like.CHEAP.idx] })
                 var count=0
                 for (i in OpeningActivity.recipe_list) {
                     listViewItemList[position].addItem(i)
@@ -156,7 +156,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             5->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.scrap_num })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.recipe.scrap_num })
                 var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)
@@ -167,7 +167,7 @@ class Community_ListViewAdapter(context: Context, activity: FragmentActivity?,fr
                 }
             }
             else->{
-                OpeningActivity.recipe_list.sortWith(compareByDescending { it.date })
+                OpeningActivity.recipe_list.sortWith(compareByDescending { it.recipe.date })
                 var count = 0
                 for (i in OpeningActivity.recipe_list){
                     listViewItemList[position].addItem(i)

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.R
 import com.e.yorizori.explainFrag
 import com.google.firebase.auth.FirebaseAuth
@@ -22,12 +23,12 @@ import com.squareup.picasso.Picasso
 class WroteAdapter(fragment : Fragment, activity : FragmentActivity) : BaseAdapter() {
     private var parent = fragment
     private var activity = activity
-    private var Wrote_Recipe : ArrayList<Recipe> = arrayListOf()
+    private var Wrote_Recipe : ArrayList<Server_recipe> = arrayListOf()
 
     init{
         Wrote_Recipe = OpeningActivity.recipe_list.filter{
-            it.writer_UID == FirebaseAuth.getInstance().currentUser!!.uid
-        } as ArrayList<Recipe>
+            it.recipe.writer_UID == FirebaseAuth.getInstance().currentUser!!.uid
+        } as ArrayList<Server_recipe>
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -45,12 +46,12 @@ class WroteAdapter(fragment : Fragment, activity : FragmentActivity) : BaseAdapt
         activity.windowManager.defaultDisplay.getMetrics(metrics)
         val px = (130 * metrics.density).toInt()
 
-        titleView.text = Wrote_Recipe[position].cook_title
-        tagView.text = mktag(Wrote_Recipe[position])
-        Picasso.get().load(Wrote_Recipe[position].pics[0]).resize(px,px).into(imageView)
+        titleView.text = Wrote_Recipe[position].recipe.cook_title
+        tagView.text = mktag(Wrote_Recipe[position].recipe)
+        Picasso.get().load(Wrote_Recipe[position].recipe.pics[0]).resize(px,px).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(this.parent,3, Wrote_Recipe[position],mktag(Wrote_Recipe[position])))
+            (activity as HomeActivity).changeFragment(explainFrag(this.parent,3, Wrote_Recipe[position],mktag(Wrote_Recipe[position].recipe)))
         }
 
 

@@ -6,5 +6,5 @@ class Community_ListViewItem{
     var iconurl : String? = null
     var titleStr:String?=null
     var tagStr:String?=null
-    var argRecipe : Recipe? = null
+    var argRecipe : Server_recipe? = null
 }

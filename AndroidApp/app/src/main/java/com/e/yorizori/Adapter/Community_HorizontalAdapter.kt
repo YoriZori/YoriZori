@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e.yorizori.Class.Community_ListViewItem
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.R
 import com.e.yorizori.explainFrag
 import com.squareup.picasso.Picasso
@@ -71,7 +72,7 @@ class Community_HorizontalAdapter(
 
     override fun getItemCount(): Int {
         if(listViewItemList.size == 0){
-            addItem(Recipe())
+            addItem(Server_recipe())
         }
         else if(listViewItemList.size != 1){
             listViewItemList = listViewItemList.filter{
@@ -97,23 +98,24 @@ class Community_HorizontalAdapter(
         this.context = context
         this.listViewItemList = listViewItemList
     }
-    fun addItem(recipe: Recipe?) {
+    fun addItem(server_recipe: Server_recipe?) {
         val item = Community_ListViewItem()
-        if (recipe == null){
+        if (server_recipe == null) {
             item.titleStr = null
-            item.tagStr=null
+            item.tagStr = null
             item.iconurl = null
             item.argRecipe = null
-        }
-        else if(recipe.cook_title == ""){
-            item.titleStr=""
-            item.tagStr="체크리스트 추가하러 가기!"
-        }
-        else {
-            item.titleStr = recipe.cook_title
-            item.tagStr = mktag(recipe)
-            item.iconurl = recipe.pics[0]
-            item.argRecipe = recipe
+        } else {
+            var recipe = server_recipe?.recipe
+            if (recipe.cook_title == "") {
+                item.titleStr = ""
+                item.tagStr = "체크리스트 추가하러 가기!"
+            } else {
+                item.titleStr = recipe.cook_title
+                item.tagStr = mktag(recipe)
+                item.iconurl = recipe.pics[0]
+                item.argRecipe = server_recipe
+            }
         }
         listViewItemList.add(item)
     }

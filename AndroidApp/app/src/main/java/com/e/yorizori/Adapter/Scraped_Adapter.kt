@@ -14,13 +14,14 @@ import androidx.fragment.app.FragmentActivity
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Class.Recipe
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.MyPage.Scrap
 import com.e.yorizori.R
 import com.e.yorizori.explainFrag
 import com.squareup.picasso.Picasso
 
 class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment : Fragment) : BaseAdapter() {
-    private var scrapedRecipe :ArrayList<Recipe> = arrayListOf()
+    private var scrapedRecipe :ArrayList<Server_recipe> = arrayListOf()
     private val context = context
     private val activity = activity as HomeActivity
     private val fragment = fragment as Scrap
@@ -30,8 +31,8 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
             Pair(it.title, it.writer)
         } as ArrayList<Pair<String,String>>
         scrapedRecipe = OpeningActivity.recipe_list.filter{
-            tmp_test.contains(Pair(it.cook_title,it.writer_UID))
-        } as ArrayList<Recipe>
+            tmp_test.contains(Pair(it.recipe.cook_title,it.recipe.writer_UID))
+        } as ArrayList<Server_recipe>
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -49,12 +50,12 @@ class Scraped_Adapter(context : Context, activity : FragmentActivity?, fragment 
         val metrics = DisplayMetrics()
         activity.windowManager.defaultDisplay.getMetrics(metrics)
         val px = 130 * metrics.density
-        titleView.text = scrapedRecipe[position].cook_title
-        tagView.text = mktag(scrapedRecipe[position])
-        Picasso.get().load(scrapedRecipe[position].pics[0]).resize(px.toInt(),px.toInt()).into(imageView)
+        titleView.text = scrapedRecipe[position].recipe.cook_title
+        tagView.text = mktag(scrapedRecipe[position].recipe)
+        Picasso.get().load(scrapedRecipe[position].recipe.pics[0]).resize(px.toInt(),px.toInt()).into(imageView)
 
         view.setOnClickListener {
-            (activity as HomeActivity).changeFragment(explainFrag(fragment,2, scrapedRecipe[position], mktag(scrapedRecipe[position])))
+            (activity as HomeActivity).changeFragment(explainFrag(fragment,2, scrapedRecipe[position], mktag(scrapedRecipe[position].recipe)))
         }
 
 

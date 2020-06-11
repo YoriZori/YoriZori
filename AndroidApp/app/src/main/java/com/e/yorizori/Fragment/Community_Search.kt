@@ -21,7 +21,7 @@ class Community_Search(context: Context, fragment : Fragment) : BackBtnPressList
 
     init{
         recipes = OpeningActivity.recipe_list.map{
-            it.cook_title
+            it.recipe.cook_title
         } as ArrayList<String>
     }
 

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.e.yorizori.Class.Recipe
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Class.Server_recipe
 import com.e.yorizori.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,7 +26,7 @@ import com.google.gson.Gson
 class OpeningActivity : AppCompatActivity(){
 
     companion object {
-        var recipe_list = arrayListOf<Recipe>()
+        var recipe_list = arrayListOf<Server_recipe>()
         var server_ing = arrayListOf<String>()
         var my_ing = mutableListOf<RefrigItem>()
 
@@ -88,14 +89,15 @@ class OpeningActivity : AppCompatActivity(){
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                var tmp_recipe : ArrayList<Recipe> = arrayListOf()
+                var tmp_recipe : ArrayList<Server_recipe> = arrayListOf()
                 for(recipe_title_cat in p0.children){
                     for(recipe in recipe_title_cat.children) {
+                        val key = recipe.key
                         val recipe_str = recipe.getValue(String::class.java)
                         val trimmed = recipe_str!!.trim()
                         val gson = Gson()
                         val recipe = gson.fromJson(trimmed, Recipe::class.java)
-                        tmp_recipe.add(recipe)
+                        tmp_recipe.add(Server_recipe(key!!,recipe))
                     }
                 }
                 recipe_list = tmp_recipe
