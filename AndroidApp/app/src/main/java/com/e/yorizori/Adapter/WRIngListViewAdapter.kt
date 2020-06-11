@@ -4,15 +4,19 @@ import com.e.yorizori.R
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.CheckListPicker
+import com.e.yorizori.Fragment.Add_Recipe
+import kotlinx.android.synthetic.main.ingredientlist_item.view.*
 import android.view.LayoutInflater as LayoutInflater1
 
 
-class WRIngListViewAdapter(context: Context?, data: Array<Pair<String,String>>) : BaseAdapter() {
+class WRIngListViewAdapter(context: Context?, fragment : Fragment) : BaseAdapter() {
     var mContext = context
-    var sample = data
+    var fragment = fragment
+    var sample : ArrayList<Pair<String,String>> = arrayListOf(Pair("",""))
     override fun getCount(): Int {
         return sample.size
     }
@@ -26,13 +30,38 @@ class WRIngListViewAdapter(context: Context?, data: Array<Pair<String,String>>) 
     }
 
 
-    override fun getView(position: Int, converView: View?, parent: ViewGroup?): View {
-        val view: View = LayoutInflater1.from(mContext).inflate(R.layout.ingredientlist_item, parent, false)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        var view = convertView
+        val context = parent.context
 
-        val ingText = view.findViewById(R.id.ingText) as TextView
-        val ingAmountText = view.findViewById(R.id.ingAmountText) as TextView
-        ingText.setText(sample[position].first)
-        ingAmountText.setText(sample[position].second)
+        if (view == null){
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater
+            view = inflater.inflate(R.layout.ingredientlist_item,parent,false)
+        }
+        val ing_auto = view!!.findViewById<AutoCompleteTextView>(R.id.ingText)
+        val searchAdapter = ArrayAdapter<String>(mContext!!,
+            android.R.layout.simple_list_item_1,
+            OpeningActivity.server_ing
+        )
+        ing_auto.threshold=0
+        ing_auto.setAdapter(searchAdapter)
+
+        ing_auto.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, view, position, id ->
+            val clicked = parent.getItemAtPosition(position).toString()
+            ing_auto.setText(clicked)
+        }
+
+        val del_button = view.findViewById<ImageButton>(R.id.ingListDel)
+        del_button.setOnClickListener {
+            sample.removeAt(position)
+            this.notifyDataSetChanged()
+            (fragment as Add_Recipe).resizeListView(0)
+        }
         return view
     }
+    fun add_item(){
+        sample.add(Pair("",""))
+    }
+
 }

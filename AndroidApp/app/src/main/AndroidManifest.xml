@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CalendarSet" />
         <activity android:name=".Activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +30,6 @@
         <activity android:name=".Activity.RegisterActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".explain"/>
 </application>
 
 </manifest>

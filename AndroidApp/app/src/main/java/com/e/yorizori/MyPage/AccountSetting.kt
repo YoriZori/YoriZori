@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_account_setting.view.*
 
 class AccountSetting(parent: Fragment) : BackBtnPressListener, Fragment() {
     val parent = parent
+    lateinit var database : DatabaseReference
+    lateinit var firebaseAuth : FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,11 +30,6 @@ class AccountSetting(parent: Fragment) : BackBtnPressListener, Fragment() {
         val view = inflater.inflate(R.layout.activity_account_setting, container, false)
         lateinit var database : DatabaseReference
         lateinit var firebaseAuth : FirebaseAuth
-        view.acn_backBtn.setOnClickListener {
-            onBack()
-        }
-        (parent as MyPage).saveInfo(3,this)
-        (activity as HomeActivity).setOnBackBtnListener(this)
 
         // get the user's id
         database = FirebaseDatabase.getInstance().getReference("Users")
@@ -40,11 +37,29 @@ class AccountSetting(parent: Fragment) : BackBtnPressListener, Fragment() {
         val user = firebaseAuth.currentUser
 
         // set the text view
-        val textView = view.findViewById<TextView>(R.id.text_id)
-        textView.text = user!!.displayName
+        view.acn_name.text = user!!.displayName
+        view.acn_email.text = user!!.email
 
         // for logout
-        view.text_logout.setOnClickListener(object : View.OnClickListener {
+        val logOutView = view.findViewById<TextView>(R.id.acn_text_logout)
+        logOutView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                firebaseAuth.signOut()
+                Toast.makeText(requireContext(), R.string.logout, Toast.LENGTH_SHORT).show()
+                val i = Intent(requireContext(), LoginActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+            }
+        })
+
+        view.acn_backBtn.setOnClickListener {
+            onBack()
+        }
+        (parent as MyPage).saveInfo(3,this)
+        (activity as HomeActivity).setOnBackBtnListener(this)
+
+        // for logout
+        view.acn_text_logout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 firebaseAuth.signOut()
                 Toast.makeText(requireContext(), R.string.logout, Toast.LENGTH_SHORT).show()

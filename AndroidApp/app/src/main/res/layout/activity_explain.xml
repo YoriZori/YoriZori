@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".explain">
+    tools:context=".explainFrag">
 
 
     <ScrollView
@@ -17,19 +17,71 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/foodListView"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+            <TextView
+                android:id="@+id/del_num"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="260dp"
+                android:layout_marginRight="260dp"
+                android:text="num"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/del_btn" />
+
+            <TextView
+                android:id="@+id/price_num"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginRight="64dp"
+                android:text="num"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/price_btn" />
+
+            <Button
+                android:id="@+id/del_btn"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_change"
+                android:text="맛있어요"
+                app:layout_constraintEnd_toStartOf="@+id/simple_btn"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
+
+            <TextView
+                android:id="@+id/simple_num"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="172dp"
+                android:layout_marginRight="172dp"
+                android:text="num"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/simple_btn" />
+
+            <Button
+                android:id="@+id/simple_btn"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_change"
+                android:text="간단해요"
+                app:layout_constraintEnd_toStartOf="@+id/price_btn"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
+
+            <Button
+                android:id="@+id/price_btn"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@android:drawable/editbox_dropdown_light_frame"
+                android:background="@drawable/button_change"
+                android:text="가성비가 좋아요!"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ing" />
+                app:layout_constraintTop_toBottomOf="@+id/recipe_listview" />
 
             <ListView
                 android:id="@+id/recipe_listview"
@@ -41,7 +93,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@android:drawable/editbox_dropdown_light_frame"
-                android:divider="@color/design_default_color_on_secondary"
+                android:divider="@android:color/darker_gray"
                 android:dividerHeight="1dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +113,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/foodListView" />
+                app:layout_constraintTop_toBottomOf="@+id/ing_ListView" />
 
             <TextView
 
@@ -101,7 +153,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_horizontal"
-                android:text="숫자"
+                android:text="sc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrapBtn" />
 
@@ -125,7 +177,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:text="음식이름"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/returnBtn"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -166,6 +218,22 @@
                     android:gravity="center|right"
                     android:text="TextView" />
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/ing_ListView"
+                android:layout_width="0dp"
+                android:layout_height="146dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:drawable/editbox_dropdown_light_frame"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ing" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

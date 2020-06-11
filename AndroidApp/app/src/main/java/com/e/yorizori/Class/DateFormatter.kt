@@ -1,9 +1,9 @@
-package com.e.yorizori
+package com.e.yorizori.Class
 
 import java.text.SimpleDateFormat
 
-class DateUtils {
-    companion object {
+class DateFormatter {
+    companion object{
         val simpleDate : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     }
 }

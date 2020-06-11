@@ -39,12 +39,16 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
         val titleview = view.findViewById(R.id.page_title) as TextView
         val adapter = Community_SortedListViewAdapter(
             this.context!!,
+            activity,
+            this,
             position
         )
         val backBtn = view.findViewById(R.id.commu_backBtn) as ImageButton
         backBtn.visibility =View.VISIBLE
+
         val SearchBtn = view.findViewById(R.id.commu_search) as ImageButton
         SearchBtn.visibility = View.GONE
+
         backBtn.setOnClickListener{
             (fragment as Community).saveInfo(0,null)
             var ft = (activity as HomeActivity).supportFragmentManager
@@ -56,9 +60,6 @@ class Community_SortedList(position : Int, activity: HomeActivity, fragment: Com
 
         listview.adapter = adapter
 
-        listview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
-            activity.changeFragment(explainFrag(this,1))
-        })
         if(goto != -1){
             val prev_frag = savedFragment[goto]!!
             (this.activity as HomeActivity).changeFragment(prev_frag)

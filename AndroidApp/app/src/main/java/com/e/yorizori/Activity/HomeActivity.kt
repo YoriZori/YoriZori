@@ -2,23 +2,30 @@ package com.e.yorizori.Activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.e.yorizori.Class.RefrigItem
+import com.e.yorizori.Class.ScrapInfo
 import com.e.yorizori.Fragment.CheckList
 import com.e.yorizori.Fragment.Community
 import com.e.yorizori.Fragment.MyPage
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_writing_recipe.*
 
 
@@ -29,23 +36,49 @@ class HomeActivity : AppCompatActivity(){
     var position = 0
 
     companion object {
-        var items = mutableListOf<RefrigItem>()
+        var hate_edit : SharedPreferences.Editor? = null
+        var hate_prefs : SharedPreferences? = null
+        var hate_items = arrayListOf<String>()
+
         var picsuc = 0
         var str : String = ""
+        var recommend_info : ArrayList<ArrayList<ScrapInfo>> = arrayListOf(arrayListOf(),arrayListOf(),arrayListOf(),arrayListOf())
 
-        fun add_item(name: String, date: String) {
-            items.add(RefrigItem(name, date))
+
+        fun set_prefs(_context : Context) {
+            hate_prefs = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE)
+            hate_edit = _context.getSharedPreferences("hate_data", Context.MODE_PRIVATE).edit()
         }
 
-        fun add_item(name: String) {
-            items.add(RefrigItem(name))
+        fun add_hate(name: String) {
+            hate_items.add(name)
+            hate_edit?.putString(name,name)
+            hate_edit?.commit()
         }
+
+
+        fun load_hate() {
+            var tmp = hate_prefs?.all
+            for(name in tmp!!.keys){
+                hate_items.add(name)
+            }
+        }
+
+        fun delete_hate(item : String) {
+            hate_edit?.remove(item)
+            hate_edit?.commit()
+        }
+
         // Image Pick Code
         val IMAGE_PICK_CODE = 1000
         // Permission Code
         val PERMISSION_CODE = 1001
 
     }
+    // Image Pick Code
+    val IMAGE_PICK_CODE = 1000
+    // Permission Code
+    val PERMISSION_CODE = 1001
 
     fun setOnBackBtnListener(listener:BackBtnPressListener?){
         backBtnListener = listener
@@ -73,7 +106,6 @@ class HomeActivity : AppCompatActivity(){
         else {
             pickImageFromGallery()
         }
-
     }
 
     fun pickImageFromGallery() {
@@ -102,38 +134,91 @@ class HomeActivity : AppCompatActivity(){
             val uri = data!!.data
             str = uri.toString()
             picsuc = 1
+            recipeImage.setImageURI(data?.data)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        var user = FirebaseAuth.getInstance().currentUser
+        var rootRef = FirebaseDatabase.getInstance().reference
+        var userUID = user!!.uid
+        var scraped =  rootRef.child("users/$userUID/scrap")
+        var price = rootRef.child("users/$userUID/cheap")
+        var simple = rootRef.child("users/$userUID/simple")
+        var delicious = rootRef.child("users/$userUID/delicious")
 
-        items.add(RefrigItem("소세지", "2018-12-25"))
-        items.add(RefrigItem("돼지고기"))
-        items.add(RefrigItem("우유", "2020-05-20"))
-        items.add(RefrigItem("양파", "2020-05-28"))
-        items.add(RefrigItem("카레가루"))
-        items.add(RefrigItem("마늘", "2020-05-29"))
-        items.add(RefrigItem("고추장"))
-        items.add(RefrigItem("떡", "2020-05-30"))
-        items.add(RefrigItem("간장", "2020-05-27"))
-        items.add(RefrigItem("으악", "2020-05-26"))
-        items.add(RefrigItem("으악", "2020-05-25"))
-        items.add(RefrigItem("으악", "2020-05-24"))
-        items.add(RefrigItem("으악", "2020-05-23"))
-        items.add(RefrigItem("으악", "2020-05-22"))
-        items.add(RefrigItem("으악", "2020-05-21"))
-        items.add(RefrigItem("으악", "2020-05-20"))
-        items.add(RefrigItem("으악", "2020-05-19"))
-        items.add(RefrigItem("으악", "2020-05-18"))
-        items.add(RefrigItem("으악", "2020-05-17"))
-        items.add(
-            RefrigItem(
-                "나랏말싸미뒹귁에달아문자와로서로사맛디아니할세이런젼차로어린백성이니르고져홀빼이셔도마참내제뜻을",
-                "2019-05-10"
-            )
-        )
+        var listener1 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[0] = tmp_list
+            }
+        }
+        var listener2 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[1] = tmp_list
+            }
+        }
+        var listener3 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[2] = tmp_list
+            }
+        }
+        var listener4 = object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var tmp_list : ArrayList<ScrapInfo> = arrayListOf()
+                for (child in p0.children){
+                    var key = child.key
+                    var list = child.getValue(String::class.java)
+                    var tmp = list!!.split(",")
+                    tmp_list.add(ScrapInfo(key!!,tmp[0],tmp[1]))
+                }
+                recommend_info[3] = tmp_list
+            }
+        }
+        set_prefs(applicationContext)
+        load_hate()
+        scraped.addValueEventListener(listener1)
+        simple.addValueEventListener(listener3)
+        delicious.addValueEventListener(listener2)
+        price.addValueEventListener(listener4)
     }
 
     override fun onResume(){
@@ -151,15 +236,23 @@ class HomeActivity : AppCompatActivity(){
             var selected:Fragment
             when(it.itemId){
                 R.id.tab_community -> {
-                    selected = fragments[0]!!
+                    if(position == 0){
+                        selected = Community()
+                    }
+                    else selected = fragments[0]!!
                 }
                 R.id.tab_check ->{
-                    selected = fragments[1]!!
+                    if(position == 1){
+                        selected = CheckList()
+                    }
+                    else selected = fragments[1]!!
                 }
                 else ->{
-                    selected = fragments[2]!!
+                    if(position == 2) {
+                        selected = MyPage()
+                    }
+                    else selected = fragments[2]!!
                 }
-
             }
             changeFragment(selected)
             true
@@ -177,7 +270,6 @@ class HomeActivity : AppCompatActivity(){
         }
     }
 
-    
     fun saveFragment(p : Int,f: Fragment){
         fragments[p] = f
         position = p

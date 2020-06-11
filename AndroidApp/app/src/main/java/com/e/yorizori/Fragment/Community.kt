@@ -9,14 +9,18 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.e.yorizori.Activity.HomeActivity
+import com.e.yorizori.Activity.OpeningActivity
 import com.e.yorizori.Adapter.Community_ListViewAdapter
 import com.e.yorizori.Interface.BackBtnPressListener
 import com.e.yorizori.R
+import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
 
 class Community: BackBtnPressListener,Fragment(){
-    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null)
+    var savedFragment: Array<Fragment?> = arrayOf(null,null,null,null,null)
     var goto = -1
 
     override fun onCreateView(
@@ -45,6 +49,7 @@ class Community: BackBtnPressListener,Fragment(){
         Search_btn.visibility = View.VISIBLE
         Search_btn.setOnClickListener {
             //Todo: search 옮겨붙이기
+            (activity as HomeActivity).changeFragment(Community_Search(context!!, this))
         }
         val adapter =
             Community_ListViewAdapter(
@@ -74,7 +79,9 @@ class Community: BackBtnPressListener,Fragment(){
         builder.setTitle("YoriZori")
         builder.setMessage("종료하시겠습니까?")
         builder.setPositiveButton("예",DialogInterface.OnClickListener { dialog, which ->
-            activity!!.finish()
+            finishAffinity(requireActivity());
+            System.runFinalization();
+            System.exit(0);
         })
         builder.setNegativeButton("아니요",DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()
