@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.e.yorizori.Activity.HomeActivity
 import com.e.yorizori.Activity.OpeningActivity
+import com.e.yorizori.Class.RefrigItem
 import com.e.yorizori.Fragment.CheckList
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.checklist_date_picker.view.*
@@ -38,12 +39,10 @@ class CheckListPicker(input : String) : DialogFragment() {
 
                 // for json
                 val json = Gson()
-                val put_me = json.toJson(OpeningActivity.my_ing)
+                val put_me = json.toJson(RefrigItem(name,"$year-$month-$day"))
 
                 // put into the shared preference.
-                Log.d("@@@@@", "before put $put_me")
-                editor.putString("having", put_me).commit()
-                Log.d("@@@@@@", "DONE put $put_me")
+                editor.putString(name, put_me).commit()
 
                 (requireActivity() as HomeActivity).changeFragment(CheckList())
                 dismiss()
